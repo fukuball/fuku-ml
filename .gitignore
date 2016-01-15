@@ -1,0 +1,12 @@
+*.py[cod]
+
+.Python
+bin
+include
+lib
+pip-selfcheck.json
+
+.coverage
+htmlcov/
+
+.DS_STORE
