@@ -8,9 +8,10 @@ class PLATestCase(unittest.TestCase):
 
     def test_train_pla(self):
         pla.load_train_data()
+        pla.init_W()
         W = pla.train()
 
-        print "訓練得出權重模型："
+        print "\n訓練得出權重模型："
         print W
         print('-'*70)
 
@@ -41,4 +42,5 @@ class PLATestCase(unittest.TestCase):
         print('-'*70)
 
 if __name__ == '__main__':
-    unittest.main()
+
+    unittest.main(verbosity=2)

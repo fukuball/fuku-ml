@@ -1,18 +1,33 @@
 #encoding=utf8
 
-import os,sys
-import random
-from numpy import array, inner, zeros, sign
+import os
+import numpy as np
 
+status = 'empty'
 train_X = []
 train_Y = []
+W = []
+data_num = 0
+data_demension = 0
+tune_times = 0
+
 
 def load_train_data():
 
+    '''
+    Load train data
+    Please check dataset/pla_train.dat to understand the data format
+    Each feature of data x separated with spaces
+    And the ground truth y put in the end of line separated by a space
+    '''
+
+    global status
     global train_X
     global train_Y
 
-    input_file = os.path.normpath( os.path.join( os.path.join( os.path.join( os.getcwd(), os.path.dirname(__file__) ), os.pardir ) , "dataset/pla_train.dat" ) )
+    status = 'load_train_data'
+
+    input_file = os.path.normpath(os.path.join(os.path.join(os.path.join(os.getcwd(), os.path.dirname(__file__)), os.pardir), "dataset/pla_train.dat"))
 
     X = []
     Y = []
@@ -22,20 +37,61 @@ def load_train_data():
             x = [1] + [float(v) for v in data[:-1]]
             X.append(x)
             Y.append(int(data[-1]))
-    train_X = array(X)
-    train_Y = array(Y)
+
+    train_X = np.array(X)
+    train_Y = np.array(Y)
+
     return train_X, train_Y
 
-def train():
 
+def init_W():
+
+    '''
+    Init the W
+    Simple way is init W all zeros
+    '''
+
+    global status
     global train_X
     global train_Y
+    global W
+    global data_num
+    global data_demension
+
+    if (status != 'load_train_data'):
+        print "Please load train data first."
+        return W
+
+    status = 'init'
 
     data_num = len(train_Y)
     data_demension = len(train_X[0])
-    W = zeros(data_demension)
+    W = np.zeros(data_demension)
 
-    idx = range(data_num)
+    return W
+
+
+def train():
+
+    '''
+    Train Perceptron Learning Algorithm
+    From f(x) = WX
+    Find best h(x) = WX similar to f(x)
+    Output W
+    '''
+
+    global status
+    global train_X
+    global train_Y
+    global W
+    global tune_times
+    global data_num
+
+    if (status != 'init'):
+        print "Please load train data and init W first."
+        return W
+
+    status = 'train'
 
     tune_times = 0
     point_wise_i = 0
@@ -48,7 +104,7 @@ def train():
             point_wise_i = 0
             flag = True
 
-        if sign(inner(train_X[point_wise_i], W)) != train_Y[point_wise_i]:
+        if np.sign(np.inner(train_X[point_wise_i], W)) != train_Y[point_wise_i]:
             flag = False
             tune_times += 1
             W = W + train_Y[point_wise_i] * train_X[point_wise_i]
