@@ -58,7 +58,7 @@ def init_W():
     global data_num
     global data_demension
 
-    if (status != 'load_train_data'):
+    if (status != 'load_train_data') and (status != 'train'):
         print "Please load train data first."
         return W
 
