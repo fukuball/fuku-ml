@@ -117,6 +117,32 @@ Run demo dataset: Random Cycle PLA alpha=0.5 step correction
 
     >>> prediction = pla.prediction(test_data)
 
+Pocket Perceptron Learning Algorithm Usage
+============
+
+Run demo dataset: Basic Naive Cycle PLA
+-----------------
+
+.. code-block:: py
+
+    >>> import numpy as np
+
+    >>> import FukuML.PocketPLA as pocket
+
+    >>> pocket.load_train_data()
+
+    >>> pocket.init_W()
+
+    >>> W = pocket.train(50)
+
+    >>> test_data = '0.62771 0.11513 0.82235 0.14493 -1'
+
+    >>> prediction = pocket.prediction(test_data)
+
+    >>> pocket.load_test_data()
+
+    >>> pocket.calculate_avg_error(pocket.test_X, pocket.test_Y, W)
+
 Note
 =========
 

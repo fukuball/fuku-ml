@@ -193,7 +193,7 @@ def prediction(test_data=''):
         return prediction
 
     if (test_data == ''):
-        print("Please input test dat for prediction.")
+        print("Please input test data for prediction.")
         return prediction
 
     data = test_data.split()
