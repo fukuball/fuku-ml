@@ -113,7 +113,7 @@ class PLATestCase(unittest.TestCase):
         #------------------------------------------------------------
 
         tune_times_sum = 0
-        for i in xrange(2000):
+        for i in range(2000):
             pla.init_W()
             W = pla.train('random')
             tune_times_sum += pla.tune_times
@@ -124,7 +124,7 @@ class PLATestCase(unittest.TestCase):
         #------------------------------------------------------------
 
         tune_times_sum = 0
-        for i in xrange(2000):
+        for i in range(2000):
             pla.init_W()
             W = pla.train('random', 0.5)
             tune_times_sum += pla.tune_times
