@@ -1,8 +1,14 @@
 fuku-ml
 =========
 
+.. image:: https://travis-ci.org/fukuball/fuku-ml.svg?branch=master
+    :target: https://travis-ci.org/fukuball/fuku-ml
+
 .. image:: https://codecov.io/github/fukuball/fuku-ml/coverage.svg?branch=master
     :target: https://codecov.io/github/fukuball/fuku-ml?branch=master
+
+.. image:: https://img.shields.io/badge/made%20with-%e2%9d%a4-ff69b4.svg
+    :target: http://www.fukuball.com
 
 Simple machine learning library
 
