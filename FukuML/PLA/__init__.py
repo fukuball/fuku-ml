@@ -46,7 +46,7 @@ def load_train_data(input_data_file=''):
             data = line.split()
             x = [1] + [float(v) for v in data[:-1]]
             X.append(x)
-            Y.append(int(data[-1]))
+            Y.append(float(data[-1]))
 
     train_X = np.array(X)
     train_Y = np.array(Y)
@@ -132,7 +132,7 @@ def prediction(test_data=''):
     prediction = 0
     data = test_data.split()
     test_data_x = [1] + [float(v) for v in data[:-1]]
-    test_data_y = int(data[-1])
+    test_data_y = float(data[-1])
 
     prediction = np.sign(np.dot(test_data_x, W))
 

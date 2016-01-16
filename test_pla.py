@@ -43,7 +43,7 @@ class PLATestCase(unittest.TestCase):
         pla.load_train_data(input_data_file)
         pla.init_W()
         W = pla.train()
-        print("測試載入 Custom Data File.")
+        print("測試載入 Custom Dataset")
         print("訓練得出權重模型：")
         print(W)
         print('-'*70)

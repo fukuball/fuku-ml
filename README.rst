@@ -42,13 +42,16 @@ Perceptron Learning Algorithm Usage
     >>> W = pla.train()
     # train by Perceptron Learning Algorithm to find best W
 
-    >>> test_data_x = np.array([1, 0.15654, 0.75584, 0.01122, 0.42598])
-    # assign new test data x
+    >>> test_data = '0.15654 0.75584 0.01122 0.42598 -1'
+    # assign test data
 
-    >>> test_data_y = -1.0
-    # assign new test data y
+    >>> print pla.test_data_x
+    # print test data x
 
-    >>> prediction = np.sign(np.dot(test_data_x, W))
+    >>> print pla.test_data_y
+    # print test data y
+
+    >>> prediction = pla.prediction(test_data)
     # prediction by trained W
 
     >>> print prediction
