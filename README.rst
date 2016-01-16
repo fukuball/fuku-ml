@@ -98,7 +98,7 @@ Run demo dataset: Random Cycle PLA
 
     >>> prediction = pla.prediction(test_data)
 
-Run demo dataset: Random Cycle PLA alpha=0.5 Step correction
+Run demo dataset: Random Cycle PLA alpha=0.5 step correction
 -----------------
 
 .. code-block:: py

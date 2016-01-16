@@ -3,9 +3,16 @@
 import os
 import unittest
 import FukuML.PLA as pla
+import FukuML.PocketPLA as pocket
 
 
-class PLATestCase(unittest.TestCase):
+class FukuMLTestCase(unittest.TestCase):
+
+    def test_pocket_pla(self):
+
+        #------------------------------------------------------------
+
+        pocket.load_train_data()
 
     def test_pla(self):
 
@@ -86,7 +93,7 @@ class PLATestCase(unittest.TestCase):
 
         #------------------------------------------------------------
 
-        print("使用 Random Cycle alpha=0.5 Step correction：")
+        print("使用 Random Cycle alpha=0.5 step correction：")
 
         pla.init_W()
         W = pla.train('random', 0.5)

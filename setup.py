@@ -35,7 +35,7 @@ setup(
     packages=['FukuML'],
     package_dir={'FukuML': 'FukuML'},
     package_data={'FukuML': ['*.*', 'PLA/*', 'PocketPLA/*', 'dataset/*']},
-    test_suite='test_pla',
+    test_suite='test_fuku_ml',
     zip_safe=False,
     classifiers=(
         'Development Status :: 5 - Production/Stable',
