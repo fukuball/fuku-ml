@@ -12,15 +12,51 @@ fuku-ml
 
 Simple machine learning library
 
-Note
-=========
-
 Installation
 ============
 
 .. code-block:: bash
 
     $ python setup.py install
+
+Perceptron Learning Algorithm Usage
+============
+
+.. code-block:: py
+
+    >>> import numpy as np
+    # we need numpy as a base libray
+
+    >>> import FukuML.PLA as pla
+    # import FukuML.PLA to do Perceptron Learning
+
+    >>> your_input_data_file = '/path/to/your/data/file'
+    # assign your input data file, please check the data format is the same as this example_.
+    .. _example: https://github.com/fukuball/fuku-ml/blob/master/FukuML/dataset/pla_train.dat
+
+    >>> pla.load_train_data(your_input_data_file)
+    # load train data
+
+    >>> pla.init_W()
+    # init the W
+
+    >>> W = pla.train()
+    # train by Perceptron Learning Algorithm to find best W
+
+    >>> test_data_x = np.array([1, 0.15654, 0.75584, 0.01122, 0.42598])
+    # assign new test data x
+
+    >>> test_data_y = -1.0
+    # assign new test data y
+
+    >>> prediction = np.sign(np.dot(test_data_x, W))
+    # prediction by trained W
+
+    >>> print prediction
+    # print the prediction, will find prediction is the same as test_data_y
+
+Note
+=========
 
 Output the requirements
 

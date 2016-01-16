@@ -15,7 +15,7 @@ data_demension = 0
 tune_times = 0
 
 
-def load_train_data():
+def load_train_data(input_data_file=''):
 
     '''
     Load train data
@@ -30,11 +30,16 @@ def load_train_data():
 
     status = 'load_train_data'
 
-    input_file = os.path.normpath(os.path.join(os.path.join(os.path.join(os.getcwd(), os.path.dirname(__file__)), os.pardir), "dataset/pla_train.dat"))
+    if (input_data_file == ''):
+        input_data_file = os.path.normpath(os.path.join(os.path.join(os.path.join(os.getcwd(), os.path.dirname(__file__)), os.pardir), "dataset/pla_train.dat"))
+    else:
+        if (os.path.isfile(input_data_file) is not True):
+            print("Please make sure input_data_file path is correct.")
+            return train_X, train_Y
 
     X = []
     Y = []
-    with open(input_file) as f:
+    with open(input_data_file) as f:
         for line in f:
             data = line.split()
             x = [1] + [float(v) for v in data[:-1]]

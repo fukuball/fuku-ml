@@ -1,5 +1,6 @@
 #encoding=utf8
 
+import os
 import unittest
 import FukuML.PLA as pla
 import numpy as np
@@ -39,6 +40,15 @@ class PLATestCase(unittest.TestCase):
         print(test_data_y)
         print("預測結果：")
         print(prediction)
+        print('-'*70)
+
+        input_data_file = os.path.join(os.path.join(os.getcwd(), os.path.dirname(__file__)), 'FukuML/dataset/pla_train.dat')
+        pla.load_train_data(input_data_file)
+        pla.init_W()
+        W = pla.train()
+        print("測試載入 Custom Data File.")
+        print("訓練得出權重模型：")
+        print(W)
         print('-'*70)
 
 if __name__ == '__main__':
