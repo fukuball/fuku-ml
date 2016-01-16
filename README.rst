@@ -7,6 +7,9 @@ fuku-ml
 .. image:: https://codecov.io/github/fukuball/fuku-ml/coverage.svg?branch=master
     :target: https://codecov.io/github/fukuball/fuku-ml?branch=master
 
+.. image:: https://pypip.in/py_versions/FukuML/badge.svg
+    :target: https://pypi.python.org/pypi/FukuML
+
 .. image:: https://img.shields.io/badge/made%20with-%e2%9d%a4-ff69b4.svg
     :target: http://www.fukuball.com
 
@@ -14,6 +17,16 @@ Simple machine learning library
 
 Installation
 ============
+
+Option 1
+-----------------
+
+.. code-block:: bash
+
+    $ pip install FukuML
+
+Option 2
+-----------------
 
 .. code-block:: bash
 
@@ -157,6 +170,13 @@ Run tests
 .. code-block:: bash
 
     $ python test_pla.py
+
+Package
+
+.. code-block:: bash
+
+    $ python setup.py sdist
+    $ python setup.py bdist_wheel --universal
 
 License
 =========

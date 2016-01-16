@@ -1,4 +1,7 @@
+LICENSE
+MANIFEST.in
 README.rst
+setup.cfg
 setup.py
 FukuML/__init__.py
 FukuML/__init__.pyc
@@ -10,4 +13,8 @@ FukuML.egg-info/requires.txt
 FukuML.egg-info/top_level.txt
 FukuML/PLA/__init__.py
 FukuML/PLA/__init__.pyc
+FukuML/PocketPLA/__init__.py
+FukuML/PocketPLA/__init__.pyc
 FukuML/dataset/pla_train.dat
+FukuML/dataset/pocket_pla_test.dat
+FukuML/dataset/pocket_pla_train.dat
