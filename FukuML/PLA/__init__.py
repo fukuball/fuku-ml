@@ -135,6 +135,12 @@ def train(mode='naive_cycle', alpha=1):
 
 def prediction(test_data=''):
 
+    '''
+    Make prediction
+    input test data
+    output the prediction
+    '''
+
     global status
     global W
     global test_data_x

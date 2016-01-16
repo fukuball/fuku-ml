@@ -7,7 +7,7 @@ import FukuML.PLA as pla
 
 class PLATestCase(unittest.TestCase):
 
-    def test_train_pla(self):
+    def test_pla(self):
 
         #------------------------------------------------------------
 

@@ -34,7 +34,7 @@ setup(
     install_requires=install_requires,
     packages=['FukuML'],
     package_dir={'FukuML': 'FukuML'},
-    package_data={'FukuML': ['*.*', 'PLA/*', 'dataset/*']},
+    package_data={'FukuML': ['*.*', 'PLA/*', 'PocketPLA/*', 'dataset/*']},
     test_suite='test_pla',
     zip_safe=False,
     classifiers=(
