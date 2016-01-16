@@ -42,8 +42,8 @@ Perceptron Learning Algorithm Usage
     >>> W = pla.train()
     # train by Perceptron Learning Algorithm to find best W
 
-    >>> test_data = '0.15654 0.75584 0.01122 0.42598 -1'
-    # assign test data
+    >>> test_data = 'Each feature of data x separated with spaces. And the ground truth y put in the end of line separated by a space'
+    # assign test data, format like this '0.97681 0.10723 0.64385 ........ 0.29556 1'
 
     >>> print pla.test_data_x
     # print test data x
@@ -56,6 +56,24 @@ Perceptron Learning Algorithm Usage
 
     >>> print prediction
     # print the prediction, will find prediction is the same as test_data_y
+
+Run demo dataset
+
+.. code-block:: py
+
+    >>> import numpy as np
+
+    >>> import FukuML.PLA as pla
+
+    >>> pla.load_train_data()
+
+    >>> pla.init_W()
+
+    >>> pla.train()
+
+    >>> test_data = '0.97681 0.10723 0.64385 0.29556 1'
+
+    >>> prediction = pla.prediction(test_data)
 
 Note
 =========

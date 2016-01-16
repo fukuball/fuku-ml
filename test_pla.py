@@ -2,8 +2,8 @@
 
 import os
 import unittest
-import FukuML.PLA as pla
 import numpy as np
+import FukuML.PLA as pla
 
 class PLATestCase(unittest.TestCase):
 
