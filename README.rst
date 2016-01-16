@@ -22,6 +22,9 @@ Installation
 Perceptron Learning Algorithm Usage
 ============
 
+Basic usage to train from you data (Basic Naive Cycle PLA)
+-----------------
+
 .. code-block:: py
 
     >>> import numpy as np
@@ -31,7 +34,7 @@ Perceptron Learning Algorithm Usage
     # import FukuML.PLA to do Perceptron Learning
 
     >>> your_input_data_file = '/path/to/your/data/file'
-    # assign your input data file, please check the data format is the same as https://github.com/fukuball/fuku-ml/blob/master/FukuML/dataset/pla_train.dat
+    # assign your input data file, please check the data format: https://github.com/fukuball/fuku-ml/blob/master/FukuML/dataset/pla_train.dat
 
     >>> pla.load_train_data(your_input_data_file)
     # load train data
@@ -45,19 +48,20 @@ Perceptron Learning Algorithm Usage
     >>> test_data = 'Each feature of data x separated with spaces. And the ground truth y put in the end of line separated by a space'
     # assign test data, format like this '0.97681 0.10723 0.64385 ........ 0.29556 1'
 
+    >>> prediction = pla.prediction(test_data)
+    # prediction by trained W
+
     >>> print pla.test_data_x
     # print test data x
 
     >>> print pla.test_data_y
     # print test data y
 
-    >>> prediction = pla.prediction(test_data)
-    # prediction by trained W
-
     >>> print prediction
-    # print the prediction, will find prediction is the same as test_data_y
+    # print the prediction, will find out prediction is the same as pla.test_data_y
 
-Run demo dataset
+Run demo dataset: Basic Naive Cycle PLA
+-----------------
 
 .. code-block:: py
 

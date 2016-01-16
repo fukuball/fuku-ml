@@ -136,8 +136,6 @@ def prediction(test_data=''):
         print("Please load train data and init W then train the W first.")
         return prediction
 
-    status = 'train'
-
     data = test_data.split()
     test_data_x = [1] + [float(v) for v in data[:-1]]
     test_data_y = float(data[-1])
