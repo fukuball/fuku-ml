@@ -11,7 +11,7 @@ class PLATestCase(unittest.TestCase):
         pla.init_W()
         W = pla.train()
 
-        print "\n訓練得出權重模型："
+        print u"\n訓練得出權重模型："
         print W
         print('-'*70)
 
@@ -20,11 +20,11 @@ class PLATestCase(unittest.TestCase):
         prediction = np.sign(np.dot(test_data_x, W))
         self.assertEqual(prediction, test_data_y)
 
-        print "測試資料 x："
+        print u"測試資料 x："
         print test_data_x
-        print "測試資料 y："
+        print u"測試資料 y："
         print test_data_y
-        print "預測結果："
+        print u"預測結果："
         print prediction
         print('-'*70)
 
@@ -33,11 +33,11 @@ class PLATestCase(unittest.TestCase):
         prediction = np.sign(np.dot(test_data_x, W))
         self.assertEqual(prediction, test_data_y)
 
-        print "測試資料 x："
+        print u"測試資料 x："
         print test_data_x
-        print "測試資料 y："
+        print u"測試資料 y："
         print test_data_y
-        print "預測結果："
+        print u"預測結果："
         print prediction
         print('-'*70)
 
