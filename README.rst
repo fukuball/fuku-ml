@@ -133,7 +133,7 @@ Run demo dataset: Random Cycle PLA alpha=0.5 step correction
 Pocket Perceptron Learning Algorithm Usage
 ============
 
-Run demo dataset: Basic Naive Cycle PLA
+Run demo dataset
 -----------------
 
 .. code-block:: py
