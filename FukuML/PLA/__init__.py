@@ -13,6 +13,8 @@ W = []
 data_num = 0
 data_demension = 0
 tune_times = 0
+test_data_x = []
+test_data_y = 0
 
 
 def load_train_data(input_data_file=''):
@@ -119,3 +121,19 @@ def train():
         point_wise_i += 1
 
     return W
+
+
+def prediction(test_data=''):
+
+    global W
+    global test_data_x
+    global test_data_y
+
+    prediction = 0
+    data = test_data.split()
+    test_data_x = [1] + [float(v) for v in data[:-1]]
+    test_data_y = int(data[-1])
+
+    prediction = np.sign(np.dot(test_data_x, W))
+
+    return prediction

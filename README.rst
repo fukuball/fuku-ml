@@ -31,8 +31,7 @@ Perceptron Learning Algorithm Usage
     # import FukuML.PLA to do Perceptron Learning
 
     >>> your_input_data_file = '/path/to/your/data/file'
-    # assign your input data file, please check the data format is the same as this example_.
-    .. _example: https://github.com/fukuball/fuku-ml/blob/master/FukuML/dataset/pla_train.dat
+    # assign your input data file, please check the data format is the same as https://github.com/fukuball/fuku-ml/blob/master/FukuML/dataset/pla_train.dat
 
     >>> pla.load_train_data(your_input_data_file)
     # load train data
