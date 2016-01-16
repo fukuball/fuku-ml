@@ -1,6 +1,9 @@
 fuku-ml
 =========
 
+.. image:: https://codecov.io/github/fukuball/fuku-ml/coverage.svg?branch=master
+    :target: https://codecov.io/github/fukuball/fuku-ml?branch=master
+
 Simple machine learning library
 
 Note
