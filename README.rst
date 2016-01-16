@@ -1,4 +1,4 @@
-fuku-ml
+FukuML
 =========
 
 .. image:: https://travis-ci.org/fukuball/fuku-ml.svg?branch=master
@@ -169,7 +169,7 @@ Run tests
 
 .. code-block:: bash
 
-    $ python test_pla.py
+    $ python test_fuku_ml.py
 
 Package
 
