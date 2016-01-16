@@ -79,6 +79,25 @@ Run demo dataset: Basic Naive Cycle PLA
 
     >>> prediction = pla.prediction(test_data)
 
+Run demo dataset: Random Cycle PLA
+-----------------
+
+.. code-block:: py
+
+    >>> import numpy as np
+
+    >>> import FukuML.PLA as pla
+
+    >>> pla.load_train_data()
+
+    >>> pla.init_W()
+
+    >>> pla.train('random')
+
+    >>> test_data = '0.97681 0.10723 0.64385 0.29556 1'
+
+    >>> prediction = pla.prediction(test_data)
+
 Note
 =========
 
@@ -88,6 +107,11 @@ Output the requirements
 
     $ pip freeze > requirements.txt
 
+Run tests
+
+.. code-block:: bash
+
+    $ python test_pla.py
 
 License
 =========

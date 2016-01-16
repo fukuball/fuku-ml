@@ -1,6 +1,7 @@
 #encoding=utf8
 
 import os
+import random
 import numpy as np
 
 __version__ = '0.0.1'
@@ -81,7 +82,7 @@ def init_W():
     return W
 
 
-def train():
+def train(mode='naive_cycle', alpha=1):
 
     '''
     Train Perceptron Learning Algorithm
@@ -103,22 +104,31 @@ def train():
 
     status = 'train'
 
+    if (mode is 'random'):
+        data_check_order = range(data_num)
+        data_check_order = random.sample(data_check_order, data_num)
+    elif (mode is 'naive_cycle'):
+        data_check_order = range(data_num)
+    else:
+        data_check_order = range(data_num)
+
     tune_times = 0
-    point_wise_i = 0
+    k = 0
     flag = True
 
     while True:
-        if point_wise_i == data_num:
+        if k == data_num:
             if flag:
                 break
-            point_wise_i = 0
+            k = 0
             flag = True
 
+        point_wise_i = data_check_order[k]
         if np.sign(np.inner(train_X[point_wise_i], W)) != train_Y[point_wise_i]:
             flag = False
             tune_times += 1
-            W = W + train_Y[point_wise_i] * train_X[point_wise_i]
-        point_wise_i += 1
+            W = W + alpha * (train_Y[point_wise_i] * train_X[point_wise_i])
+        k += 1
 
     return W
 
@@ -134,6 +144,10 @@ def prediction(test_data=''):
 
     if (status != 'train'):
         print("Please load train data and init W then train the W first.")
+        return prediction
+
+    if (test_data == ''):
+        print("Please input test dat for prediction.")
         return prediction
 
     data = test_data.split()
