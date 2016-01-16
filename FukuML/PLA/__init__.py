@@ -16,6 +16,8 @@ data_demension = 0
 tune_times = 0
 test_data_x = []
 test_data_y = 0
+test_X = []
+test_Y = []
 
 
 def load_train_data(input_data_file=''):
@@ -53,6 +55,40 @@ def load_train_data(input_data_file=''):
     train_Y = np.array(Y)
 
     return train_X, train_Y
+
+
+def load_test_data(input_data_file=''):
+
+    '''
+    Load test data
+    Please check dataset/pocket_pla_test.dat to understand the data format
+    Each feature of data x separated with spaces
+    And the ground truth y put in the end of line separated by a space
+    '''
+
+    global test_X
+    global test_Y
+
+    if (input_data_file == ''):
+        input_data_file = os.path.normpath(os.path.join(os.path.join(os.path.join(os.getcwd(), os.path.dirname(__file__)), os.pardir), "dataset/pocket_pla_test.dat"))
+    else:
+        if (os.path.isfile(input_data_file) is not True):
+            print("Please make sure input_data_file path is correct.")
+            return test_X, test_Y
+
+    X = []
+    Y = []
+    with open(input_data_file) as f:
+        for line in f:
+            data = line.split()
+            x = [1] + [float(v) for v in data[:-1]]
+            X.append(x)
+            Y.append(float(data[-1]))
+
+    test_X = np.array(X)
+    test_Y = np.array(Y)
+
+    return test_X, test_Y
 
 
 def init_W():
@@ -117,6 +153,10 @@ def train(mode='naive_cycle', alpha=1):
     flag = True
 
     while True:
+        if (tune_times > (2 * data_num)):
+            print("Dataset not linear separable.")
+            break
+
         if k == data_num:
             if flag:
                 break
