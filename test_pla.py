@@ -86,7 +86,7 @@ class PLATestCase(unittest.TestCase):
 
         #------------------------------------------------------------
 
-        print("使用 Random Cycle alpha=0.5 Step collection：")
+        print("使用 Random Cycle alpha=0.5 Step correction：")
 
         pla.init_W()
         W = pla.train('random', 0.5)

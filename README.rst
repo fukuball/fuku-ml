@@ -98,6 +98,25 @@ Run demo dataset: Random Cycle PLA
 
     >>> prediction = pla.prediction(test_data)
 
+Run demo dataset: Random Cycle PLA alpha=0.5 Step correction
+-----------------
+
+.. code-block:: py
+
+    >>> import numpy as np
+
+    >>> import FukuML.PLA as pla
+
+    >>> pla.load_train_data()
+
+    >>> pla.init_W()
+
+    >>> pla.train('random', 0.5)
+
+    >>> test_data = '0.97681 0.10723 0.64385 0.29556 1'
+
+    >>> prediction = pla.prediction(test_data)
+
 Note
 =========
 
