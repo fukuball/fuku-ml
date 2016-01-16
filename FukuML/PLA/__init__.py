@@ -62,7 +62,7 @@ def init_W():
     global data_demension
 
     if (status != 'load_train_data') and (status != 'train'):
-        print "Please load train data first."
+        print("Please load train data first.")
         return W
 
     status = 'init'
@@ -91,7 +91,7 @@ def train():
     global data_num
 
     if (status != 'init'):
-        print "Please load train data and init W first."
+        print("Please load train data and init W first.")
         return W
 
     status = 'train'
