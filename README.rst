@@ -3,6 +3,23 @@ fuku-ml
 
 Simple machine learning library
 
+Note
+=========
+
+Installation
+============
+
+.. code-block:: bash
+
+    $ python setup.py install
+
+Output the requirements
+
+.. code-block:: bash
+
+    $ pip freeze > requirements.txt
+
+
 License
 =========
 The MIT License (MIT)

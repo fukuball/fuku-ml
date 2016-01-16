@@ -3,6 +3,9 @@
 import os
 import numpy as np
 
+__version__ = '0.0.1'
+__all__ = ['Machine Learning', 'Perceptron Learning Algorithm', 'PLA']
+
 status = 'empty'
 train_X = []
 train_Y = []

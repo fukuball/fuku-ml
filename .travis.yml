@@ -1,0 +1,22 @@
+language: python
+
+python:
+  - "2.6"
+  - "2.7"
+  - "3.3"
+  - "3.4"
+  - "pypy"
+
+install:
+  - pip install -r requirements_test.txt
+  - pip install codecov
+
+script:
+  - coverage run --source=FukuML setup.py test
+
+after_success:
+  - codecov
+
+notifications:
+  email:
+    - fukuball@gmail.com
