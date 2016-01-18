@@ -115,6 +115,27 @@ class BinaryClassifier(object):
 
         return self.W
 
+    def score_function(self, x, W):
+
+        '''
+        Score function to calculate score
+        '''
+
+        score = np.sign(np.inner(x, W))
+
+        return score
+
+    def error_function(self, y_prediction, y_truth):
+
+        '''
+        Error function to calculate error
+        '''
+
+        if y_prediction != y_truth:
+            return 1
+        else:
+            return 0
+
     def calculate_avg_error(self, X, Y, W):
 
         '''
@@ -122,7 +143,11 @@ class BinaryClassifier(object):
         '''
 
         data_num = len(Y)
-        error_num = sum([1 for i in range(data_num) if np.sign(np.inner(X[i], W)) != Y[i]])
+        error_num = 0
+
+        for i in range(data_num):
+            error_num = error_num + self.error_function(self.score_function(X[i], W), Y[i])
+
         avg_error = error_num / float(data_num)
 
         return avg_error
@@ -166,7 +191,8 @@ class BinaryClassifier(object):
                 flag = True
 
             point_wise_i = data_check_order[k]
-            if np.sign(np.inner(self.train_X[point_wise_i], self.W)) != self.train_Y[point_wise_i]:
+
+            if self.error_function(self.score_function(self.train_X[point_wise_i], self.W), self.train_Y[point_wise_i]):
                 flag = False
                 self.tune_times += 1
                 self.W = self.W + alpha * (self.train_Y[point_wise_i] * self.train_X[point_wise_i])
@@ -196,6 +222,6 @@ class BinaryClassifier(object):
         self.test_data_x = [1] + [float(v) for v in data[:-1]]
         self.test_data_y = float(data[-1])
 
-        prediction = np.sign(np.dot(self.test_data_x, self.W))
+        prediction = self.score_function(self.test_data_x, self.W)
 
         return prediction
