@@ -2,6 +2,7 @@
 
 import os
 import random
+import pickle
 import numpy as np
 import FukuML.Utility as utility
 
@@ -221,3 +222,7 @@ class BinaryClassifier(object):
             input_data_y = float(data[-1])
             prediction = self.score_function(input_data_x, self.W)
             return {"input_data_x": input_data_x, "input_data_y": input_data_y, "prediction": prediction}
+
+    def serialize(self):
+
+        return pickle.dumps(self, protocol=0)

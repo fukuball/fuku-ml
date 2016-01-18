@@ -2,6 +2,7 @@
 
 import os
 import unittest
+import pickle
 import FukuML.PLA as pla
 import FukuML.PocketPLA as pocket
 
@@ -112,6 +113,10 @@ class FukuMLTestCase(unittest.TestCase):
 
         self.assertEqual(prediction['input_data_y'], prediction['prediction'])
 
+        serialized_pla_bc = pla_bc.serialize()
+        deserialized_pla_bc = pickle.loads(serialized_pla_bc)
+        self.assertTrue((pla_bc.train_X == deserialized_pla_bc.train_X).all())
+
     def test_pocket_pla_binary_classifier(self):
 
         #------------------------------------------------------------
@@ -164,6 +169,10 @@ class FukuMLTestCase(unittest.TestCase):
         print('-'*70)
 
         self.assertEqual(prediction['input_data_y'], prediction['prediction'])
+
+        serialized_pocket_bc = pocket_bc.serialize()
+        deserialized_pocket_bc = pickle.loads(serialized_pocket_bc)
+        self.assertTrue((pocket_bc.train_X == deserialized_pocket_bc.train_X).all())
 
 
 if __name__ == '__main__':
