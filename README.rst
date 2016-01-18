@@ -47,31 +47,34 @@ Basic usage to train from you data (Basic Naive Cycle PLA)
     # import FukuML.PLA to do Perceptron Learning
 
     >>> your_input_data_file = '/path/to/your/data/file'
-    # assign your input data file, please check the data format: https://github.com/fukuball/fuku-ml/blob/master/FukuML/dataset/pla_train.dat
+    # assign your input data file, please check the data format: https://github.com/fukuball/fuku-ml/blob/master/FukuML/dataset/pla_binary_train.dat
 
-    >>> pla.load_train_data(your_input_data_file)
+    >>> pla_bc = pla.BinaryClassifier()
+    # new a PLA binary classifier
+
+    >>> pla_bc.load_train_data(your_input_data_file)
     # load train data
 
-    >>> pla.init_W()
+    >>> pla_bc.init_W()
     # init the W
 
-    >>> W = pla.train()
+    >>> W = pla_bc.train()
     # train by Perceptron Learning Algorithm to find best W
 
     >>> test_data = 'Each feature of data x separated with spaces. And the ground truth y put in the end of line separated by a space'
     # assign test data, format like this '0.97681 0.10723 0.64385 ........ 0.29556 1'
 
-    >>> prediction = pla.prediction(test_data)
+    >>> prediction = pla_bc.prediction(test_data)
     # prediction by trained W
 
-    >>> print pla.test_data_x
+    >>> print pla_bc.test_data_x
     # print test data x
 
-    >>> print pla.test_data_y
+    >>> print pla_bc.test_data_y
     # print test data y
 
     >>> print prediction
-    # print the prediction, will find out prediction is the same as pla.test_data_y
+    # print the prediction, will find out prediction is the same as pla_bc.test_data_y
 
 Run demo dataset: Basic Naive Cycle PLA
 -----------------
@@ -82,15 +85,17 @@ Run demo dataset: Basic Naive Cycle PLA
 
     >>> import FukuML.PLA as pla
 
-    >>> pla.load_train_data()
+    >>> pla_bc = pla.BinaryClassifier()
 
-    >>> pla.init_W()
+    >>> pla_bc.load_train_data()
 
-    >>> pla.train()
+    >>> pla_bc.init_W()
+
+    >>> pla_bc.train()
 
     >>> test_data = '0.97681 0.10723 0.64385 0.29556 1'
 
-    >>> prediction = pla.prediction(test_data)
+    >>> prediction = pla_bc.prediction(test_data)
 
 Run demo dataset: Random Cycle PLA
 -----------------
@@ -101,15 +106,17 @@ Run demo dataset: Random Cycle PLA
 
     >>> import FukuML.PLA as pla
 
-    >>> pla.load_train_data()
+    >>> pla_bc = pla.BinaryClassifier()
 
-    >>> pla.init_W()
+    >>> pla_bc.load_train_data()
 
-    >>> pla.train('random')
+    >>> pla_bc.init_W()
+
+    >>> pla_bc.train('random')
 
     >>> test_data = '0.97681 0.10723 0.64385 0.29556 1'
 
-    >>> prediction = pla.prediction(test_data)
+    >>> prediction = pla_bc.prediction(test_data)
 
 Run demo dataset: Random Cycle PLA alpha=0.5 step correction
 -----------------
@@ -120,15 +127,17 @@ Run demo dataset: Random Cycle PLA alpha=0.5 step correction
 
     >>> import FukuML.PLA as pla
 
-    >>> pla.load_train_data()
+    >>> pla_bc = pla.BinaryClassifier()
 
-    >>> pla.init_W()
+    >>> pla_bc.load_train_data()
 
-    >>> pla.train('random', 0.5)
+    >>> pla_bc.init_W()
+
+    >>> pla_bc.train('random', 0.5)
 
     >>> test_data = '0.97681 0.10723 0.64385 0.29556 1'
 
-    >>> prediction = pla.prediction(test_data)
+    >>> prediction = pla_bc.prediction(test_data)
 
 Pocket Perceptron Learning Algorithm Usage
 ============
@@ -142,19 +151,21 @@ Run demo dataset
 
     >>> import FukuML.PocketPLA as pocket
 
-    >>> pocket.load_train_data()
+    >>> pocket_bc = pocket.BinaryClassifier()
 
-    >>> pocket.init_W()
+    >>> pocket_bc.load_train_data()
 
-    >>> W = pocket.train(50)
+    >>> pocket_bc.init_W()
+
+    >>> W = pocket_bc.train(50)
 
     >>> test_data = '0.62771 0.11513 0.82235 0.14493 -1'
 
-    >>> prediction = pocket.prediction(test_data)
+    >>> prediction = pocket_bc.prediction(test_data)
 
-    >>> pocket.load_test_data()
+    >>> pocket_bc.load_test_data()
 
-    >>> pocket.calculate_avg_error(pocket.test_X, pocket.test_Y, W)
+    >>> pocket_bc.calculate_avg_error(pocket_bc.test_X, pocket_bc.test_Y, W)
 
 Note
 =========
@@ -177,6 +188,7 @@ Package
 
     $ python setup.py sdist
     $ python setup.py bdist_wheel --universal
+    $ twine upload dist/*
 
 License
 =========

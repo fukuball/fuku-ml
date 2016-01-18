@@ -3,6 +3,10 @@ MANIFEST.in
 README.rst
 setup.cfg
 setup.py
+FukuML/PLA.py
+FukuML/PLA.pyc
+FukuML/PocketPLA.py
+FukuML/PocketPLA.pyc
 FukuML/__init__.py
 FukuML/__init__.pyc
 FukuML.egg-info/PKG-INFO
@@ -11,10 +15,6 @@ FukuML.egg-info/dependency_links.txt
 FukuML.egg-info/not-zip-safe
 FukuML.egg-info/requires.txt
 FukuML.egg-info/top_level.txt
-FukuML/PLA/__init__.py
-FukuML/PLA/__init__.pyc
-FukuML/PocketPLA/__init__.py
-FukuML/PocketPLA/__init__.pyc
-FukuML/dataset/pla_train.dat
-FukuML/dataset/pocket_pla_test.dat
-FukuML/dataset/pocket_pla_train.dat
+FukuML/dataset/pla_binary_train.dat
+FukuML/dataset/pocket_pla_binary_test.dat
+FukuML/dataset/pocket_pla_binary_train.dat

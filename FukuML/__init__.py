@@ -1,4 +1,4 @@
 #encoding=utf8
 
-__version__ = '0.0.1'
-__all__ = ['Machine Learning', 'Perceptron Learning Algorithm', 'PLA']
+__version__ = '0.0.2'
+__all__ = ['PLA', 'PLA.BinaryClassifier', 'PocketPLA', 'PocketPLA.BinaryClassifier']
