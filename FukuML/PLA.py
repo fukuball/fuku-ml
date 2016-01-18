@@ -2,34 +2,18 @@
 
 import os
 import random
-import pickle
 import numpy as np
 import FukuML.Utility as utility
+import FukuML.MLBase as ml
 
 
-class BinaryClassifier(object):
-
-    status = 'empty'
-    train_X = []
-    train_Y = []
-    W = []
-    data_num = 0
-    data_demension = 0
-    tune_times = 0
-    test_X = []
-    test_Y = []
+class BinaryClassifier(ml.Learner):
 
     def __init__(self):
 
-        self.status = 'empty'
-        self.train_X = []
-        self.train_Y = []
-        self.W = []
-        self.data_num = 0
-        self.data_demension = 0
-        self.tune_times = 0
-        self.test_X = []
-        self.test_Y = []
+        """init"""
+
+        super(BinaryClassifier, self)
 
     def load_train_data(self, input_data_file=''):
 
@@ -222,7 +206,3 @@ class BinaryClassifier(object):
             input_data_y = float(data[-1])
             prediction = self.score_function(input_data_x, self.W)
             return {"input_data_x": input_data_x, "input_data_y": input_data_y, "prediction": prediction}
-
-    def serialize(self):
-
-        return pickle.dumps(self, protocol=0)
