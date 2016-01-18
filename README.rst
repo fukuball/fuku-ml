@@ -67,13 +67,13 @@ Basic usage to train from you data (Basic Naive Cycle PLA)
     >>> prediction = pla_bc.prediction(test_data)
     # prediction by trained W
 
-    >>> print pla_bc.test_data_x
+    >>> print prediction['input_data_x']
     # print test data x
 
-    >>> print pla_bc.test_data_y
+    >>> print prediction['input_data_y']
     # print test data y
 
-    >>> print prediction
+    >>> print prediction['prediction']
     # print the prediction, will find out prediction is the same as pla_bc.test_data_y
 
 Run demo dataset: Basic Naive Cycle PLA
@@ -97,6 +97,10 @@ Run demo dataset: Basic Naive Cycle PLA
 
     >>> prediction = pla_bc.prediction(test_data)
 
+    >>> future_data = '0.97681 0.10723 0.64385 0.29556'
+
+    >>> prediction = pla_bc.prediction(future_data, 'future_data')
+
 Run demo dataset: Random Cycle PLA
 -----------------
 
@@ -118,6 +122,10 @@ Run demo dataset: Random Cycle PLA
 
     >>> prediction = pla_bc.prediction(test_data)
 
+    >>> future_data = '0.97681 0.10723 0.64385 0.29556'
+
+    >>> prediction = pla_bc.prediction(future_data, 'future_data')
+
 Run demo dataset: Random Cycle PLA alpha=0.5 step correction
 -----------------
 
@@ -138,6 +146,10 @@ Run demo dataset: Random Cycle PLA alpha=0.5 step correction
     >>> test_data = '0.97681 0.10723 0.64385 0.29556 1'
 
     >>> prediction = pla_bc.prediction(test_data)
+
+    >>> future_data = '0.97681 0.10723 0.64385 0.29556'
+
+    >>> prediction = pla_bc.prediction(future_data, 'future_data')
 
 Pocket Perceptron Learning Algorithm Usage
 ============
@@ -162,6 +174,10 @@ Run demo dataset
     >>> test_data = '0.62771 0.11513 0.82235 0.14493 -1'
 
     >>> prediction = pocket_bc.prediction(test_data)
+
+    >>> future_data = '0.62771 0.11513 0.82235 0.14493'
+
+    >>> prediction = pocket_bc.prediction(future_data, 'future_data')
 
     >>> pocket_bc.load_test_data()
 

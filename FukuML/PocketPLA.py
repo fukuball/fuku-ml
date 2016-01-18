@@ -3,6 +3,7 @@
 import os
 import random
 import numpy as np
+import FukuML.Utility as utility
 
 
 class BinaryClassifier(object):
@@ -14,11 +15,10 @@ class BinaryClassifier(object):
     data_num = 0
     data_demension = 0
     tune_times = 0
-    test_data_x = []
-    test_data_y = 0
     test_X = []
     test_Y = []
-    avg_error = float('Inf')
+
+    temp_avg_error = float('Inf')
     put_in_pocket_times = 0
 
     def __init__(self):
@@ -30,11 +30,10 @@ class BinaryClassifier(object):
         self.data_num = 0
         self.data_demension = 0
         self.tune_times = 0
-        self.test_data_x = []
-        self.test_data_y = 0
         self.test_X = []
         self.test_Y = []
-        self.avg_error = float('Inf')
+
+        self.temp_avg_error = float('Inf')
         self.put_in_pocket_times = 0
 
     def load_train_data(self, input_data_file=''):
@@ -55,17 +54,8 @@ class BinaryClassifier(object):
                 print("Please make sure input_data_file path is correct.")
                 return self.train_X, self.train_Y
 
-        X = []
-        Y = []
-        with open(input_data_file) as f:
-            for line in f:
-                data = line.split()
-                x = [1] + [float(v) for v in data[:-1]]
-                X.append(x)
-                Y.append(float(data[-1]))
-
-        self.train_X = np.array(X)
-        self.train_Y = np.array(Y)
+        dataset_loader = utility.DatasetLoader()
+        self.train_X, self.train_Y = dataset_loader.load(input_data_file)
 
         return self.train_X, self.train_Y
 
@@ -85,17 +75,8 @@ class BinaryClassifier(object):
                 print("Please make sure input_data_file path is correct.")
                 return self.test_X, self.test_Y
 
-        X = []
-        Y = []
-        with open(input_data_file) as f:
-            for line in f:
-                data = line.split()
-                x = [1] + [float(v) for v in data[:-1]]
-                X.append(x)
-                Y.append(float(data[-1]))
-
-        self.test_X = np.array(X)
-        self.test_Y = np.array(Y)
+        dataset_loader = utility.DatasetLoader()
+        self.test_X, self.test_Y = dataset_loader.load(input_data_file)
 
         return self.test_X, self.test_Y
 
@@ -118,15 +99,54 @@ class BinaryClassifier(object):
 
         return self.W
 
-    def calculate_avg_error(self, X, Y, W):
+    def score_function(self, x, W):
+        # need refector
 
         '''
-        Get current avg error from X, Y, W
+        Score function to calculate score
+        '''
+
+        score = np.sign(np.inner(x, W))
+
+        return score
+
+    def error_function(self, y_prediction, y_truth):
+        # need refector
+
+        '''
+        Error function to calculate error
+        '''
+
+        if y_prediction != y_truth:
+            return 1
+        else:
+            return 0
+
+    def calculate_avg_error(self, X, Y, W):
+        # need refector
+
+        '''
+        Calculate avg error from X, Y, W
         '''
 
         data_num = len(Y)
-        error_num = sum([1 for i in range(data_num) if np.sign(np.inner(X[i], W)) != Y[i]])
+        error_num = 0
+
+        for i in range(data_num):
+            error_num = error_num + self.error_function(self.score_function(X[i], W), Y[i])
+
         avg_error = error_num / float(data_num)
+
+        return avg_error
+
+    def calculate_test_data_avg_error(self):
+        # need refector
+
+        '''
+        Calculate test data avg error
+        '''
+
+        avg_error = self.calculate_avg_error(self.test_X, self.test_Y, self.W)
 
         return avg_error
 
@@ -147,7 +167,7 @@ class BinaryClassifier(object):
 
         new_W = self.W
 
-        self.avg_error = self.calculate_avg_error(self.train_X, self.train_Y, new_W)
+        self.temp_avg_error = self.calculate_avg_error(self.train_X, self.train_Y, new_W)
 
         for _ in range(updates):
             if (mode is 'naive_cycle'):
@@ -159,19 +179,20 @@ class BinaryClassifier(object):
                 data_check_order = range(self.data_num)
                 data_check_order = random.sample(data_check_order, self.data_num)
             for i in data_check_order:
-                if np.sign(np.inner(self.train_X[i], new_W)) != self.train_Y[i]:
+
+                if self.error_function(self.score_function(self.train_X[i], new_W), self.train_Y[i]):
                     self.tune_times += 1
                     new_W = new_W + alpha * (self.train_Y[i] * self.train_X[i])
                     new_avg_error = self.calculate_avg_error(self.train_X, self.train_Y, new_W)
-                    if new_avg_error < self.avg_error:
+                    if new_avg_error < self.temp_avg_error:
                         self.put_in_pocket_times += 1
-                        self.avg_error = new_avg_error
+                        self.temp_avg_error = new_avg_error
                         self.W = new_W
                     break
 
         return self.W
 
-    def prediction(self, test_data=''):
+    def prediction(self, input_data='', mode='test_data'):
 
         '''
         Make prediction
@@ -185,14 +206,18 @@ class BinaryClassifier(object):
             print("Please load train data and init W then train the W first.")
             return prediction
 
-        if (test_data == ''):
+        if (input_data == ''):
             print("Please input test data for prediction.")
             return prediction
 
-        data = test_data.split()
-        self.test_data_x = [1] + [float(v) for v in data[:-1]]
-        self.test_data_y = float(data[-1])
-
-        prediction = np.sign(np.dot(self.test_data_x, self.W))
-
-        return prediction
+        if mode == 'future_data':
+            data = input_data.split()
+            input_data_x = [1] + [float(v) for v in data]
+            prediction = self.score_function(input_data_x, self.W)
+            return {"input_data_x": input_data_x, "input_data_y": None, "prediction": prediction}
+        else:
+            data = input_data.split()
+            input_data_x = [1] + [float(v) for v in data[:-1]]
+            input_data_y = float(data[-1])
+            prediction = self.score_function(input_data_x, self.W)
+            return {"input_data_x": input_data_x, "input_data_y": input_data_y, "prediction": prediction}

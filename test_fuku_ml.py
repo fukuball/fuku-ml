@@ -27,27 +27,27 @@ class FukuMLTestCase(unittest.TestCase):
         prediction = pla_bc.prediction(test_data)
 
         print("測試資料 x：")
-        print(pla_bc.test_data_x)
+        print(prediction['input_data_x'])
         print("測試資料 y：")
-        print(pla_bc.test_data_y)
+        print(prediction['input_data_y'])
         print("預測結果：")
-        print(prediction)
+        print(prediction['prediction'])
         print('-'*70)
 
-        self.assertEqual(pla_bc.test_data_y, prediction)
+        self.assertEqual(prediction['input_data_y'], prediction['prediction'])
 
         test_data = '0.15654 0.75584 0.01122 0.42598 -1'
         prediction = pla_bc.prediction(test_data)
 
         print("測試資料 x：")
-        print(pla_bc.test_data_x)
+        print(prediction['input_data_x'])
         print("測試資料 y：")
-        print(pla_bc.test_data_y)
+        print(prediction['input_data_y'])
         print("預測結果：")
-        print(prediction)
+        print(prediction['prediction'])
         print('-'*70)
 
-        self.assertEqual(pla_bc.test_data_y, prediction)
+        self.assertEqual(prediction['input_data_y'], prediction['prediction'])
 
         #------------------------------------------------------------
 
@@ -77,14 +77,14 @@ class FukuMLTestCase(unittest.TestCase):
         prediction = pla_bc.prediction(test_data)
 
         print("測試資料 x：")
-        print(pla_bc.test_data_x)
+        print(prediction['input_data_x'])
         print("測試資料 y：")
-        print(pla_bc.test_data_y)
+        print(prediction['input_data_y'])
         print("預測結果：")
-        print(prediction)
+        print(prediction['prediction'])
         print('-'*70)
 
-        self.assertEqual(pla_bc.test_data_y, prediction)
+        self.assertEqual(prediction['input_data_y'], prediction['prediction'])
 
         #------------------------------------------------------------
 
@@ -103,14 +103,14 @@ class FukuMLTestCase(unittest.TestCase):
         prediction = pla_bc.prediction(test_data)
 
         print("測試資料 x：")
-        print(pla_bc.test_data_x)
+        print(prediction['input_data_x'])
         print("測試資料 y：")
-        print(pla_bc.test_data_y)
+        print(prediction['input_data_y'])
         print("預測結果：")
-        print(prediction)
+        print(prediction['prediction'])
         print('-'*70)
 
-        self.assertEqual(pla_bc.test_data_y, prediction)
+        self.assertEqual(prediction['input_data_y'], prediction['prediction'])
 
     def test_pocket_pla_binary_classifier(self):
 
@@ -156,14 +156,14 @@ class FukuMLTestCase(unittest.TestCase):
         prediction = pocket_bc.prediction(test_data)
 
         print("測試資料 x：")
-        print(pocket_bc.test_data_x)
+        print(prediction['input_data_x'])
         print("測試資料 y：")
-        print(pocket_bc.test_data_y)
+        print(prediction['input_data_y'])
         print("預測結果：")
-        print(prediction)
+        print(prediction['prediction'])
         print('-'*70)
 
-        self.assertEqual(pocket_bc.test_data_y, prediction)
+        self.assertEqual(prediction['input_data_y'], prediction['prediction'])
 
 
 if __name__ == '__main__':
