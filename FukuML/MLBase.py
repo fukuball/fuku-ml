@@ -67,7 +67,7 @@ class Learner(object):
         return avg_error
 
     @abstractmethod
-    def train(self, updates=50, mode='random', alpha=1):
+    def train(self):
         return
 
     def prediction(self, input_data='', mode='test_data'):
