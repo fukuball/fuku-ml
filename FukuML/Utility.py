@@ -1,18 +1,14 @@
 #encoding=utf8
 
 import numpy as np
+import pickle
 
 
 class DatasetLoader(object):
 
-    status = 'empty'
-
-    def __init__(self):
-
-        self.status = 'empty'
-
-    def load(self, input_data_file=''):
-
+    @staticmethod
+    def load(input_data_file=''):
+        """load file"""
         X = []
         Y = []
         with open(input_data_file) as f:
@@ -23,3 +19,16 @@ class DatasetLoader(object):
                 Y.append(float(data[-1]))
 
         return np.array(X), np.array(Y)
+
+
+class Serializer(object):
+
+    @staticmethod
+    def serialize(need_serialize=''):
+        """serialize"""
+        return pickle.dumps(need_serialize, protocol=0)
+
+    @staticmethod
+    def deserialize(pickle_serialized=''):
+        """ddserialize"""
+        return pickle.loads(pickle_serialized)

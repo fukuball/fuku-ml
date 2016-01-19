@@ -47,8 +47,7 @@ class BinaryClassifier(ml.Learner):
                 print("Please make sure input_data_file path is correct.")
                 return self.train_X, self.train_Y
 
-        dataset_loader = utility.DatasetLoader()
-        self.train_X, self.train_Y = dataset_loader.load(input_data_file)
+        self.train_X, self.train_Y = utility.DatasetLoader.load(input_data_file)
 
         return self.train_X, self.train_Y
 
@@ -68,8 +67,7 @@ class BinaryClassifier(ml.Learner):
                 print("Please make sure input_data_file path is correct.")
                 return self.test_X, self.test_Y
 
-        dataset_loader = utility.DatasetLoader()
-        self.test_X, self.test_Y = dataset_loader.load(input_data_file)
+        self.test_X, self.test_Y = utility.DatasetLoader.load(input_data_file)
 
         return self.test_X, self.test_Y
 
@@ -116,32 +114,12 @@ class BinaryClassifier(ml.Learner):
             return 0
 
     def calculate_avg_error(self, X, Y, W):
-        # need refector
 
-        '''
-        Calculate avg error from X, Y, W
-        '''
-
-        data_num = len(Y)
-        error_num = 0
-
-        for i in range(data_num):
-            error_num = error_num + self.error_function(self.score_function(X[i], W), Y[i])
-
-        avg_error = error_num / float(data_num)
-
-        return avg_error
+        return super(BinaryClassifier, self).calculate_avg_error(X, Y, W)
 
     def calculate_test_data_avg_error(self):
-        # need refector
 
-        '''
-        Calculate test data avg error
-        '''
-
-        avg_error = self.calculate_avg_error(self.test_X, self.test_Y, self.W)
-
-        return avg_error
+        return super(BinaryClassifier, self).calculate_avg_error()
 
     def train(self, updates=50, mode='random', alpha=1):
 
@@ -187,30 +165,4 @@ class BinaryClassifier(ml.Learner):
 
     def prediction(self, input_data='', mode='test_data'):
 
-        '''
-        Make prediction
-        input test data
-        output the prediction
-        '''
-
-        prediction = 0
-
-        if (self.status != 'train'):
-            print("Please load train data and init W then train the W first.")
-            return prediction
-
-        if (input_data == ''):
-            print("Please input test data for prediction.")
-            return prediction
-
-        if mode == 'future_data':
-            data = input_data.split()
-            input_data_x = [1] + [float(v) for v in data]
-            prediction = self.score_function(input_data_x, self.W)
-            return {"input_data_x": input_data_x, "input_data_y": None, "prediction": prediction}
-        else:
-            data = input_data.split()
-            input_data_x = [1] + [float(v) for v in data[:-1]]
-            input_data_y = float(data[-1])
-            prediction = self.score_function(input_data_x, self.W)
-            return {"input_data_x": input_data_x, "input_data_y": input_data_y, "prediction": prediction}
+        return super(BinaryClassifier, self).prediction(input_data, mode)

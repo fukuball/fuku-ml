@@ -18,21 +18,21 @@ Simple machine learning library
 Installation
 ============
 
-Option 1
+Install from pip
 -----------------
 
 .. code-block:: bash
 
     $ pip install FukuML
 
-Option 2
+Install from source
 -----------------
 
 .. code-block:: bash
 
     $ python setup.py install
 
-Perceptron Learning Algorithm Usage
+Usage
 ============
 
 Basic usage to train from you data (Basic Naive Cycle PLA)
@@ -76,135 +76,7 @@ Basic usage to train from you data (Basic Naive Cycle PLA)
     >>> print prediction['prediction']
     # print the prediction, will find out prediction is the same as pla_bc.test_data_y
 
-Run demo dataset: Basic Naive Cycle PLA
------------------
-
-.. code-block:: py
-
-    >>> import numpy as np
-
-    >>> import FukuML.PLA as pla
-
-    >>> pla_bc = pla.BinaryClassifier()
-
-    >>> pla_bc.load_train_data()
-
-    >>> pla_bc.init_W()
-
-    >>> pla_bc.train()
-
-    >>> test_data = '0.97681 0.10723 0.64385 0.29556 1'
-
-    >>> prediction = pla_bc.prediction(test_data)
-
-    >>> future_data = '0.97681 0.10723 0.64385 0.29556'
-
-    >>> prediction = pla_bc.prediction(future_data, 'future_data')
-
-Run demo dataset: Random Cycle PLA
------------------
-
-.. code-block:: py
-
-    >>> import numpy as np
-
-    >>> import FukuML.PLA as pla
-
-    >>> pla_bc = pla.BinaryClassifier()
-
-    >>> pla_bc.load_train_data()
-
-    >>> pla_bc.init_W()
-
-    >>> pla_bc.train('random')
-
-    >>> test_data = '0.97681 0.10723 0.64385 0.29556 1'
-
-    >>> prediction = pla_bc.prediction(test_data)
-
-    >>> future_data = '0.97681 0.10723 0.64385 0.29556'
-
-    >>> prediction = pla_bc.prediction(future_data, 'future_data')
-
-Run demo dataset: Random Cycle PLA alpha=0.5 step correction
------------------
-
-.. code-block:: py
-
-    >>> import numpy as np
-
-    >>> import FukuML.PLA as pla
-
-    >>> pla_bc = pla.BinaryClassifier()
-
-    >>> pla_bc.load_train_data()
-
-    >>> pla_bc.init_W()
-
-    >>> pla_bc.train('random', 0.5)
-
-    >>> test_data = '0.97681 0.10723 0.64385 0.29556 1'
-
-    >>> prediction = pla_bc.prediction(test_data)
-
-    >>> future_data = '0.97681 0.10723 0.64385 0.29556'
-
-    >>> prediction = pla_bc.prediction(future_data, 'future_data')
-
-Pocket Perceptron Learning Algorithm Usage
-============
-
-Run demo dataset
------------------
-
-.. code-block:: py
-
-    >>> import numpy as np
-
-    >>> import FukuML.PocketPLA as pocket
-
-    >>> pocket_bc = pocket.BinaryClassifier()
-
-    >>> pocket_bc.load_train_data()
-
-    >>> pocket_bc.init_W()
-
-    >>> W = pocket_bc.train(50)
-
-    >>> test_data = '0.62771 0.11513 0.82235 0.14493 -1'
-
-    >>> prediction = pocket_bc.prediction(test_data)
-
-    >>> future_data = '0.62771 0.11513 0.82235 0.14493'
-
-    >>> prediction = pocket_bc.prediction(future_data, 'future_data')
-
-    >>> pocket_bc.load_test_data()
-
-    >>> pocket_bc.calculate_avg_error(pocket_bc.test_X, pocket_bc.test_Y, W)
-
-Note
-=========
-
-Output the requirements
-
-.. code-block:: bash
-
-    $ pip freeze > requirements.txt
-
-Run tests
-
-.. code-block:: bash
-
-    $ python test_fuku_ml.py
-
-Package
-
-.. code-block:: bash
-
-    $ python setup.py sdist
-    $ python setup.py bdist_wheel --universal
-    $ twine upload dist/*
+For detail, please check https://github.com/fukuball/fuku-ml/blob/master/doc/sample_code.py
 
 License
 =========
