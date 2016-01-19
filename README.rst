@@ -18,25 +18,12 @@ Simple machine learning library
 Installation
 ============
 
-Install from pip
------------------
-
 .. code-block:: bash
 
     $ pip install FukuML
 
-Install from source
------------------
-
-.. code-block:: bash
-
-    $ python setup.py install
-
 Usage
 ============
-
-Basic usage to train from you data (Basic Naive Cycle PLA)
------------------
 
 .. code-block:: py
 
