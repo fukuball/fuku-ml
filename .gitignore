@@ -1,7 +1,12 @@
 *.py[cod]
 
+*.egg
+*.egg-info
+
 .Python
 bin
+build
+dist
 include
 lib
 pip-selfcheck.json
