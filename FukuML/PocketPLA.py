@@ -16,7 +16,15 @@ class BinaryClassifier(ml.Learner):
 
         """init"""
 
-        super(BinaryClassifier, self)
+        self.status = 'empty'
+        self.train_X = []
+        self.train_Y = []
+        self.W = []
+        self.data_num = 0
+        self.data_demension = 0
+        self.tune_times = 0
+        self.test_X = []
+        self.test_Y = []
 
         self.temp_avg_error = float('Inf')
         self.put_in_pocket_times = 0

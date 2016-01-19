@@ -17,19 +17,10 @@ class Learner(object):
     test_X = []
     test_Y = []
 
+    @abstractmethod
     def __init__(self):
-
         """init"""
-
-        self.status = 'empty'
-        self.train_X = []
-        self.train_Y = []
-        self.W = []
-        self.data_num = 0
-        self.data_demension = 0
-        self.tune_times = 0
-        self.test_X = []
-        self.test_Y = []
+        return
 
     @abstractmethod
     def load_train_data(self, input_data_file=''):
