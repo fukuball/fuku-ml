@@ -3,10 +3,15 @@ MANIFEST.in
 README.rst
 setup.cfg
 setup.py
+FukuML/LearningModel.pyc
+FukuML/MLBase.py
+FukuML/MLBase.pyc
 FukuML/PLA.py
 FukuML/PLA.pyc
 FukuML/PocketPLA.py
 FukuML/PocketPLA.pyc
+FukuML/Utility.py
+FukuML/Utility.pyc
 FukuML/__init__.py
 FukuML/__init__.pyc
 FukuML.egg-info/PKG-INFO
