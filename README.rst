@@ -76,7 +76,7 @@ Basic usage to train from you data (Basic Naive Cycle PLA)
     >>> print prediction['prediction']
     # print the prediction, will find out prediction is the same as pla_bc.test_data_y
 
-For detail, please check https://github.com/fukuball/fuku-ml/blob/master/doc/sample_code.py
+For detail, please check https://github.com/fukuball/fuku-ml/blob/master/doc/sample_code.rst
 
 License
 =========
