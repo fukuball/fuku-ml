@@ -10,6 +10,9 @@ FukuML
 .. image:: https://badge.fury.io/py/FukuML.svg
     :target: https://badge.fury.io/py/FukuML
 
+.. image:: https://api.codacy.com/project/badge/grade/afc87eff27ab47d6b960ea7b3088c469
+    :target: https://www.codacy.com/app/fukuball/fuku-ml
+
 .. image:: https://img.shields.io/badge/made%20with-%e2%9d%a4-ff69b4.svg
     :target: http://www.fukuball.com
 
