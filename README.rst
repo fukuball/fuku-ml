@@ -25,6 +25,17 @@ Installation
 
     $ pip install FukuML
 
+Algorithm
+============
+
+Perceptron Binary Classification Learning Algorithm
+
+Pocket Perceptron Binary Classification Learning Algorithm
+
+Linear Regression Learning Algorithm
+
+Linear Regression Binary Classification Learning Algorithm
+
 Usage
 ============
 
