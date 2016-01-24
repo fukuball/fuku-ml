@@ -36,6 +36,10 @@ Linear Regression Learning Algorithm
 
 Linear Regression Binary Classification Learning Algorithm
 
+Logistic Regression Learning Algorithm
+
+Logistic Regression Binary Classification Learning Algorithm
+
 Usage
 ============
 

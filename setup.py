@@ -45,6 +45,7 @@ setup(
         'Machine Learning :: Perceptron Learning Algorithm',
         'Machine Learning :: Pocket Perceptron Learning Algorithm',
         'Machine Learning :: Linear Regression Learning Algorithm',
+        'Machine Learning :: Logistic Regression Learning Algorithm',
         'Operating System :: OS Independent',
         'Programming Language :: Python',
         'Programming Language :: Python :: 2',
