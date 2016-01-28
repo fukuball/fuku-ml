@@ -151,7 +151,7 @@ class LogisticRegression(ml.Learner):
 
         return avg_error
 
-    def train(self, updates=2000, mode='batch', ita=0.0126):
+    def train(self, updates=2000, mode='batch', ita=0.126):
 
         '''
         Train Linear Regression Algorithm
@@ -265,7 +265,7 @@ class BinaryClassifier(LogisticRegression):
 
         return super(BinaryClassifier, self).calculate_avg_error()
 
-    def train(self, updates=2000, mode='batch', ita=0.0126):
+    def train(self, updates=2000, mode='batch', ita=0.126):
 
         return super(BinaryClassifier, self).train(updates, mode, ita)
 
