@@ -217,7 +217,7 @@ class BinaryClassifier(LinearRegression):
         return super(BinaryClassifier, self).prediction(input_data, mode)
 
 
-class MultiClassifier(BinaryClassifier):
+class MultiClassifier(LinearRegression):
 
     def __init__(self):
 

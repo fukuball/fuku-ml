@@ -2,9 +2,11 @@
 
 import os
 import random
+import operator
 import numpy as np
 import FukuML.Utility as utility
 import FukuML.MLBase as ml
+#np.set_printoptions(threshold=np.nan)
 
 
 class LogisticRegression(ml.Learner):
@@ -19,7 +21,6 @@ class LogisticRegression(ml.Learner):
         self.W = []
         self.data_num = 0
         self.data_demension = 0
-        self.tune_times = 0
         self.test_X = []
         self.test_Y = []
 
@@ -199,7 +200,6 @@ class BinaryClassifier(LogisticRegression):
         self.W = []
         self.data_num = 0
         self.data_demension = 0
-        self.tune_times = 0
         self.test_X = []
         self.test_Y = []
 
@@ -274,7 +274,7 @@ class BinaryClassifier(LogisticRegression):
         return super(BinaryClassifier, self).prediction(input_data, mode)
 
 
-class MultiClassifier(BinaryClassifier):
+class MultiClassifier(LogisticRegression):
 
     def __init__(self):
 
@@ -283,9 +283,156 @@ class MultiClassifier(BinaryClassifier):
         self.status = 'empty'
         self.train_X = []
         self.train_Y = []
-        self.W = []
+        self.W = {}
         self.data_num = 0
         self.data_demension = 0
-        self.tune_times = 0
         self.test_X = []
         self.test_Y = []
+
+        self.class_list = []
+        self.temp_train_Y = []
+        self.temp_W = {}
+
+    def load_train_data(self, input_data_file=''):
+
+        self.status = 'load_train_data'
+
+        if (input_data_file == ''):
+            input_data_file = os.path.normpath(os.path.join(os.path.join(os.getcwd(), os.path.dirname(__file__)), "dataset/digits_multiclass_train.dat"))
+        else:
+            if (os.path.isfile(input_data_file) is not True):
+                print("Please make sure input_data_file path is correct.")
+                return self.train_X, self.train_Y
+
+        self.train_X, self.train_Y = utility.DatasetLoader.load(input_data_file)
+
+        return self.train_X, self.train_Y
+
+    def load_test_data(self, input_data_file=''):
+
+        if (input_data_file == ''):
+            input_data_file = os.path.normpath(os.path.join(os.path.join(os.getcwd(), os.path.dirname(__file__)), "dataset/digits_multiclass_test.dat"))
+        else:
+            if (os.path.isfile(input_data_file) is not True):
+                print("Please make sure input_data_file path is correct.")
+                return self.test_X, self.test_Y
+
+        self.test_X, self.test_Y = utility.DatasetLoader.load(input_data_file)
+
+        return self.test_X, self.test_Y
+
+    def init_W(self):
+
+        if (self.status != 'load_train_data') and (self.status != 'train'):
+            print("Please load train data first.")
+            return self.W
+
+        self.status = 'init'
+
+        self.data_num = len(self.train_Y)
+        self.data_demension = len(self.train_X[0])
+        self.class_list = np.unique(self.train_Y)
+
+        for class_item in self.class_list:
+            self.W[class_item] = np.zeros(self.data_demension)
+
+        return self.W
+
+    def theta(self, s):
+
+        return super(MultiClassifier, self).theta(s)
+
+    def score_function(self, x, W):
+
+        return super(MultiClassifier, self).score_function(x, W)
+
+    def score_function_all_class(self, x, W):
+
+        score_list = {}
+        for class_item in self.class_list:
+            score_list[class_item] = self.score_function(x, W[class_item])
+
+        return max(score_list.iteritems(), key=operator.itemgetter(1))[0]
+
+    def error_function(self, y_prediction, y_truth):
+
+        if y_prediction != y_truth:
+            return 1
+        else:
+            return 0
+
+    def calculate_gradient(self, X, Y, W):
+
+        return super(MultiClassifier, self).calculate_gradient(X, Y, W)
+
+    def calculate_avg_error(self, X, Y, W):
+
+        data_num = len(Y)
+        error_num = 0
+
+        for i in range(data_num):
+            error_num = error_num + self.error_function(self.score_function_all_class(X[i], W), Y[i])
+
+        avg_error = error_num / float(data_num)
+
+        return avg_error
+
+    def calculate_test_data_avg_error(self):
+
+        return super(MultiClassifier, self).calculate_avg_error()
+
+    def modify_Y(self, Y, class_item):
+
+        modify_Y = []
+        for yi in Y:
+            if yi == class_item:
+                modify_Y.append(1)
+            else:
+                modify_Y.append(-1)
+
+        return np.array(modify_Y)
+
+    def train(self, updates=2000, mode='batch', ita=0.126, decomposition='ova'):
+
+        if (self.status != 'init'):
+            print("Please load train data and init W first.")
+            return self.W
+
+        for class_item in self.class_list:
+            self.status = 'init'
+            if decomposition == 'ovo':
+                print class_item
+            else:
+                modify_Y = self.modify_Y(self.train_Y, class_item)
+                self.temp_train_Y = self.train_Y
+                self.train_Y = modify_Y
+                self.temp_W = self.W
+                self.W = self.temp_W[class_item]
+                self.temp_W[class_item] = super(MultiClassifier, self).train(updates, mode, ita)
+                self.train_Y = self.temp_train_Y
+                self.temp_train_Y = []
+                self.W = self.temp_W
+                self.temp_W = {}
+            print "class %d learned." % class_item
+
+        return self.W
+
+    def prediction(self, input_data='', mode='test_data'):
+
+        prediction = {}
+        prediction_list = {}
+
+        for class_item in self.class_list:
+            self.temp_W = self.W
+            self.W = self.temp_W[class_item]
+            prediction = super(MultiClassifier, self).prediction(input_data, mode)
+            prediction_list[class_item] = prediction['prediction']
+            self.W = self.temp_W
+            self.temp_W = {}
+
+        return {
+            "input_data_x": prediction['input_data_x'],
+            "input_data_y": prediction['input_data_y'],
+            "prediction": max(prediction_list.iteritems(), key=operator.itemgetter(1))[0],
+            "prediction_list": prediction_list,
+        }
