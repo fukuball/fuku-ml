@@ -359,7 +359,7 @@ class MultiClassifier(LogisticRegression):
         for class_item in self.class_list:
             score_list[class_item] = self.score_function(x, W[class_item])
 
-        return max(score_list.iteritems(), key=operator.itemgetter(1))[0]
+        return max(score_list.items(), key=operator.itemgetter(1))[0]
 
     def error_function(self, y_prediction, y_truth):
 
@@ -440,6 +440,6 @@ class MultiClassifier(LogisticRegression):
         return {
             "input_data_x": prediction['input_data_x'],
             "input_data_y": prediction['input_data_y'],
-            "prediction": max(prediction_list.iteritems(), key=operator.itemgetter(1))[0],
+            "prediction": max(prediction_list.items(), key=operator.itemgetter(1))[0],
             "prediction_list": prediction_list,
         }
