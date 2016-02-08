@@ -166,23 +166,3 @@ class BinaryClassifier(ml.Learner):
     def prediction(self, input_data='', mode='test_data'):
 
         return super(BinaryClassifier, self).prediction(input_data, mode)
-
-
-class MultiClassifier(BinaryClassifier):
-
-    def __init__(self):
-
-        """init"""
-
-        self.status = 'empty'
-        self.train_X = []
-        self.train_Y = []
-        self.W = []
-        self.data_num = 0
-        self.data_demension = 0
-        self.tune_times = 0
-        self.test_X = []
-        self.test_Y = []
-
-        self.temp_avg_error = float('Inf')
-        self.put_in_pocket_times = 0

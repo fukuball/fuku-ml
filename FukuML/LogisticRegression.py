@@ -21,6 +21,7 @@ class LogisticRegression(ml.Learner):
         self.W = []
         self.data_num = 0
         self.data_demension = 0
+        self.tune_times = 0
         self.test_X = []
         self.test_Y = []
 
@@ -200,6 +201,7 @@ class BinaryClassifier(LogisticRegression):
         self.W = []
         self.data_num = 0
         self.data_demension = 0
+        self.tune_times = 0
         self.test_X = []
         self.test_Y = []
 
@@ -276,6 +278,10 @@ class BinaryClassifier(LogisticRegression):
 
 class MultiClassifier(LogisticRegression):
 
+    class_list = []
+    temp_train_Y = []
+    temp_W = {}
+
     def __init__(self):
 
         """init"""
@@ -286,6 +292,7 @@ class MultiClassifier(LogisticRegression):
         self.W = {}
         self.data_num = 0
         self.data_demension = 0
+        self.tune_times = 0
         self.test_X = []
         self.test_Y = []
 

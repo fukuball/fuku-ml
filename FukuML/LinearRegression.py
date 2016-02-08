@@ -23,6 +23,7 @@ class LinearRegression(ml.Learner):
         self.tune_times = 0
         self.test_X = []
         self.test_Y = []
+
         self.xpsedo = []
 
     def load_train_data(self, input_data_file=''):
@@ -147,6 +148,8 @@ class LinearRegression(ml.Learner):
 
 class BinaryClassifier(LinearRegression):
 
+    xpsedo = []
+
     def __init__(self):
 
         """init"""
@@ -160,6 +163,7 @@ class BinaryClassifier(LinearRegression):
         self.tune_times = 0
         self.test_X = []
         self.test_Y = []
+
         self.xpsedo = []
 
     def load_train_data(self, input_data_file=''):
@@ -215,21 +219,3 @@ class BinaryClassifier(LinearRegression):
     def prediction(self, input_data='', mode='test_data'):
 
         return super(BinaryClassifier, self).prediction(input_data, mode)
-
-
-class MultiClassifier(LinearRegression):
-
-    def __init__(self):
-
-        """init"""
-
-        self.status = 'empty'
-        self.train_X = []
-        self.train_Y = []
-        self.W = []
-        self.data_num = 0
-        self.data_demension = 0
-        self.tune_times = 0
-        self.test_X = []
-        self.test_Y = []
-        self.xpsedo = []
