@@ -401,7 +401,7 @@ class MultiClassifier(LogisticRegression):
         for class_item in self.class_list:
             self.status = 'init'
             if decomposition == 'ovo':
-                print class_item
+                print(class_item)
             else:
                 modify_Y = self.modify_Y(self.train_Y, class_item)
                 self.temp_train_Y = self.train_Y
@@ -413,7 +413,7 @@ class MultiClassifier(LogisticRegression):
                 self.temp_train_Y = []
                 self.W = self.temp_W
                 self.temp_W = {}
-            print "class %d learned." % class_item
+            print("class %d learned." % class_item)
 
         return self.W
 
