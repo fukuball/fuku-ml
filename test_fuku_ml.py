@@ -103,6 +103,7 @@ class FukuMLTestCase(unittest.TestCase):
 
         test_data = '0.97681 0.10723 0.64385 0.29556 1'
         prediction = pla_bc.prediction(test_data)
+        self.assertEqual(prediction['input_data_y'], prediction['prediction'])
 
         print("測試資料 x：")
         print(prediction['input_data_x'])
@@ -111,8 +112,6 @@ class FukuMLTestCase(unittest.TestCase):
         print("預測結果：")
         print(prediction['prediction'])
         print('-'*70)
-
-        self.assertEqual(prediction['input_data_y'], prediction['prediction'])
 
         #------------------------------------------------------------
 
@@ -129,6 +128,7 @@ class FukuMLTestCase(unittest.TestCase):
 
         test_data = '0.97681 0.10723 0.64385 0.29556 1'
         prediction = pla_bc.prediction(test_data)
+        self.assertEqual(prediction['input_data_y'], prediction['prediction'])
 
         print("測試資料 x：")
         print(prediction['input_data_x'])
@@ -137,8 +137,6 @@ class FukuMLTestCase(unittest.TestCase):
         print("預測結果：")
         print(prediction['prediction'])
         print('-'*70)
-
-        self.assertEqual(prediction['input_data_y'], prediction['prediction'])
 
         serialized_pla_bc = utility.Serializer.serialize(pla_bc)
         deserialized_pla_bc = utility.Serializer.deserialize(serialized_pla_bc)
@@ -186,6 +184,7 @@ class FukuMLTestCase(unittest.TestCase):
 
         test_data = '0.62771 0.11513 0.82235 0.14493 -1'
         prediction = pocket_bc.prediction(test_data)
+        self.assertEqual(prediction['input_data_y'], prediction['prediction'])
 
         print("測試資料 x：")
         print(prediction['input_data_x'])
@@ -195,11 +194,29 @@ class FukuMLTestCase(unittest.TestCase):
         print(prediction['prediction'])
         print('-'*70)
 
-        self.assertEqual(prediction['input_data_y'], prediction['prediction'])
-
         serialized_pocket_bc = utility.Serializer.serialize(pocket_bc)
         deserialized_pocket_bc = utility.Serializer.deserialize(serialized_pocket_bc)
         self.assertTrue((pocket_bc.train_X == deserialized_pocket_bc.train_X).all())
+
+         #------------------------------------------------------------
+
+        print("使用 Linear Regression 加速器：")
+
+        pocket_bc = pocket.BinaryClassifier()
+        pocket_bc.load_train_data()
+        pocket_bc.init_W('linear_regression_accelerator')
+        W = pocket_bc.train()
+        pocket_bc.load_test_data()
+
+        print("訓練得出權重模型：")
+        print(W)
+        print("W 更新次數：")
+        print(pocket_bc.tune_times)
+        print("W 效果改善次數：")
+        print(pocket_bc.put_in_pocket_times)
+        print("W 平均錯誤率：")
+        print(pocket_bc.calculate_avg_error(pocket_bc.test_X, pocket_bc.test_Y, W))
+        print('-'*70)
 
     def test_linear_regression(self):
 

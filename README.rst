@@ -34,6 +34,8 @@ Perceptron Binary Classification Learning Algorithm with Linear Regression Accel
 
 Pocket Perceptron Binary Classification Learning Algorithm
 
+Pocket Perceptron Binary Classification Learning Algorithm with Linear Regression Accelerator
+
 Linear Regression Learning Algorithm
 
 Linear Regression Binary Classification Learning Algorithm

@@ -5,6 +5,7 @@ import random
 import numpy as np
 import FukuML.Utility as utility
 import FukuML.MLBase as ml
+import FukuML.LinearRegression as linear_regression
 
 
 class BinaryClassifier(ml.Learner):
@@ -71,7 +72,7 @@ class BinaryClassifier(ml.Learner):
 
         return self.test_X, self.test_Y
 
-    def init_W(self):
+    def init_W(self, mode='normal'):
 
         '''
         Init the W
@@ -87,6 +88,10 @@ class BinaryClassifier(ml.Learner):
         self.data_num = len(self.train_Y)
         self.data_demension = len(self.train_X[0])
         self.W = np.zeros(self.data_demension)
+
+        if mode == 'linear_regression_accelerator':
+            accelerator = linear_regression.Accelerator()
+            self.W = accelerator.init_W(self)
 
         return self.W
 

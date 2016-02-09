@@ -133,6 +133,35 @@ Run demo dataset
 
     >>> pocket_bc.calculate_avg_error(pocket_bc.test_X, pocket_bc.test_Y, W)
 
+Run demo dataset: with Linear Regression Accelerator
+-----------------
+
+.. code-block:: py
+
+    >>> import numpy as np
+
+    >>> import FukuML.PocketPLA as pocket
+
+    >>> pocket_bc = pocket.BinaryClassifier()
+
+    >>> pocket_bc.load_train_data()
+
+    >>> pocket_bc.init_W('linear_regression_accelerator')
+
+    >>> W = pocket_bc.train(50)
+
+    >>> test_data = '0.62771 0.11513 0.82235 0.14493 -1'
+
+    >>> prediction = pocket_bc.prediction(test_data)
+
+    >>> future_data = '0.62771 0.11513 0.82235 0.14493'
+
+    >>> prediction = pocket_bc.prediction(future_data, 'future_data')
+
+    >>> pocket_bc.load_test_data()
+
+    >>> pocket_bc.calculate_avg_error(pocket_bc.test_X, pocket_bc.test_Y, W)
+
 Linear Regression Learning Algorithm
 ============
 
