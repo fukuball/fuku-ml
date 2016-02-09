@@ -40,6 +40,8 @@ Logistic Regression Learning Algorithm
 
 Logistic Regression Binary Classification Learning Algorithm
 
+Logistic Regression Multi Classification Learning Algorithm
+
 Usage
 ============
 
