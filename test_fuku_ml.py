@@ -28,6 +28,7 @@ class FukuMLTestCase(unittest.TestCase):
 
         test_data = '0.97681 0.10723 0.64385 0.29556 1'
         prediction = pla_bc.prediction(test_data)
+        self.assertEqual(prediction['input_data_y'], prediction['prediction'])
 
         print("測試資料 x：")
         print(prediction['input_data_x'])
@@ -36,11 +37,10 @@ class FukuMLTestCase(unittest.TestCase):
         print("預測結果：")
         print(prediction['prediction'])
         print('-'*70)
-
-        self.assertEqual(prediction['input_data_y'], prediction['prediction'])
 
         test_data = '0.15654 0.75584 0.01122 0.42598 -1'
         prediction = pla_bc.prediction(test_data)
+        self.assertEqual(prediction['input_data_y'], prediction['prediction'])
 
         print("測試資料 x：")
         print(prediction['input_data_x'])
@@ -50,7 +50,32 @@ class FukuMLTestCase(unittest.TestCase):
         print(prediction['prediction'])
         print('-'*70)
 
+        #------------------------------------------------------------
+
+        print("使用 Linear Regression 加速器：")
+
+        pla_bc = pla.BinaryClassifier()
+        pla_bc.load_train_data()
+        pla_bc.init_W('linear_regression_accelerator')
+        W = pla_bc.train()
+
+        print("\n訓練得出權重模型：")
+        print(W)
+        print("W 更新次數：")
+        print(pla_bc.tune_times)
+        print('-'*70)
+
+        test_data = '0.97681 0.10723 0.64385 0.29556 1'
+        prediction = pla_bc.prediction(test_data)
         self.assertEqual(prediction['input_data_y'], prediction['prediction'])
+
+        print("測試資料 x：")
+        print(prediction['input_data_x'])
+        print("測試資料 y：")
+        print(prediction['input_data_y'])
+        print("預測結果：")
+        print(prediction['prediction'])
+        print('-'*70)
 
         #------------------------------------------------------------
 

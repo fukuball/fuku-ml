@@ -219,3 +219,19 @@ class BinaryClassifier(LinearRegression):
     def prediction(self, input_data='', mode='test_data'):
 
         return super(BinaryClassifier, self).prediction(input_data, mode)
+
+
+class Accelerator(object):
+
+    @staticmethod
+    def init_W(ml_learner):
+        W = []
+        linear = BinaryClassifier()
+        linear.status = 'init'
+        linear.train_X = ml_learner.train_X
+        linear.train_Y = ml_learner.train_Y
+        linear.data_num = ml_learner.data_num
+        linear.data_demension = ml_learner.data_demension
+        linear.W = ml_learner.W
+        W = linear.train()
+        return W

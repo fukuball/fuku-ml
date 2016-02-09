@@ -26,6 +26,31 @@ Run demo dataset: Basic Naive Cycle PLA
 
     >>> prediction = pla_bc.prediction(future_data, 'future_data')
 
+Run demo dataset: Basic Naive Cycle PLA with Linear Regression Accelerator
+-----------------
+
+.. code-block:: py
+
+    >>> import numpy as np
+
+    >>> import FukuML.PLA as pla
+
+    >>> pla_bc = pla.BinaryClassifier()
+
+    >>> pla_bc.load_train_data()
+
+    >>> pla_bc.init_W('linear_regression_accelerator')
+
+    >>> pla_bc.train()
+
+    >>> test_data = '0.97681 0.10723 0.64385 0.29556 1'
+
+    >>> prediction = pla_bc.prediction(test_data)
+
+    >>> future_data = '0.97681 0.10723 0.64385 0.29556'
+
+    >>> prediction = pla_bc.prediction(future_data, 'future_data')
+
 Run demo dataset: Random Cycle PLA
 -----------------
 

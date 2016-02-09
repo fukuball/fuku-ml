@@ -34,7 +34,7 @@ setup(
     install_requires=install_requires,
     packages=['FukuML'],
     package_dir={'FukuML': 'FukuML'},
-    package_data={'FukuML': ['*.*', 'dataset/*']},
+    package_data={'FukuML': ['*.*', 'dataset/*.*', 'dataset/digits/*.*', 'dataset/digits/traning_digits/*.*', 'dataset/digits/test_digits/*.*']},
     test_suite='test_fuku_ml',
     zip_safe=False,
     classifiers=(
