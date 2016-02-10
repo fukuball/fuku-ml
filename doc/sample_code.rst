@@ -250,6 +250,27 @@ Run demo dataset
 
     >>> prediction = logistic.prediction(test_data)
 
+Run demo dataset: with Linear Regression Accelerator
+-----------------
+
+    .. code-block:: py
+
+    >>> import numpy as np
+
+    >>> import FukuML.LogisticRegression as logistic_regression
+
+    >>> logistic = logistic_regression.LinearRegression()
+
+    >>> logistic.load_train_data()
+
+    >>> logistic.init_W('linear_regression_accelerator')
+
+    >>> W = logistic.train()
+
+    >>> test_data = '0.26502 0.5486 0.971 0.19333 0.12207 0.81528 0.46743 0.45889 0.31004 0.3307 0.43078 0.50661 0.57281 0.052715 0.50443 0.78686 0.20099 0.85909 0.26772 0.13751 1'
+
+    >>> prediction = logistic.prediction(test_data)
+
 Logistic Regression Binary Classification Learning Algorithm
 ============
 
