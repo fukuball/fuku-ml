@@ -218,9 +218,9 @@ class BinaryClassifier(LogisticRegression):
 
         return super(BinaryClassifier, self).load_test_data(input_data_file)
 
-    def init_W(self):
+    def init_W(self, mode='normal'):
 
-        return super(BinaryClassifier, self).init_W()
+        return super(BinaryClassifier, self).init_W(mode)
 
     def theta(self, s):
 
@@ -333,7 +333,7 @@ class MultiClassifier(LogisticRegression):
 
         return self.test_X, self.test_Y
 
-    def init_W(self):
+    def init_W(self, mode='normal', decomposition='ova'):
 
         if (self.status != 'load_train_data') and (self.status != 'train'):
             print("Please load train data first.")
@@ -347,6 +347,23 @@ class MultiClassifier(LogisticRegression):
 
         for class_item in self.class_list:
             self.W[class_item] = np.zeros(self.data_demension)
+
+        if mode == 'linear_regression_accelerator':
+            accelerator = linear_regression.Accelerator()
+            for class_item in self.class_list:
+                if decomposition == 'ovo':
+                    print(class_item)
+                else:
+                    modify_Y = self.modify_Y(self.train_Y, class_item)
+                    self.temp_train_Y = self.train_Y
+                    self.train_Y = modify_Y
+                    self.temp_W = self.W
+                    self.W = self.temp_W[class_item]
+                    self.temp_W[class_item] = accelerator.init_W(self)
+                    self.train_Y = self.temp_train_Y
+                    self.temp_train_Y = []
+                    self.W = self.temp_W
+                    self.temp_W = {}
 
         return self.W
 
@@ -426,6 +443,8 @@ class MultiClassifier(LogisticRegression):
                 self.W = self.temp_W
                 self.temp_W = {}
             print("class %d learned." % class_item)
+
+        self.status = 'train'
 
         return self.W
 
