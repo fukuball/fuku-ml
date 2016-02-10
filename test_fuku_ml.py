@@ -406,7 +406,6 @@ class FukuMLTestCase(unittest.TestCase):
         logistic = logistic_regression.MultiClassifier()
         logistic.load_train_data()
         logistic.load_test_data()
-        '''
         logistic.init_W()
         W = logistic.train()
 
@@ -440,22 +439,6 @@ class FukuMLTestCase(unittest.TestCase):
         print("W 平均錯誤率（Ein）：")
         print(logistic.calculate_avg_error(logistic.train_X, logistic.train_Y, W))
         print("W 平均錯誤率（Eout）：")
-        print(logistic.calculate_avg_error(logistic.test_X, logistic.test_Y, W))
-        print('-'*70)
-        '''
-
-        #------------------------------------------------------------
-
-        print("使用 Linear Regression 加速器：")
-        W = logistic.init_W('linear_regression_accelerator')
-        print("\n加速初始化權重模型：")
-        print(W)
-        W = logistic.train()
-        print("\n訓練得出權重模型：")
-        print(W)
-        print("W 平均錯誤值（Ein）：")
-        print(logistic.calculate_avg_error(logistic.train_X, logistic.train_Y, W))
-        print("W 平均錯誤值（Eout）：")
         print(logistic.calculate_avg_error(logistic.test_X, logistic.test_Y, W))
         print('-'*70)
 
