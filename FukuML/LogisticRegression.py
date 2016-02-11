@@ -97,6 +97,8 @@ class LogisticRegression(ml.Learner):
         Theta sigmoid function
         '''
 
+        s = np.where(s < -709, -709, s)
+
         return 1/(1 + np.exp((-1)*s))
 
     def score_function(self, x, W):
@@ -333,7 +335,7 @@ class MultiClassifier(LogisticRegression):
 
         return self.test_X, self.test_Y
 
-    def init_W(self, mode='normal'):
+    def init_W(self, mode='normal', decomposition='ova'):
 
         if (self.status != 'load_train_data') and (self.status != 'train'):
             print("Please load train data first.")
@@ -347,6 +349,23 @@ class MultiClassifier(LogisticRegression):
 
         for class_item in self.class_list:
             self.W[class_item] = np.zeros(self.data_demension)
+
+        if mode == 'linear_regression_accelerator':
+            accelerator = linear_regression.Accelerator()
+            for class_item in self.class_list:
+                if decomposition == 'ovo':
+                    print(class_item)
+                else:
+                    modify_Y = self.modify_Y(self.train_Y, class_item)
+                    self.temp_train_Y = self.train_Y
+                    self.train_Y = modify_Y
+                    self.temp_W = self.W
+                    self.W = self.temp_W[class_item]
+                    self.temp_W[class_item] = accelerator.init_W(self)
+                    self.train_Y = self.temp_train_Y
+                    self.temp_train_Y = []
+                    self.W = self.temp_W
+                    self.temp_W = {}
 
         return self.W
 
