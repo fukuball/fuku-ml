@@ -288,6 +288,7 @@ class MultiClassifier(LogisticRegression):
     class_list = []
     temp_train_Y = []
     temp_W = {}
+    decomposition = 'ova'
 
     def __init__(self):
 
@@ -306,6 +307,7 @@ class MultiClassifier(LogisticRegression):
         self.class_list = []
         self.temp_train_Y = []
         self.temp_W = {}
+        self.decomposition = 'ova'
 
     def load_train_data(self, input_data_file=''):
 
@@ -346,6 +348,7 @@ class MultiClassifier(LogisticRegression):
         self.data_num = len(self.train_Y)
         self.data_demension = len(self.train_X[0])
         self.class_list = np.unique(self.train_Y)
+        self.decomposition = decomposition
 
         for class_item in self.class_list:
             self.W[class_item] = np.zeros(self.data_demension)
@@ -353,9 +356,9 @@ class MultiClassifier(LogisticRegression):
         if mode == 'linear_regression_accelerator':
             accelerator = linear_regression.Accelerator()
             for class_item in self.class_list:
-                if decomposition == 'ovo':
+                if self.decomposition == 'ovo':
                     print(class_item)
-                else:
+                elif self.decomposition == 'ova':
                     modify_Y = self.modify_Y(self.train_Y, class_item)
                     self.temp_train_Y = self.train_Y
                     self.train_Y = modify_Y
@@ -423,7 +426,7 @@ class MultiClassifier(LogisticRegression):
 
         return np.array(modify_Y)
 
-    def train(self, updates=2000, mode='batch', ita=0.126, decomposition='ova'):
+    def train(self, updates=2000, mode='batch', ita=0.126):
 
         if (self.status != 'init'):
             print("Please load train data and init W first.")
@@ -431,9 +434,9 @@ class MultiClassifier(LogisticRegression):
 
         for class_item in self.class_list:
             self.status = 'init'
-            if decomposition == 'ovo':
+            if self.decomposition == 'ovo':
                 print(class_item)
-            else:
+            elif self.decomposition == 'ova':
                 modify_Y = self.modify_Y(self.train_Y, class_item)
                 self.temp_train_Y = self.train_Y
                 self.train_Y = modify_Y
