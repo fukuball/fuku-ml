@@ -15,9 +15,9 @@ for (dirpath, dirnames, filenames) in os.walk(test_digits_folder):
         one_line_string = ''
         with open(test_file_path) as f:
             for line in f:
-                space_line = " ".join(line).rstrip()
+                space_line = " ".join(line).rstrip() + " "
                 one_line_string = one_line_string + space_line
-        one_line_string = one_line_string + " " + digit_class + "\n"
+        one_line_string = one_line_string + digit_class + "\n"
         test_digit_content = test_digit_content + one_line_string
 
     target_file = open(test_digits_file_path, 'w')
@@ -39,9 +39,9 @@ for (dirpath, dirnames, filenames) in os.walk(train_digits_folder):
         one_line_string = ''
         with open(train_file_path) as f:
             for line in f:
-                space_line = " ".join(line).rstrip()
+                space_line = " ".join(line).rstrip() + " "
                 one_line_string = one_line_string + space_line
-        one_line_string = one_line_string + " " + digit_class + "\n"
+        one_line_string = one_line_string + digit_class + "\n"
         train_digit_content = train_digit_content + one_line_string
 
     target_file = open(train_digits_file_path, 'w')

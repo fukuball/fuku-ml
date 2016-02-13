@@ -3,6 +3,8 @@
 import os
 import random
 import operator
+import itertools
+#import collections
 import numpy as np
 import FukuML.Utility as utility
 import FukuML.MLBase as ml
@@ -286,8 +288,10 @@ class BinaryClassifier(LogisticRegression):
 class MultiClassifier(LogisticRegression):
 
     class_list = []
+    temp_train_X = []
     temp_train_Y = []
     temp_W = {}
+    temp_data_num = 0
     decomposition = 'ova'
 
     def __init__(self):
@@ -305,8 +309,10 @@ class MultiClassifier(LogisticRegression):
         self.test_Y = []
 
         self.class_list = []
+        self.temp_train_X = []
         self.temp_train_Y = []
         self.temp_W = {}
+        self.temp_data_num = 0
         self.decomposition = 'ova'
 
     def load_train_data(self, input_data_file=''):
@@ -347,8 +353,12 @@ class MultiClassifier(LogisticRegression):
 
         self.data_num = len(self.train_Y)
         self.data_demension = len(self.train_X[0])
-        self.class_list = np.unique(self.train_Y)
         self.decomposition = decomposition
+
+        if self.decomposition == 'ovo':
+            self.class_list = list(itertools.combinations(np.unique(self.train_Y), 2))
+        elif self.decomposition == 'ova':
+            self.class_list = np.unique(self.train_Y)
 
         for class_item in self.class_list:
             self.W[class_item] = np.zeros(self.data_demension)
@@ -383,10 +393,23 @@ class MultiClassifier(LogisticRegression):
     def score_function_all_class(self, x, W):
 
         score_list = {}
-        for class_item in self.class_list:
-            score_list[class_item] = self.score_function(x, W[class_item])
+        ovo_vote = []
 
-        return max(score_list.items(), key=operator.itemgetter(1))[0]
+        for class_item in self.class_list:
+            score = self.score_function(x, W[class_item])
+            if self.decomposition == 'ovo':
+                if score >= 0.5:
+                    score_list[class_item] = class_item[0]
+                else:
+                    score_list[class_item] = class_item[1]
+                ovo_vote.append(score_list[class_item])
+            elif self.decomposition == 'ova':
+                score_list[class_item] = score
+
+        if self.decomposition == 'ovo':
+            return max(set(ovo_vote), key=ovo_vote.count)
+        elif self.decomposition == 'ova':
+            return max(score_list.items(), key=operator.itemgetter(1))[0]
 
     def error_function(self, y_prediction, y_truth):
 
@@ -426,6 +449,21 @@ class MultiClassifier(LogisticRegression):
 
         return np.array(modify_Y)
 
+    def modify_XY(self, X, Y, class_item):
+
+        modify_X = []
+        modify_Y = []
+
+        for yi in Y:
+            if yi == class_item[0]:
+                modify_Y.append(1)
+                modify_X.append(X[yi])
+            elif yi == class_item[1]:
+                modify_Y.append(-1)
+                modify_X.append(X[yi])
+
+        return np.array(modify_X), np.array(modify_Y)
+
     def train(self, updates=2000, mode='batch', ita=0.126):
 
         if (self.status != 'init'):
@@ -435,7 +473,25 @@ class MultiClassifier(LogisticRegression):
         for class_item in self.class_list:
             self.status = 'init'
             if self.decomposition == 'ovo':
-                print(class_item)
+                modify_X, modify_Y = self.modify_XY(self.train_X, self.train_Y, class_item)
+                self.temp_train_X = self.train_X
+                self.temp_train_Y = self.train_Y
+                self.train_X = modify_X
+                self.train_Y = modify_Y
+                self.temp_data_num = self.data_num
+                self.data_num = len(self.train_Y)
+                self.temp_W = self.W
+                self.W = self.temp_W[class_item]
+                self.temp_W[class_item] = super(MultiClassifier, self).train(updates, mode, ita)
+                self.train_X = self.temp_train_X
+                self.train_Y = self.temp_train_Y
+                self.temp_train_X = []
+                self.temp_train_Y = []
+                self.data_num = self.temp_data_num
+                self.temp_data_num = 0
+                self.W = self.temp_W
+                self.temp_W = {}
+                print("class %d to %d learned." % (class_item[0], class_item[1]))
             elif self.decomposition == 'ova':
                 modify_Y = self.modify_Y(self.train_Y, class_item)
                 self.temp_train_Y = self.train_Y
@@ -447,7 +503,7 @@ class MultiClassifier(LogisticRegression):
                 self.temp_train_Y = []
                 self.W = self.temp_W
                 self.temp_W = {}
-            print("class %d learned." % class_item)
+                print("class %d learned." % class_item)
 
         self.status = 'train'
 
@@ -457,18 +513,33 @@ class MultiClassifier(LogisticRegression):
 
         prediction = {}
         prediction_list = {}
+        prediction_return = 0.0
+        ovo_vote = []
 
         for class_item in self.class_list:
             self.temp_W = self.W
             self.W = self.temp_W[class_item]
             prediction = super(MultiClassifier, self).prediction(input_data, mode)
-            prediction_list[class_item] = prediction['prediction']
+            if self.decomposition == 'ovo':
+                if prediction['prediction'] >= 0.5:
+                    prediction_list[class_item] = class_item[0]
+                else:
+                    prediction_list[class_item] = class_item[1]
+                ovo_vote.append(prediction_list[class_item])
+            elif self.decomposition == 'ova':
+                prediction_list[class_item] = prediction['prediction']
             self.W = self.temp_W
             self.temp_W = {}
+
+        if self.decomposition == 'ovo':
+            #counter = collections.Counter(ovo_vote)
+            prediction_return = max(set(ovo_vote), key=ovo_vote.count)
+        elif self.decomposition == 'ova':
+            prediction_return = max(prediction_list.items(), key=operator.itemgetter(1))[0]
 
         return {
             "input_data_x": prediction['input_data_x'],
             "input_data_y": prediction['input_data_y'],
-            "prediction": max(prediction_list.items(), key=operator.itemgetter(1))[0],
+            "prediction": prediction_return,
             "prediction_list": prediction_list,
         }
