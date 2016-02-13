@@ -369,7 +369,24 @@ class MultiClassifier(LogisticRegression):
             accelerator = linear_regression.Accelerator()
             for class_item in self.class_list:
                 if self.decomposition == 'ovo':
-                    print(class_item)
+                    modify_X, modify_Y = self.modify_XY(self.train_X, self.train_Y, class_item)
+                    self.temp_train_X = self.train_X
+                    self.temp_train_Y = self.train_Y
+                    self.train_X = modify_X
+                    self.train_Y = modify_Y
+                    self.temp_data_num = self.data_num
+                    self.data_num = len(self.train_Y)
+                    self.temp_W = self.W
+                    self.W = self.temp_W[class_item]
+                    self.temp_W[class_item] = accelerator.init_W(self)
+                    self.train_X = self.temp_train_X
+                    self.train_Y = self.temp_train_Y
+                    self.temp_train_X = []
+                    self.temp_train_Y = []
+                    self.data_num = self.temp_data_num
+                    self.temp_data_num = 0
+                    self.W = self.temp_W
+                    self.temp_W = {}
                 elif self.decomposition == 'ova':
                     modify_Y = self.modify_Y(self.train_Y, class_item)
                     self.temp_train_Y = self.train_Y
@@ -493,7 +510,7 @@ class MultiClassifier(LogisticRegression):
                 self.temp_data_num = 0
                 self.W = self.temp_W
                 self.temp_W = {}
-                print("class %d to %d learned." % (class_item[0], class_item[1]))
+                #print("class %d to %d learned." % (class_item[0], class_item[1]))
             elif self.decomposition == 'ova':
                 modify_Y = self.modify_Y(self.train_Y, class_item)
                 self.temp_train_Y = self.train_Y
@@ -505,7 +522,7 @@ class MultiClassifier(LogisticRegression):
                 self.temp_train_Y = []
                 self.W = self.temp_W
                 self.temp_W = {}
-                print("class %d learned." % class_item)
+                #print("class %d learned." % class_item)
 
         self.status = 'train'
 
