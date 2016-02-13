@@ -345,6 +345,8 @@ class MultiClassifier(LogisticRegression):
 
     def init_W(self, mode='normal', decomposition='ova'):
 
+        self.W = {}
+
         if (self.status != 'load_train_data') and (self.status != 'train'):
             print("Please load train data first.")
             return self.W
@@ -454,13 +456,13 @@ class MultiClassifier(LogisticRegression):
         modify_X = []
         modify_Y = []
 
-        for yi in Y:
-            if yi == class_item[0]:
+        for idx, val in enumerate(Y):
+            if val == class_item[0]:
                 modify_Y.append(1)
-                modify_X.append(X[yi])
-            elif yi == class_item[1]:
+                modify_X.append(X[idx])
+            elif val == class_item[1]:
                 modify_Y.append(-1)
-                modify_X.append(X[yi])
+                modify_X.append(X[idx])
 
         return np.array(modify_X), np.array(modify_Y)
 
