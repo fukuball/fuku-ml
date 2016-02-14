@@ -46,7 +46,15 @@ Logistic Regression Learning Algorithm with Linear Regression Accelerator
 
 Logistic Regression Binary Classification Learning Algorithm
 
-Logistic Regression Multi Classification Learning Algorithm
+Logistic Regression Binary Classification Learning Algorithm with Linear Regression Accelerator
+
+Logistic Regression One vs All Multi Classification Learning Algorithm
+
+Logistic Regression One vs All Multi Classification Learning Algorithm with Linear Regression Accelerator
+
+Logistic Regression One vs One Multi Classification Learning Algorithm
+
+Logistic Regression One vs One Multi Classification Learning Algorithm with Linear Regression Accelerator
 
 Usage
 ============
