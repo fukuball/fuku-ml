@@ -351,7 +351,7 @@ class MultiClassifier(BinaryClassifier):
             self.temp_data_num = 0
             self.W = self.temp_W
             self.temp_W = {}
-            print("class %d to %d learned." % (class_item[0], class_item[1]))
+            #print("class %d to %d learned." % (class_item[0], class_item[1]))
 
         self.status = 'train'
 
