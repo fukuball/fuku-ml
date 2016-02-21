@@ -2,6 +2,7 @@
 
 import os
 import random
+import itertools
 import numpy as np
 import FukuML.Utility as utility
 import FukuML.MLBase as ml
@@ -171,3 +172,105 @@ class BinaryClassifier(ml.Learner):
     def prediction(self, input_data='', mode='test_data'):
 
         return super(BinaryClassifier, self).prediction(input_data, mode)
+
+
+class MultiClassifier(BinaryClassifier):
+
+    temp_avg_error = float('Inf')
+    put_in_pocket_times = 0
+    class_list = []
+    temp_train_X = []
+    temp_train_Y = []
+    temp_W = {}
+    temp_data_num = 0
+    decomposition = 'ovo'
+
+    def __init__(self):
+
+        self.status = 'empty'
+        self.train_X = []
+        self.train_Y = []
+        self.W = []
+        self.data_num = 0
+        self.data_demension = 0
+        self.tune_times = 0
+        self.test_X = []
+        self.test_Y = []
+
+        self.temp_avg_error = float('Inf')
+        self.put_in_pocket_times = 0
+        self.class_list = []
+        self.temp_train_X = []
+        self.temp_train_Y = []
+        self.temp_W = {}
+        self.temp_data_num = 0
+        self.decomposition = 'ovo'
+
+    def load_train_data(self, input_data_file=''):
+
+        self.status = 'load_train_data'
+
+        if (input_data_file == ''):
+            input_data_file = os.path.normpath(os.path.join(os.path.join(os.getcwd(), os.path.dirname(__file__)), "dataset/digits_multiclass_train.dat"))
+        else:
+            if (os.path.isfile(input_data_file) is not True):
+                print("Please make sure input_data_file path is correct.")
+                return self.train_X, self.train_Y
+
+        self.train_X, self.train_Y = utility.DatasetLoader.load(input_data_file)
+
+        return self.train_X, self.train_Y
+
+    def load_test_data(self, input_data_file=''):
+
+        if (input_data_file == ''):
+            input_data_file = os.path.normpath(os.path.join(os.path.join(os.getcwd(), os.path.dirname(__file__)), "dataset/digits_multiclass_test.dat"))
+        else:
+            if (os.path.isfile(input_data_file) is not True):
+                print("Please make sure input_data_file path is correct.")
+                return self.test_X, self.test_Y
+
+        self.test_X, self.test_Y = utility.DatasetLoader.load(input_data_file)
+
+        return self.test_X, self.test_Y
+
+    def init_W(self, mode='normal'):
+
+        self.W = {}
+
+        if (self.status != 'load_train_data') and (self.status != 'train'):
+            print("Please load train data first.")
+            return self.W
+
+        self.status = 'init'
+
+        self.data_num = len(self.train_Y)
+        self.data_demension = len(self.train_X[0])
+        self.class_list = list(itertools.combinations(np.unique(self.train_Y), 2))
+
+        for class_item in self.class_list:
+            self.W[class_item] = np.zeros(self.data_demension)
+
+        if mode == 'linear_regression_accelerator':
+            accelerator = linear_regression.Accelerator()
+            for class_item in self.class_list:
+                modify_X, modify_Y = self.modify_XY(self.train_X, self.train_Y, class_item)
+                self.temp_train_X = self.train_X
+                self.temp_train_Y = self.train_Y
+                self.train_X = modify_X
+                self.train_Y = modify_Y
+                self.temp_data_num = self.data_num
+                self.data_num = len(self.train_Y)
+                self.temp_W = self.W
+                self.W = self.temp_W[class_item]
+                self.temp_W[class_item] = accelerator.init_W(self)
+                self.train_X = self.temp_train_X
+                self.train_Y = self.temp_train_Y
+                self.temp_train_X = []
+                self.temp_train_Y = []
+                self.data_num = self.temp_data_num
+                self.temp_data_num = 0
+                self.W = self.temp_W
+                self.temp_W = {}
+
+        return self.W
