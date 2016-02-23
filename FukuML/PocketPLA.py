@@ -274,3 +274,122 @@ class MultiClassifier(BinaryClassifier):
                 self.temp_W = {}
 
         return self.W
+
+    def score_function(self, x, W):
+
+        return super(MultiClassifier, self).score_function(x, W)
+
+    def score_function_all_class(self, x, W):
+
+        score_list = {}
+        ovo_vote = []
+
+        for class_item in self.class_list:
+            score = self.score_function(x, W[class_item])
+            if score == 1:
+                score_list[class_item] = class_item[0]
+            else:
+                score_list[class_item] = class_item[1]
+            ovo_vote.append(score_list[class_item])
+
+        return max(set(ovo_vote), key=ovo_vote.count)
+
+    def error_function(self, y_prediction, y_truth):
+
+        return super(MultiClassifier, self).error_function(y_prediction, y_truth)
+
+    def calculate_avg_error(self, X, Y, W):
+
+        return super(MultiClassifier, self).calculate_avg_error(X, Y, W)
+
+    def calculate_avg_error_all_class(self, X, Y, W):
+
+        data_num = len(Y)
+        error_num = 0
+
+        for i in range(data_num):
+            error_num = error_num + self.error_function(self.score_function_all_class(X[i], W), Y[i])
+
+        avg_error = error_num / float(data_num)
+
+        return avg_error
+
+    def calculate_test_data_avg_error(self):
+
+        return super(MultiClassifier, self).calculate_avg_error()
+
+    def modify_XY(self, X, Y, class_item):
+
+        modify_X = []
+        modify_Y = []
+
+        for idx, val in enumerate(Y):
+            if val == class_item[0]:
+                modify_Y.append(1)
+                modify_X.append(X[idx])
+            elif val == class_item[1]:
+                modify_Y.append(-1)
+                modify_X.append(X[idx])
+
+        return np.array(modify_X), np.array(modify_Y)
+
+    def train(self, updates=50, mode='random', alpha=1):
+
+        if (self.status != 'init'):
+            print("Please load train data and init W first.")
+            return self.W
+
+        for class_item in self.class_list:
+            self.status = 'init'
+            self.temp_avg_error = float('Inf')
+            modify_X, modify_Y = self.modify_XY(self.train_X, self.train_Y, class_item)
+            self.temp_train_X = self.train_X
+            self.temp_train_Y = self.train_Y
+            self.train_X = modify_X
+            self.train_Y = modify_Y
+            self.temp_data_num = self.data_num
+            self.data_num = len(self.train_Y)
+            self.temp_W = self.W
+            self.W = self.temp_W[class_item]
+            self.temp_W[class_item] = super(MultiClassifier, self).train(updates, mode, alpha)
+            self.train_X = self.temp_train_X
+            self.train_Y = self.temp_train_Y
+            self.temp_train_X = []
+            self.temp_train_Y = []
+            self.data_num = self.temp_data_num
+            self.temp_data_num = 0
+            self.W = self.temp_W
+            self.temp_W = {}
+            print("class %d to %d learned." % (class_item[0], class_item[1]))
+
+        self.status = 'train'
+
+        return self.W
+
+    def prediction(self, input_data='', mode='test_data'):
+
+        prediction = {}
+        prediction_list = {}
+        prediction_return = 0.0
+        ovo_vote = []
+
+        for class_item in self.class_list:
+            self.temp_W = self.W
+            self.W = self.temp_W[class_item]
+            prediction = super(MultiClassifier, self).prediction(input_data, mode)
+            if prediction['prediction'] == 1:
+                prediction_list[class_item] = class_item[0]
+            else:
+                prediction_list[class_item] = class_item[1]
+            ovo_vote.append(prediction_list[class_item])
+            self.W = self.temp_W
+            self.temp_W = {}
+
+        prediction_return = max(set(ovo_vote), key=ovo_vote.count)
+
+        return {
+            "input_data_x": prediction['input_data_x'],
+            "input_data_y": prediction['input_data_y'],
+            "prediction": prediction_return,
+            "prediction_list": prediction_list,
+        }

@@ -296,6 +296,10 @@ class MultiClassifier(BinaryClassifier):
 
     def calculate_avg_error(self, X, Y, W):
 
+        return super(MultiClassifier, self).calculate_avg_error(X, Y, W)
+
+    def calculate_avg_error_all_class(self, X, Y, W):
+
         data_num = len(Y)
         error_num = 0
 

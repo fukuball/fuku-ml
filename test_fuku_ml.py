@@ -169,9 +169,9 @@ class FukuMLTestCase(unittest.TestCase):
         print("所有類型預測機率值：")
         print(prediction['prediction_list'])
         print("W 平均錯誤率（Ein）：")
-        print(pla_mc.calculate_avg_error(pla_mc.train_X, pla_mc.train_Y, W))
+        print(pla_mc.calculate_avg_error_all_class(pla_mc.train_X, pla_mc.train_Y, W))
         print("W 平均錯誤率（Eout）：")
-        print(pla_mc.calculate_avg_error(pla_mc.test_X, pla_mc.test_Y, W))
+        print(pla_mc.calculate_avg_error_all_class(pla_mc.test_X, pla_mc.test_Y, W))
         print('-'*70)
 
         print("使用 Linear Regression 加速器：")
@@ -185,9 +185,9 @@ class FukuMLTestCase(unittest.TestCase):
         self.assertEqual(float(prediction['input_data_y']), float(prediction['prediction']))
 
         print("W 平均錯誤率（Ein）：")
-        print(pla_mc.calculate_avg_error(pla_mc.train_X, pla_mc.train_Y, W))
+        print(pla_mc.calculate_avg_error_all_class(pla_mc.train_X, pla_mc.train_Y, W))
         print("W 平均錯誤率（Eout）：")
-        print(pla_mc.calculate_avg_error(pla_mc.test_X, pla_mc.test_Y, W))
+        print(pla_mc.calculate_avg_error_all_class(pla_mc.test_X, pla_mc.test_Y, W))
         print('-'*70)
 
     def test_pocket_pla_binary_classifier(self):
@@ -270,6 +270,52 @@ class FukuMLTestCase(unittest.TestCase):
         print(pocket_bc.calculate_avg_error(pocket_bc.train_X, pocket_bc.train_Y, W))
         print("W 平均錯誤率（Eout）：")
         print(pocket_bc.calculate_avg_error(pocket_bc.test_X, pocket_bc.test_Y, W))
+        print('-'*70)
+
+    def test_pocket_pla_multi_classifier(self):
+
+        #------------------------------------------------------------
+
+        pocket_mc = pocket.MultiClassifier()
+        pocket_mc.load_train_data()
+        pocket_mc.load_test_data()
+        pocket_mc.init_W()
+        W = pocket_mc.train()
+        print("\n訓練得出權重模型：")
+        print(W)
+
+        test_data = '0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 0 0 0 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 0 0 0 0 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 0 0 0 0 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 0 0 0 0 0 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 0 0 0 0 0 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 0 0 0 0 0 0 0 0 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 0 0 0 0 0 0 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 0 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0'
+        prediction = pocket_mc.prediction(test_data)
+        self.assertEqual(float(prediction['input_data_y']), float(prediction['prediction']))
+
+        print("測試資料 x：")
+        print(prediction['input_data_x'])
+        print("測試資料 y：")
+        print(prediction['input_data_y'])
+        print("預測結果：")
+        print(prediction['prediction'])
+        print("所有類型預測機率值：")
+        print(prediction['prediction_list'])
+        print("W 平均錯誤率（Ein）：")
+        print(pocket_mc.calculate_avg_error_all_class(pocket_mc.train_X, pocket_mc.train_Y, W))
+        print("W 平均錯誤率（Eout）：")
+        print(pocket_mc.calculate_avg_error_all_class(pocket_mc.test_X, pocket_mc.test_Y, W))
+        print('-'*70)
+
+        print("使用 Linear Regression 加速器：")
+        pocket_mc.init_W('linear_regression_accelerator')
+        W = pocket_mc.train()
+        print("\n訓練得出權重模型：")
+        print(W)
+
+        test_data = '0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 0 0 0 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 0 0 0 0 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 0 0 0 0 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 0 0 0 0 0 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 0 0 0 0 0 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 0 0 0 0 0 0 0 0 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 0 0 0 0 0 0 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 0 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0'
+        prediction = pocket_mc.prediction(test_data)
+        self.assertEqual(float(prediction['input_data_y']), float(prediction['prediction']))
+
+        print("W 平均錯誤率（Ein）：")
+        print(pocket_mc.calculate_avg_error_all_class(pocket_mc.train_X, pocket_mc.train_Y, W))
+        print("W 平均錯誤率（Eout）：")
+        print(pocket_mc.calculate_avg_error_all_class(pocket_mc.test_X, pocket_mc.test_Y, W))
         print('-'*70)
 
     def test_linear_regression(self):
@@ -471,9 +517,9 @@ class FukuMLTestCase(unittest.TestCase):
         print("所有類型預測機率值：")
         print(prediction['prediction_list'])
         print("W 平均錯誤率（Ein）：")
-        print(logistic.calculate_avg_error(logistic.train_X, logistic.train_Y, W))
+        print(logistic.calculate_avg_error_all_class(logistic.train_X, logistic.train_Y, W))
         print("W 平均錯誤率（Eout）：")
-        print(logistic.calculate_avg_error(logistic.test_X, logistic.test_Y, W))
+        print(logistic.calculate_avg_error_all_class(logistic.test_X, logistic.test_Y, W))
         print('-'*70)
 
         print("隨機梯度下降：")
@@ -482,9 +528,9 @@ class FukuMLTestCase(unittest.TestCase):
         print("訓練得出權重模型：")
         print(W)
         print("W 平均錯誤率（Ein）：")
-        print(logistic.calculate_avg_error(logistic.train_X, logistic.train_Y, W))
+        print(logistic.calculate_avg_error_all_class(logistic.train_X, logistic.train_Y, W))
         print("W 平均錯誤率（Eout）：")
-        print(logistic.calculate_avg_error(logistic.test_X, logistic.test_Y, W))
+        print(logistic.calculate_avg_error_all_class(logistic.test_X, logistic.test_Y, W))
         print('-'*70)
 
         #------------------------------------------------------------
@@ -497,9 +543,9 @@ class FukuMLTestCase(unittest.TestCase):
         print("\n訓練得出權重模型：")
         print(W)
         print("W 平均錯誤率（Ein）：")
-        print(logistic.calculate_avg_error(logistic.train_X, logistic.train_Y, W))
+        print(logistic.calculate_avg_error_all_class(logistic.train_X, logistic.train_Y, W))
         print("W 平均錯誤率（Eout）：")
-        print(logistic.calculate_avg_error(logistic.test_X, logistic.test_Y, W))
+        print(logistic.calculate_avg_error_all_class(logistic.test_X, logistic.test_Y, W))
         print('-'*70)
 
         #------------------------------------------------------------
@@ -523,9 +569,9 @@ class FukuMLTestCase(unittest.TestCase):
         print("所有類型預測機率值：")
         print(prediction['prediction_list'])
         print("W 平均錯誤率（Ein）：")
-        print(logistic.calculate_avg_error(logistic.train_X, logistic.train_Y, W))
+        print(logistic.calculate_avg_error_all_class(logistic.train_X, logistic.train_Y, W))
         print("W 平均錯誤率（Eout）：")
-        print(logistic.calculate_avg_error(logistic.test_X, logistic.test_Y, W))
+        print(logistic.calculate_avg_error_all_class(logistic.test_X, logistic.test_Y, W))
         print('-'*70)
 
         #------------------------------------------------------------
@@ -541,9 +587,9 @@ class FukuMLTestCase(unittest.TestCase):
         self.assertEqual(float(prediction['input_data_y']), float(prediction['prediction']))
 
         print("W 平均錯誤率（Ein）：")
-        print(logistic.calculate_avg_error(logistic.train_X, logistic.train_Y, W))
+        print(logistic.calculate_avg_error_all_class(logistic.train_X, logistic.train_Y, W))
         print("W 平均錯誤率（Eout）：")
-        print(logistic.calculate_avg_error(logistic.test_X, logistic.test_Y, W))
+        print(logistic.calculate_avg_error_all_class(logistic.test_X, logistic.test_Y, W))
         print('-'*70)
 
 
