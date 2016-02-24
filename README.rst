@@ -28,37 +28,41 @@ Installation
 Algorithm
 ============
 
-Perceptron Binary Classification Learning Algorithm
+- Perceptron Binary Classification Learning Algorithm
 
-Perceptron Binary Classification Learning Algorithm with Linear Regression Accelerator
+- Perceptron Binary Classification Learning Algorithm with Linear Regression Accelerator
 
-Perceptron Multi Classification Learning Algorithm
+- Perceptron Multi Classification Learning Algorithm
 
-Perceptron Multi Classification Learning Algorithm with Linear Regression Accelerator
+- Perceptron Multi Classification Learning Algorithm with Linear Regression Accelerator
 
-Pocket Perceptron Binary Classification Learning Algorithm
+- Pocket Perceptron Binary Classification Learning Algorithm
 
-Pocket Perceptron Binary Classification Learning Algorithm with Linear Regression Accelerator
+- Pocket Perceptron Binary Classification Learning Algorithm with Linear Regression Accelerator
 
-Linear Regression Learning Algorithm
+- Pocket Perceptron Multi Classification Learning Algorithm
 
-Linear Regression Binary Classification Learning Algorithm
+- Pocket Perceptron Multi Classification Learning Algorithm with Linear Regression Accelerator
 
-Logistic Regression Learning Algorithm
+- Linear Regression Learning Algorithm
 
-Logistic Regression Learning Algorithm with Linear Regression Accelerator
+- Linear Regression Binary Classification Learning Algorithm
 
-Logistic Regression Binary Classification Learning Algorithm
+- Logistic Regression Learning Algorithm
 
-Logistic Regression Binary Classification Learning Algorithm with Linear Regression Accelerator
+- Logistic Regression Learning Algorithm with Linear Regression Accelerator
 
-Logistic Regression One vs All Multi Classification Learning Algorithm
+- Logistic Regression Binary Classification Learning Algorithm
 
-Logistic Regression One vs All Multi Classification Learning Algorithm with Linear Regression Accelerator
+- Logistic Regression Binary Classification Learning Algorithm with Linear Regression Accelerator
 
-Logistic Regression One vs One Multi Classification Learning Algorithm
+- Logistic Regression One vs All Multi Classification Learning Algorithm
 
-Logistic Regression One vs One Multi Classification Learning Algorithm with Linear Regression Accelerator
+- Logistic Regression One vs All Multi Classification Learning Algorithm with Linear Regression Accelerator
+
+- Logistic Regression One vs One Multi Classification Learning Algorithm
+
+- Logistic Regression One vs One Multi Classification Learning Algorithm with Linear Regression Accelerator
 
 Usage
 ============
