@@ -221,6 +221,36 @@ class BinaryClassifier(LinearRegression):
         return super(BinaryClassifier, self).prediction(input_data, mode)
 
 
+class MultiClassifier(BinaryClassifier):
+
+    class_list = []
+    temp_train_X = []
+    temp_train_Y = []
+    temp_W = {}
+    temp_data_num = 0
+    decomposition = 'ovo'
+
+    def __init__(self):
+
+        self.status = 'empty'
+        self.train_X = []
+        self.train_Y = []
+        self.W = []
+        self.data_num = 0
+        self.data_demension = 0
+        self.tune_times = 0
+        self.test_X = []
+        self.test_Y = []
+        self.xpsedo = []
+
+        self.class_list = []
+        self.temp_train_X = []
+        self.temp_train_Y = []
+        self.temp_W = {}
+        self.temp_data_num = 0
+        self.decomposition = 'ovo'
+
+
 class Accelerator(object):
 
     @staticmethod
