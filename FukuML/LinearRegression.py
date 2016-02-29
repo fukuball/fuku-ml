@@ -250,6 +250,34 @@ class MultiClassifier(BinaryClassifier):
         self.temp_data_num = 0
         self.decomposition = 'ovo'
 
+    def load_train_data(self, input_data_file=''):
+
+        self.status = 'load_train_data'
+
+        if (input_data_file == ''):
+            input_data_file = os.path.normpath(os.path.join(os.path.join(os.getcwd(), os.path.dirname(__file__)), "dataset/digits_multiclass_train.dat"))
+        else:
+            if (os.path.isfile(input_data_file) is not True):
+                print("Please make sure input_data_file path is correct.")
+                return self.train_X, self.train_Y
+
+        self.train_X, self.train_Y = utility.DatasetLoader.load(input_data_file)
+
+        return self.train_X, self.train_Y
+
+    def load_test_data(self, input_data_file=''):
+
+        if (input_data_file == ''):
+            input_data_file = os.path.normpath(os.path.join(os.path.join(os.getcwd(), os.path.dirname(__file__)), "dataset/digits_multiclass_test.dat"))
+        else:
+            if (os.path.isfile(input_data_file) is not True):
+                print("Please make sure input_data_file path is correct.")
+                return self.test_X, self.test_Y
+
+        self.test_X, self.test_Y = utility.DatasetLoader.load(input_data_file)
+
+        return self.test_X, self.test_Y
+
 
 class Accelerator(object):
 
