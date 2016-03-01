@@ -1,6 +1,7 @@
 #encoding=utf8
 
 import os
+import itertools
 import numpy as np
 import FukuML.Utility as utility
 import FukuML.MLBase as ml
@@ -277,6 +278,25 @@ class MultiClassifier(BinaryClassifier):
         self.test_X, self.test_Y = utility.DatasetLoader.load(input_data_file)
 
         return self.test_X, self.test_Y
+
+    def init_W(self, mode='normal'):
+
+        self.W = {}
+
+        if (self.status != 'load_train_data') and (self.status != 'train'):
+            print("Please load train data first.")
+            return self.W
+
+        self.status = 'init'
+
+        self.data_num = len(self.train_Y)
+        self.data_demension = len(self.train_X[0])
+        self.class_list = list(itertools.combinations(np.unique(self.train_Y), 2))
+
+        for class_item in self.class_list:
+            self.W[class_item] = np.zeros(self.data_demension)
+
+        return self.W
 
 
 class Accelerator(object):
