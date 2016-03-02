@@ -298,6 +298,25 @@ class MultiClassifier(BinaryClassifier):
 
         return self.W
 
+    def score_function(self, x, W):
+
+        return super(MultiClassifier, self).score_function(x, W)
+
+    def score_function_all_class(self, x, W):
+
+        score_list = {}
+        ovo_vote = []
+
+        for class_item in self.class_list:
+            score = self.score_function(x, W[class_item])
+            if score == 1:
+                score_list[class_item] = class_item[0]
+            else:
+                score_list[class_item] = class_item[1]
+            ovo_vote.append(score_list[class_item])
+
+        return max(set(ovo_vote), key=ovo_vote.count)
+
 
 class Accelerator(object):
 
