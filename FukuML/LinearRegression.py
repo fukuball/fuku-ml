@@ -317,6 +317,26 @@ class MultiClassifier(BinaryClassifier):
 
         return max(set(ovo_vote), key=ovo_vote.count)
 
+    def error_function(self, y_prediction, y_truth):
+
+        return super(MultiClassifier, self).error_function(y_prediction, y_truth)
+
+    def calculate_avg_error(self, X, Y, W):
+
+        return super(MultiClassifier, self).calculate_avg_error(X, Y, W)
+
+    def calculate_avg_error_all_class(self, X, Y, W):
+
+        data_num = len(Y)
+        error_num = 0
+
+        for i in range(data_num):
+            error_num = error_num + self.error_function(self.score_function_all_class(X[i], W), Y[i])
+
+        avg_error = error_num / float(data_num)
+
+        return avg_error
+
 
 class Accelerator(object):
 
