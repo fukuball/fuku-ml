@@ -337,6 +337,25 @@ class MultiClassifier(BinaryClassifier):
 
         return avg_error
 
+    def calculate_test_data_avg_error(self):
+
+        return super(MultiClassifier, self).calculate_avg_error()
+
+    def modify_XY(self, X, Y, class_item):
+
+        modify_X = []
+        modify_Y = []
+
+        for idx, val in enumerate(Y):
+            if val == class_item[0]:
+                modify_Y.append(1)
+                modify_X.append(X[idx])
+            elif val == class_item[1]:
+                modify_Y.append(-1)
+                modify_X.append(X[idx])
+
+        return np.array(modify_X), np.array(modify_Y)
+
 
 class Accelerator(object):
 
