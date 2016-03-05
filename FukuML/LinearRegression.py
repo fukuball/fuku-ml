@@ -356,6 +356,38 @@ class MultiClassifier(BinaryClassifier):
 
         return np.array(modify_X), np.array(modify_Y)
 
+    def train(self):
+
+        if (self.status != 'init'):
+            print("Please load train data and init W first.")
+            return self.W
+
+        for class_item in self.class_list:
+            self.status = 'init'
+            modify_X, modify_Y = self.modify_XY(self.train_X, self.train_Y, class_item)
+            self.temp_train_X = self.train_X
+            self.temp_train_Y = self.train_Y
+            self.train_X = modify_X
+            self.train_Y = modify_Y
+            self.temp_data_num = self.data_num
+            self.data_num = len(self.train_Y)
+            self.temp_W = self.W
+            self.W = self.temp_W[class_item]
+            self.temp_W[class_item] = super(MultiClassifier, self).train()
+            self.train_X = self.temp_train_X
+            self.train_Y = self.temp_train_Y
+            self.temp_train_X = []
+            self.temp_train_Y = []
+            self.data_num = self.temp_data_num
+            self.temp_data_num = 0
+            self.W = self.temp_W
+            self.temp_W = {}
+            #print("class %d to %d learned." % (class_item[0], class_item[1]))
+
+        self.status = 'train'
+
+        return self.W
+
 
 class Accelerator(object):
 
