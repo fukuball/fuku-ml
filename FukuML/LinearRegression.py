@@ -388,6 +388,34 @@ class MultiClassifier(BinaryClassifier):
 
         return self.W
 
+    def prediction(self, input_data='', mode='test_data'):
+
+        prediction = {}
+        prediction_list = {}
+        prediction_return = 0.0
+        ovo_vote = []
+
+        for class_item in self.class_list:
+            self.temp_W = self.W
+            self.W = self.temp_W[class_item]
+            prediction = super(MultiClassifier, self).prediction(input_data, mode)
+            if prediction['prediction'] == 1:
+                prediction_list[class_item] = class_item[0]
+            else:
+                prediction_list[class_item] = class_item[1]
+            ovo_vote.append(prediction_list[class_item])
+            self.W = self.temp_W
+            self.temp_W = {}
+
+        prediction_return = max(set(ovo_vote), key=ovo_vote.count)
+
+        return {
+            "input_data_x": prediction['input_data_x'],
+            "input_data_y": prediction['input_data_y'],
+            "prediction": prediction_return,
+            "prediction_list": prediction_list,
+        }
+
 
 class Accelerator(object):
 
