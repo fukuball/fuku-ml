@@ -48,6 +48,8 @@ Algorithm
 
 - Linear Regression Binary Classification Learning Algorithm
 
+- Linear Regression Multi Classification Learning Algorithm
+
 - Logistic Regression Learning Algorithm
 
 - Logistic Regression Learning Algorithm with Linear Regression Accelerator
