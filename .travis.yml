@@ -21,7 +21,6 @@ before_install:
 install:
   - pip install -r requirements_test.txt
   - pip install codecov
-  - python setup.py dev
 
 script:
   - coverage run --source=FukuML setup.py test
