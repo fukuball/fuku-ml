@@ -19,9 +19,9 @@ before_install:
   - pip install -U pip setuptools wheel
 
 install:
-  - travis_wait travis_retry pip install -r requirements_test.txt
-  - travis_wait travis_retry pip install codecov
-  - travis_retry python setup.py dev
+  - pip install -r requirements_test.txt
+  - pip install codecov
+  - python setup.py dev
 
 script:
   - coverage run --source=FukuML setup.py test
