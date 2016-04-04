@@ -6,21 +6,15 @@ python:
   - "3.3"
   - "3.4"
 
-# Setup anaconda
-before_install:
-  - wget http://repo.continuum.io/miniconda/Miniconda-latest-Linux-x86_64.sh -O miniconda.sh
-  - chmod +x miniconda.sh
-  - ./miniconda.sh -b
-  - export PATH=/home/travis/miniconda/bin:$PATH
-  - conda update --yes conda
-  # The next couple lines fix a crash with multiprocessing on Travis and are not specific to using Miniconda
-  - sudo rm -rf /dev/shm
-  - sudo ln -s /run/shm /dev/shm
+virtualenv:
+  system_site_packages: true
 
-# Install packages
+before_install:
+ - sudo apt-get install build-essential python-dev python-numpy python-numpy-dev python-scipy libatlas-dev g++ python-matplotlib ipython
+
 install:
-  - conda install --yes python=$TRAVIS_PYTHON_VERSION numpy scipy scikit-learn codecov
-  - python setup.py install
+  #- pip install -r requirements_test.txt3
+  - pip install codecov
 
 script:
   - coverage run --source=FukuML setup.py test
