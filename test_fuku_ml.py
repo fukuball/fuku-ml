@@ -622,6 +622,63 @@ class FukuMLTestCase(unittest.TestCase):
         print(logistic.calculate_avg_error_all_class(logistic.test_X, logistic.test_Y, W))
         print('-'*70)
 
+    def test_pla_binary_classifier_with_feature_transform(self):
+
+        #------------------------------------------------------------
+
+        input_train_data_file = os.path.join(os.path.join(os.getcwd(), os.path.dirname(__file__)), 'FukuML/dataset/pocket_pla_binary_train.dat')
+        input_test_data_file = os.path.join(os.path.join(os.getcwd(), os.path.dirname(__file__)), 'FukuML/dataset/pocket_pla_binary_test.dat')
+
+        pla_bc = pla.BinaryClassifier()
+        pla_bc.load_train_data(input_train_data_file)
+        pla_bc.init_W()
+        W = pla_bc.train()
+        pla_bc.load_test_data(input_test_data_file)
+
+        print("\n訓練得出權重模型：")
+        print(W)
+        print("W 更新次數：")
+        print(pla_bc.tune_times)
+        print("W 平均錯誤率（Ein）：")
+        print(pla_bc.calculate_avg_error(pla_bc.train_X, pla_bc.train_Y, W))
+        print("W 平均錯誤率（Eout）：")
+        print(pla_bc.calculate_avg_error(pla_bc.test_X, pla_bc.test_Y, W))
+        print('-'*70)
+
+        pla_bc = pla.BinaryClassifier()
+        pla_bc.load_train_data(input_train_data_file)
+        pla_bc.setFeatureTransform('polynomial', 2)
+        pla_bc.init_W()
+        W = pla_bc.train()
+        pla_bc.load_test_data(input_test_data_file)
+
+        print("\n Polynomial 非線性轉換訓練得出權重模型：")
+        print(W)
+        print("W 更新次數：")
+        print(pla_bc.tune_times)
+        print("W 平均錯誤率（Ein）：")
+        print(pla_bc.calculate_avg_error(pla_bc.train_X, pla_bc.train_Y, W))
+        print("W 平均錯誤率（Eout）：")
+        print(pla_bc.calculate_avg_error(pla_bc.test_X, pla_bc.test_Y, W))
+        print('-'*70)
+
+        pla_bc = pla.BinaryClassifier()
+        pla_bc.load_train_data(input_train_data_file)
+        pla_bc.setFeatureTransform('legendre', 2)
+        pla_bc.init_W()
+        W = pla_bc.train()
+        pla_bc.load_test_data(input_test_data_file)
+
+        print("\n Legendre 非線性轉換訓練得出權重模型：")
+        print(W)
+        print("W 更新次數：")
+        print(pla_bc.tune_times)
+        print("W 平均錯誤率（Ein）：")
+        print(pla_bc.calculate_avg_error(pla_bc.train_X, pla_bc.train_Y, W))
+        print("W 平均錯誤率（Eout）：")
+        print(pla_bc.calculate_avg_error(pla_bc.test_X, pla_bc.test_Y, W))
+        print('-'*70)
+
 
 if __name__ == '__main__':
 

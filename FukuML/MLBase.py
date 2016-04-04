@@ -1,6 +1,7 @@
 #encoding=utf8
 
 from abc import ABCMeta, abstractmethod
+import FukuML.Utility as utility
 
 
 class Learner(object):
@@ -15,6 +16,8 @@ class Learner(object):
     tune_times = 0
     test_X = []
     test_Y = []
+    feature_transform_mode = ''
+    feature_transform_degree = 1
 
     @abstractmethod
     def __init__(self):
@@ -27,6 +30,29 @@ class Learner(object):
     @abstractmethod
     def load_test_data(self, input_data_file=''):
         return
+
+    def setFeatureTransform(self, mode='polynomial', degree=1):
+
+        '''
+        Transform data feature to high level
+        '''
+
+        if self.status != 'load_train_data':
+            print("Please load train data first.")
+            return self.train_X
+
+        self.feature_transform_mode = mode
+        self.feature_transform_degree = degree
+
+        self.train_X = self.train_X[:, 1:]
+
+        self.train_X = utility.DatasetLoader.featureTransform(
+            self.train_X,
+            self.feature_transform_mode,
+            self.feature_transform_degree
+        )
+
+        return self.train_X
 
     @abstractmethod
     def init_W(self):

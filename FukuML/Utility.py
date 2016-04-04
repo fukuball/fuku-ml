@@ -2,6 +2,8 @@
 
 import numpy as np
 import pickle
+from sklearn.preprocessing import PolynomialFeatures
+from scipy.special import legendre
 
 
 class DatasetLoader(object):
@@ -19,6 +21,18 @@ class DatasetLoader(object):
                 Y.append(float(data[-1]))
 
         return np.array(X), np.array(Y)
+
+    @staticmethod
+    def featureTransform(X, mode='polynomial', degree=1):
+
+        poly = PolynomialFeatures(degree)
+        process_X = poly.fit_transform(X)
+
+        if mode == 'legendre':
+            lege = legendre(degree)
+            process_X = lege(process_X)
+
+        return process_X
 
 
 class Serializer(object):
