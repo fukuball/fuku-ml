@@ -68,6 +68,15 @@ class LogisticRegression(ml.Learner):
 
         self.test_X, self.test_Y = utility.DatasetLoader.load(input_data_file)
 
+        if (self.feature_transform_mode == 'polynomial') or (self.feature_transform_mode == 'legendre'):
+            self.test_X = self.test_X[:, 1:]
+
+            self.test_X = utility.DatasetLoader.featureTransform(
+                self.test_X,
+                self.feature_transform_mode,
+                self.feature_transform_degree
+            )
+
         return self.test_X, self.test_Y
 
     def init_W(self, mode='normal'):

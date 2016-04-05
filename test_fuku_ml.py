@@ -622,7 +622,7 @@ class FukuMLTestCase(unittest.TestCase):
         print(logistic.calculate_avg_error_all_class(logistic.test_X, logistic.test_Y, W))
         print('-'*70)
 
-    def test_pla_binary_classifier_with_feature_transform(self):
+    def test_binary_classifier_with_feature_transform(self):
 
         #------------------------------------------------------------
 
@@ -635,7 +635,7 @@ class FukuMLTestCase(unittest.TestCase):
         W = pla_bc.train()
         pla_bc.load_test_data(input_test_data_file)
 
-        print("\n訓練得出權重模型：")
+        print("\nPLA 訓練得出權重模型：")
         print(W)
         print("W 更新次數：")
         print(pla_bc.tune_times)
@@ -652,7 +652,7 @@ class FukuMLTestCase(unittest.TestCase):
         W = pla_bc.train()
         pla_bc.load_test_data(input_test_data_file)
 
-        print("\n Polynomial 非線性轉換訓練得出權重模型：")
+        print("\nPLA Polynomial 非線性轉換訓練得出權重模型：")
         print(W)
         print("W 更新次數：")
         print(pla_bc.tune_times)
@@ -669,7 +669,7 @@ class FukuMLTestCase(unittest.TestCase):
         W = pla_bc.train()
         pla_bc.load_test_data(input_test_data_file)
 
-        print("\n Legendre 非線性轉換訓練得出權重模型：")
+        print("\nPLA Legendre 非線性轉換訓練得出權重模型：")
         print(W)
         print("W 更新次數：")
         print(pla_bc.tune_times)
@@ -677,6 +677,156 @@ class FukuMLTestCase(unittest.TestCase):
         print(pla_bc.calculate_avg_error(pla_bc.train_X, pla_bc.train_Y, W))
         print("W 平均錯誤率（Eout）：")
         print(pla_bc.calculate_avg_error(pla_bc.test_X, pla_bc.test_Y, W))
+        print('-'*70)
+
+        #------------------------------------------------------------
+
+        pocket_bc = pocket.BinaryClassifier()
+        pocket_bc.load_train_data(input_train_data_file)
+        pocket_bc.init_W()
+        W = pocket_bc.train(50)
+        pocket_bc.load_test_data(input_test_data_file)
+
+        print("Pocket 訓練得出權重模型：")
+        print(W)
+        print("W 更新次數：")
+        print(pocket_bc.tune_times)
+        print("W 效果改善次數：")
+        print(pocket_bc.put_in_pocket_times)
+        print("W 平均錯誤率（Ein）：")
+        print(pocket_bc.calculate_avg_error(pocket_bc.train_X, pocket_bc.train_Y, W))
+        print("W 平均錯誤率（Eout）：")
+        print(pocket_bc.calculate_avg_error(pocket_bc.test_X, pocket_bc.test_Y, W))
+        print('-'*70)
+
+        pocket_bc = pocket.BinaryClassifier()
+        pocket_bc.load_train_data(input_train_data_file)
+        pocket_bc.setFeatureTransform('polynomial', 2)
+        pocket_bc.init_W()
+        W = pocket_bc.train(50)
+        pocket_bc.load_test_data(input_test_data_file)
+
+        print("Pocket Polynomial 非線性轉換訓練得出權重模型：")
+        print(W)
+        print("W 更新次數：")
+        print(pocket_bc.tune_times)
+        print("W 效果改善次數：")
+        print(pocket_bc.put_in_pocket_times)
+        print("W 平均錯誤率（Ein）：")
+        print(pocket_bc.calculate_avg_error(pocket_bc.train_X, pocket_bc.train_Y, W))
+        print("W 平均錯誤率（Eout）：")
+        print(pocket_bc.calculate_avg_error(pocket_bc.test_X, pocket_bc.test_Y, W))
+        print('-'*70)
+
+        pocket_bc = pocket.BinaryClassifier()
+        pocket_bc.load_train_data(input_train_data_file)
+        pocket_bc.setFeatureTransform('legendre', 2)
+        pocket_bc.init_W()
+        W = pocket_bc.train(50)
+        pocket_bc.load_test_data(input_test_data_file)
+
+        print("Pocket Legendre 非線性轉換訓練得出權重模型：")
+        print(W)
+        print("W 更新次數：")
+        print(pocket_bc.tune_times)
+        print("W 效果改善次數：")
+        print(pocket_bc.put_in_pocket_times)
+        print("W 平均錯誤率（Ein）：")
+        print(pocket_bc.calculate_avg_error(pocket_bc.train_X, pocket_bc.train_Y, W))
+        print("W 平均錯誤率（Eout）：")
+        print(pocket_bc.calculate_avg_error(pocket_bc.test_X, pocket_bc.test_Y, W))
+        print('-'*70)
+
+        #------------------------------------------------------------
+
+        linear_bc = linear_regression.BinaryClassifier()
+        linear_bc.load_train_data(input_train_data_file)
+        linear_bc.init_W()
+        W = linear_bc.train()
+        linear_bc.load_test_data(input_test_data_file)
+
+        print("\nLinear Regression 訓練得出權重模型：")
+        print(W)
+        print("W 平均錯誤率（Ein）：")
+        print(linear_bc.calculate_avg_error(linear_bc.train_X, linear_bc.train_Y, W))
+        print("W 平均錯誤率（Eout）：")
+        print(linear_bc.calculate_avg_error(linear_bc.test_X, linear_bc.test_Y, W))
+        print('-'*70)
+
+        linear_bc = linear_regression.BinaryClassifier()
+        linear_bc.load_train_data(input_train_data_file)
+        linear_bc.setFeatureTransform('polynomial', 2)
+        linear_bc.init_W()
+        W = linear_bc.train()
+        linear_bc.load_test_data(input_test_data_file)
+
+        print("\nLinear Regression Polynomial 訓練得出權重模型：")
+        print(W)
+        print("W 平均錯誤率（Ein）：")
+        print(linear_bc.calculate_avg_error(linear_bc.train_X, linear_bc.train_Y, W))
+        print("W 平均錯誤率（Eout）：")
+        print(linear_bc.calculate_avg_error(linear_bc.test_X, linear_bc.test_Y, W))
+        print('-'*70)
+
+        linear_bc = linear_regression.BinaryClassifier()
+        linear_bc.load_train_data(input_train_data_file)
+        linear_bc.setFeatureTransform('legendre', 2)
+        linear_bc.init_W()
+        W = linear_bc.train()
+        linear_bc.load_test_data(input_test_data_file)
+
+        print("\nLinear Regression Legendre 訓練得出權重模型：")
+        print(W)
+        print("W 平均錯誤率（Ein）：")
+        print(linear_bc.calculate_avg_error(linear_bc.train_X, linear_bc.train_Y, W))
+        print("W 平均錯誤率（Eout）：")
+        print(linear_bc.calculate_avg_error(linear_bc.test_X, linear_bc.test_Y, W))
+        print('-'*70)
+
+        #------------------------------------------------------------
+
+        logistic = logistic_regression.BinaryClassifier()
+        logistic.load_train_data(input_train_data_file)
+        logistic.init_W()
+        W = logistic.train()
+        logistic.load_test_data(input_test_data_file)
+
+        print("\nLogistic Regression 訓練得出權重模型：")
+        print(W)
+        print("W 平均錯誤率（Ein）：")
+        print(logistic.calculate_avg_error(logistic.train_X, logistic.train_Y, W))
+        print("W 平均錯誤率（Eout）：")
+        print(logistic.calculate_avg_error(logistic.test_X, logistic.test_Y, W))
+        print('-'*70)
+
+        logistic = logistic_regression.BinaryClassifier()
+        logistic.load_train_data(input_train_data_file)
+        logistic.setFeatureTransform('polynomial', 2)
+        logistic.init_W()
+        W = logistic.train()
+        logistic.load_test_data(input_test_data_file)
+
+        print("\nLogistic Regression Polynomial 訓練得出權重模型：")
+        print(W)
+        print("W 平均錯誤率（Ein）：")
+        print(logistic.calculate_avg_error(logistic.train_X, logistic.train_Y, W))
+        print("W 平均錯誤率（Eout）：")
+        print(logistic.calculate_avg_error(logistic.test_X, logistic.test_Y, W))
+        print('-'*70)
+
+        logistic = logistic_regression.BinaryClassifier()
+        logistic.load_train_data(input_train_data_file)
+        logistic.setFeatureTransform('legendre', 2)
+        logistic.init_W()
+        W = logistic.train()
+        logistic.load_test_data(input_test_data_file)
+
+        print("\nLogistic Regression Legendre 訓練得出權重模型：")
+        print(W)
+        print("W 平均錯誤率（Ein）：")
+        print(logistic.calculate_avg_error(logistic.train_X, logistic.train_Y, W))
+        print("W 平均錯誤率（Eout）：")
+        print(logistic.calculate_avg_error(logistic.test_X, logistic.test_Y, W))
         print('-'*70)
 
 
