@@ -241,6 +241,15 @@ class MultiClassifier(BinaryClassifier):
 
         self.test_X, self.test_Y = utility.DatasetLoader.load(input_data_file)
 
+        if (self.feature_transform_mode == 'polynomial') or (self.feature_transform_mode == 'legendre'):
+            self.test_X = self.test_X[:, 1:]
+
+            self.test_X = utility.DatasetLoader.featureTransform(
+                self.test_X,
+                self.feature_transform_mode,
+                self.feature_transform_degree
+            )
+
         return self.test_X, self.test_Y
 
     def init_W(self, mode='normal'):
@@ -369,7 +378,7 @@ class MultiClassifier(BinaryClassifier):
             self.temp_data_num = 0
             self.W = self.temp_W
             self.temp_W = {}
-            print("class %d to %d learned." % (class_item[0], class_item[1]))
+            #print("class %d to %d learned." % (class_item[0], class_item[1]))
 
         self.status = 'train'
 

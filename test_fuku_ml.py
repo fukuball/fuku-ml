@@ -829,6 +829,155 @@ class FukuMLTestCase(unittest.TestCase):
         print(logistic.calculate_avg_error(logistic.test_X, logistic.test_Y, W))
         print('-'*70)
 
+    def test_multi_classifier_with_feature_transform(self):
+
+        #------------------------------------------------------------
+
+        pla_mc = pla.MultiClassifier()
+        pla_mc.load_train_data()
+        pla_mc.setFeatureTransform('polynomial', 1)
+        pla_mc.load_test_data()
+        pla_mc.init_W()
+        W = pla_mc.train()
+        print("\nPLA Polynomial 多類訓練得出權重模型：")
+        print(W)
+        print("W 平均錯誤率（Ein）：")
+        print(pla_mc.calculate_avg_error_all_class(pla_mc.train_X, pla_mc.train_Y, W))
+        print("W 平均錯誤率（Eout）：")
+        print(pla_mc.calculate_avg_error_all_class(pla_mc.test_X, pla_mc.test_Y, W))
+        print('-'*70)
+
+        pla_mc = pla.MultiClassifier()
+        pla_mc.load_train_data()
+        pla_mc.setFeatureTransform('legendre', 1)
+        pla_mc.load_test_data()
+        pla_mc.init_W()
+        W = pla_mc.train()
+        print("\nPLA Legendre 多類訓練得出權重模型：")
+        print(W)
+        print("W 平均錯誤率（Ein）：")
+        print(pla_mc.calculate_avg_error_all_class(pla_mc.train_X, pla_mc.train_Y, W))
+        print("W 平均錯誤率（Eout）：")
+        print(pla_mc.calculate_avg_error_all_class(pla_mc.test_X, pla_mc.test_Y, W))
+        print('-'*70)
+
+        #------------------------------------------------------------
+
+        pocket_mc = pocket.MultiClassifier()
+        pocket_mc.load_train_data()
+        pocket_mc.setFeatureTransform('polynomial', 1)
+        pocket_mc.load_test_data()
+        pocket_mc.init_W()
+        W = pocket_mc.train()
+        print("\nPocket Polynomial 多類訓練得出權重模型：")
+        print(W)
+        print("W 平均錯誤率（Ein）：")
+        print(pocket_mc.calculate_avg_error_all_class(pocket_mc.train_X, pocket_mc.train_Y, W))
+        print("W 平均錯誤率（Eout）：")
+        print(pocket_mc.calculate_avg_error_all_class(pocket_mc.test_X, pocket_mc.test_Y, W))
+        print('-'*70)
+
+        pocket_mc = pocket.MultiClassifier()
+        pocket_mc.load_train_data()
+        pocket_mc.setFeatureTransform('legendre', 1)
+        pocket_mc.load_test_data()
+        pocket_mc.init_W()
+        W = pocket_mc.train()
+        print("\nPocket Legendre 多類訓練得出權重模型：")
+        print(W)
+        print("W 平均錯誤率（Ein）：")
+        print(pocket_mc.calculate_avg_error_all_class(pocket_mc.train_X, pocket_mc.train_Y, W))
+        print("W 平均錯誤率（Eout）：")
+        print(pocket_mc.calculate_avg_error_all_class(pocket_mc.test_X, pocket_mc.test_Y, W))
+        print('-'*70)
+
+        #------------------------------------------------------------
+
+        linear_mc = linear_regression.MultiClassifier()
+        linear_mc.load_train_data()
+        linear_mc.setFeatureTransform('polynomial', 1)
+        linear_mc.load_test_data()
+        linear_mc.init_W()
+        W = linear_mc.train()
+        print("\nLinear Regression Polynomial 多類訓練得出權重模型：")
+        print(W)
+        print("W 平均錯誤率（Ein）：")
+        print(linear_mc.calculate_avg_error_all_class(linear_mc.train_X, linear_mc.train_Y, W))
+        print("W 平均錯誤率（Eout）：")
+        print(linear_mc.calculate_avg_error_all_class(linear_mc.test_X, linear_mc.test_Y, W))
+        print('-'*70)
+
+        linear_mc = linear_regression.MultiClassifier()
+        linear_mc.load_train_data()
+        linear_mc.setFeatureTransform('legendre', 1)
+        linear_mc.load_test_data()
+        linear_mc.init_W()
+        W = linear_mc.train()
+        print("\nLinear Regression Legendre 多類訓練得出權重模型：")
+        print(W)
+        print("W 平均錯誤率（Ein）：")
+        print(linear_mc.calculate_avg_error_all_class(linear_mc.train_X, linear_mc.train_Y, W))
+        print("W 平均錯誤率（Eout）：")
+        print(linear_mc.calculate_avg_error_all_class(linear_mc.test_X, linear_mc.test_Y, W))
+        print('-'*70)
+
+        #------------------------------------------------------------
+
+        logistic_mc = logistic_regression.MultiClassifier()
+        logistic_mc.load_train_data()
+        logistic_mc.setFeatureTransform('polynomial', 1)
+        logistic_mc.load_test_data()
+        logistic_mc.init_W()
+        W = logistic_mc.train()
+
+        print("\nLogistic Regression Polynomial 多類訓練得出權重模型：")
+        print(W)
+        print("W 平均錯誤率（Ein）：")
+        print(logistic_mc.calculate_avg_error_all_class(logistic_mc.train_X, logistic_mc.train_Y, W))
+        print("W 平均錯誤率（Eout）：")
+        print(logistic_mc.calculate_avg_error_all_class(logistic_mc.test_X, logistic_mc.test_Y, W))
+        print('-'*70)
+
+        logistic_mc = logistic_regression.MultiClassifier()
+        logistic_mc.load_train_data()
+        logistic_mc.setFeatureTransform('legendre', 1)
+        logistic_mc.load_test_data()
+        logistic_mc.init_W()
+        W = logistic_mc.train()
+
+        print("\nLogistic Regression Legendre 多類訓練得出權重模型：")
+        print(W)
+        print("W 平均錯誤率（Ein）：")
+        print(logistic_mc.calculate_avg_error_all_class(logistic_mc.train_X, logistic_mc.train_Y, W))
+        print("W 平均錯誤率（Eout）：")
+        print(logistic_mc.calculate_avg_error_all_class(logistic_mc.test_X, logistic_mc.test_Y, W))
+        print('-'*70)
+
+    '''
+    def test_cross_validation(self):
+
+        #------------------------------------------------------------
+
+        input_train_data_file = os.path.join(os.path.join(os.getcwd(), os.path.dirname(__file__)), 'FukuML/dataset/pocket_pla_binary_train.dat')
+        input_test_data_file = os.path.join(os.path.join(os.getcwd(), os.path.dirname(__file__)), 'FukuML/dataset/pocket_pla_binary_test.dat')
+
+        pla_bc = pla.BinaryClassifier()
+        pla_bc.load_train_data(input_train_data_file)
+        pla_bc.calculate_cross_validation_error(10)
+        pla_bc.init_W()
+        W = pla_bc.train()
+        pla_bc.load_test_data(input_test_data_file)
+
+        print("\nPLA 訓練得出權重模型：")
+        print(W)
+        print("W 更新次數：")
+        print(pla_bc.tune_times)
+        print("W 平均錯誤率（Ein）：")
+        print(pla_bc.calculate_avg_error(pla_bc.train_X, pla_bc.train_Y, W))
+        print("W 平均錯誤率（Eout）：")
+        print(pla_bc.calculate_avg_error(pla_bc.test_X, pla_bc.test_Y, W))
+        print('-'*70)
+    '''
 
 if __name__ == '__main__':
 

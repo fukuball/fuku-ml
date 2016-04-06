@@ -1,6 +1,7 @@
 #encoding=utf8
 
 from abc import ABCMeta, abstractmethod
+import numpy as np
 import FukuML.Utility as utility
 
 
@@ -89,6 +90,17 @@ class Learner(object):
         '''
 
         avg_error = self.calculate_avg_error(self.test_X, self.test_Y, self.W)
+
+        return avg_error
+
+    def calculate_cross_validation_error(self, fold=10):
+
+        avg_error = 0
+
+        #print self.train_X
+        #print self.train_X.tolist()
+        #print np.random.shuffle(self.train_X)
+        #self.train_X = np.array(self.train_X)
 
         return avg_error
 
