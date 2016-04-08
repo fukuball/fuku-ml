@@ -953,7 +953,7 @@ class FukuMLTestCase(unittest.TestCase):
         print(logistic_mc.calculate_avg_error_all_class(logistic_mc.test_X, logistic_mc.test_Y, W))
         print('-'*70)
 
-    def test_cross_validation(self):
+    def test_binary_classification_cross_validation(self):
 
         #------------------------------------------------------------
 
@@ -980,13 +980,13 @@ class FukuMLTestCase(unittest.TestCase):
         avg_errors = cross_validator.excute()
 
         print("\n各模型驗證平均錯誤：")
-        print avg_errors
+        print(avg_errors)
         print("\n最小平均錯誤率：")
-        print cross_validator.getMinAVGError()
+        print(cross_validator.getMinAVGError())
 
         print("\n取得最佳模型：")
         best_model = cross_validator.getBestModel()
-        print best_model
+        print(best_model)
         best_model.init_W()
         W = best_model.train()
         best_model.load_test_data(input_test_data_file)
@@ -1000,6 +1000,7 @@ class FukuMLTestCase(unittest.TestCase):
         print("W 平均錯誤率（Eout）：")
         print(best_model.calculate_avg_error(best_model.test_X, best_model.test_Y, W))
         print('-'*70)
+
 
 if __name__ == '__main__':
 

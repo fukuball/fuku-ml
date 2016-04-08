@@ -1,6 +1,7 @@
 #encoding=utf8
 
 import os
+import sys
 import random
 import operator
 import itertools
@@ -532,7 +533,7 @@ class MultiClassifier(LogisticRegression):
                 self.temp_data_num = 0
                 self.W = self.temp_W
                 self.temp_W = {}
-                #print("class %d to %d learned." % (class_item[0], class_item[1]))
+                print("class %d to %d learned." % (class_item[0], class_item[1]))
             elif self.decomposition == 'ova':
                 modify_Y = self.modify_Y(self.train_Y, class_item)
                 self.temp_train_Y = self.train_Y
@@ -544,7 +545,7 @@ class MultiClassifier(LogisticRegression):
                 self.temp_train_Y = []
                 self.W = self.temp_W
                 self.temp_W = {}
-                #print("class %d learned." % class_item)
+                print("class %d learned." % class_item)
 
         self.status = 'train'
 

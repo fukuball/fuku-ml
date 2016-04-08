@@ -73,7 +73,11 @@ class CrossValidator(object):
                 model.train()
                 validate_X = dataset[i*validate_num:(i+1)*validate_num, :-1]
                 validate_Y = dataset[i*validate_num:(i+1)*validate_num, -1]
-                error = error + model.calculate_avg_error(validate_X, validate_Y, model.W)
+
+                if hasattr(model, 'class_list'):
+                    error = error + model.calculate_avg_error_all_class(validate_X, validate_Y, model.W)
+                else:
+                    error = error + model.calculate_avg_error(validate_X, validate_Y, model.W)
 
             model.train_X = dataset[:, :-1]
             model.train_Y = dataset[:, -1]
