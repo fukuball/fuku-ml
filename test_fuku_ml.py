@@ -953,7 +953,6 @@ class FukuMLTestCase(unittest.TestCase):
         print(logistic_mc.calculate_avg_error_all_class(logistic_mc.test_X, logistic_mc.test_Y, W))
         print('-'*70)
 
-    '''
     def test_cross_validation(self):
 
         #------------------------------------------------------------
@@ -961,23 +960,46 @@ class FukuMLTestCase(unittest.TestCase):
         input_train_data_file = os.path.join(os.path.join(os.getcwd(), os.path.dirname(__file__)), 'FukuML/dataset/pocket_pla_binary_train.dat')
         input_test_data_file = os.path.join(os.path.join(os.getcwd(), os.path.dirname(__file__)), 'FukuML/dataset/pocket_pla_binary_test.dat')
 
+        cross_validator = utility.CrossValidator()
+
         pla_bc = pla.BinaryClassifier()
         pla_bc.load_train_data(input_train_data_file)
-        pla_bc.calculate_cross_validation_error(10)
-        pla_bc.init_W()
-        W = pla_bc.train()
-        pla_bc.load_test_data(input_test_data_file)
+        pocket_bc = pocket.BinaryClassifier()
+        pocket_bc.load_train_data(input_train_data_file)
+        linear_bc = linear_regression.BinaryClassifier()
+        linear_bc.load_train_data(input_train_data_file)
+        logistic_bc = logistic_regression.BinaryClassifier()
+        logistic_bc.load_train_data(input_train_data_file)
 
-        print("\nPLA 訓練得出權重模型：")
+        print("\n10 fold cross validation：")
+
+        cross_validator.addModel(pla_bc)
+        cross_validator.addModel(pocket_bc)
+        cross_validator.addModel(linear_bc)
+        cross_validator.addModel(logistic_bc)
+        avg_errors = cross_validator.excute()
+
+        print("\n各模型驗證平均錯誤：")
+        print avg_errors
+        print("\n最小平均錯誤率：")
+        print cross_validator.getMinAVGError()
+
+        print("\n取得最佳模型：")
+        best_model = cross_validator.getBestModel()
+        print best_model
+        best_model.init_W()
+        W = best_model.train()
+        best_model.load_test_data(input_test_data_file)
+
+        print("\n訓練得出權重模型：")
         print(W)
         print("W 更新次數：")
-        print(pla_bc.tune_times)
+        print(best_model.tune_times)
         print("W 平均錯誤率（Ein）：")
-        print(pla_bc.calculate_avg_error(pla_bc.train_X, pla_bc.train_Y, W))
+        print(best_model.calculate_avg_error(best_model.train_X, best_model.train_Y, W))
         print("W 平均錯誤率（Eout）：")
-        print(pla_bc.calculate_avg_error(pla_bc.test_X, pla_bc.test_Y, W))
+        print(best_model.calculate_avg_error(best_model.test_X, best_model.test_Y, W))
         print('-'*70)
-    '''
 
 if __name__ == '__main__':
 

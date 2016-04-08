@@ -93,17 +93,6 @@ class Learner(object):
 
         return avg_error
 
-    def calculate_cross_validation_error(self, fold=10):
-
-        avg_error = 0
-
-        #print self.train_X
-        #print self.train_X.tolist()
-        #print np.random.shuffle(self.train_X)
-        #self.train_X = np.array(self.train_X)
-
-        return avg_error
-
     @abstractmethod
     def train(self):
         return
