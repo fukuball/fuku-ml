@@ -1,6 +1,6 @@
 #encoding=utf8
 
-__version__ = '0.1.4'
+__version__ = '0.1.5'
 __all__ = [
     'MLBase',
     'PLA',
@@ -18,5 +18,7 @@ __all__ = [
     'LogisticRegression.BinaryClassifier',
     'LogisticRegression.MultiClassifier',
     'Utility',
-    'Utility.DatasetLoader'
+    'Utility.DatasetLoader',
+    'Utility.CrossValidator',
+    'Utility.Serializer'
 ]
