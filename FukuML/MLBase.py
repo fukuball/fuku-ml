@@ -1,7 +1,6 @@
 #encoding=utf8
 
 from abc import ABCMeta, abstractmethod
-import numpy as np
 import FukuML.Utility as utility
 
 
@@ -14,7 +13,6 @@ class Learner(object):
     W = []
     data_num = 0
     data_demension = 0
-    tune_times = 0
     test_X = []
     test_Y = []
     feature_transform_mode = ''

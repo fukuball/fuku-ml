@@ -6,6 +6,7 @@ import FukuML.PLA as pla
 import FukuML.PocketPLA as pocket
 import FukuML.LinearRegression as linear_regression
 import FukuML.LogisticRegression as logistic_regression
+import FukuML.RidgeRegression as ridge_regression
 import FukuML.Utility as utility
 
 
@@ -993,8 +994,6 @@ class FukuMLTestCase(unittest.TestCase):
 
         print("\n訓練得出權重模型：")
         print(W)
-        print("W 更新次數：")
-        print(best_model.tune_times)
         print("W 平均錯誤率（Ein）：")
         print(best_model.calculate_avg_error(best_model.train_X, best_model.train_Y, W))
         print("W 平均錯誤率（Eout）：")
@@ -1036,6 +1035,12 @@ class FukuMLTestCase(unittest.TestCase):
         print(best_model.calculate_avg_error_all_class(best_model.test_X, best_model.test_Y, W))
         print('-'*70)
 
+    def test_ridge_regression_binary_classifier(self):
+
+        #------------------------------------------------------------
+
+        ridge_bc = ridge_regression.BinaryClassifier()
+        print(ridge_bc)
 
 if __name__ == '__main__':
 

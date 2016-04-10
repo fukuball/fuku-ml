@@ -1,7 +1,6 @@
 #encoding=utf8
 
 import os
-import sys
 import itertools
 import numpy as np
 import FukuML.Utility as utility
@@ -22,9 +21,10 @@ class LinearRegression(ml.Learner):
         self.W = []
         self.data_num = 0
         self.data_demension = 0
-        self.tune_times = 0
         self.test_X = []
         self.test_Y = []
+        self.feature_transform_mode = ''
+        self.feature_transform_degree = 1
 
         self.xpsedo = []
 
@@ -171,9 +171,10 @@ class BinaryClassifier(LinearRegression):
         self.W = []
         self.data_num = 0
         self.data_demension = 0
-        self.tune_times = 0
         self.test_X = []
         self.test_Y = []
+        self.feature_transform_mode = ''
+        self.feature_transform_degree = 1
 
         self.xpsedo = []
 
@@ -249,10 +250,11 @@ class MultiClassifier(BinaryClassifier):
         self.W = []
         self.data_num = 0
         self.data_demension = 0
-        self.tune_times = 0
         self.test_X = []
         self.test_Y = []
         self.xpsedo = []
+        self.feature_transform_mode = ''
+        self.feature_transform_degree = 1
 
         self.class_list = []
         self.temp_train_X = []
