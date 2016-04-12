@@ -66,6 +66,8 @@ Algorithm
 
 - Logistic Regression One vs One Multi Classification Learning Algorithm with Linear Regression Accelerator
 
+- Ridge Regression Learning Algorithm
+
 - 10 Fold Cross Validator
 
 Usage
