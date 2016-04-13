@@ -1042,7 +1042,7 @@ class FukuMLTestCase(unittest.TestCase):
         ridge = ridge_regression.RidgeRegression()
         ridge.load_train_data()
         ridge.load_test_data()
-        ridge.setLambda(pow(10, -3))
+        ridge.setParam(lambda_p=pow(10, -3))
         ridge.init_W()
         W = ridge.train()
 
@@ -1077,7 +1077,7 @@ class FukuMLTestCase(unittest.TestCase):
         for lambda_p in lambda_p_set:
             ridge_bc = ridge_regression.BinaryClassifier()
             ridge_bc.load_train_data()
-            ridge_bc.setLambda(pow(10, lambda_p))
+            ridge_bc.setParam(lambda_p=pow(10, lambda_p))
             cross_validator.addModel(ridge_bc)
 
         print("\n10 fold cross validation：")
@@ -1115,6 +1115,38 @@ class FukuMLTestCase(unittest.TestCase):
         print("W 平均錯誤率（Eout）：")
         print(best_model.calculate_avg_error(best_model.test_X, best_model.test_Y, W))
         print('-'*70)
+
+    def test_ridge_regression_multi_classifier(self):
+
+        #------------------------------------------------------------
+
+        ridge_mc = ridge_regression.MultiClassifier()
+        ridge_mc.load_train_data()
+        ridge_mc.load_test_data()
+        ridge_mc.setParam(lambda_p=pow(10, -3))
+        ridge_mc.init_W()
+        W = ridge_mc.train()
+        print("\n訓練得出權重模型：")
+        print(W)
+
+        test_data = '0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 0 0 0 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 0 0 0 0 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 0 0 0 0 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 0 0 0 0 0 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 0 0 0 0 0 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 0 0 0 0 0 0 0 0 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 0 0 0 0 0 0 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 0 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0'
+        prediction = ridge_mc.prediction(test_data)
+        self.assertEqual(float(prediction['input_data_y']), float(prediction['prediction']))
+
+        print("測試資料 x：")
+        print(prediction['input_data_x'])
+        print("測試資料 y：")
+        print(prediction['input_data_y'])
+        print("預測結果：")
+        print(prediction['prediction'])
+        print("所有類型預測機率值：")
+        print(prediction['prediction_list'])
+        print("W 平均錯誤率（Ein）：")
+        print(ridge_mc.calculate_avg_error_all_class(ridge_mc.train_X, ridge_mc.train_Y, W))
+        print("W 平均錯誤率（Eout）：")
+        print(ridge_mc.calculate_avg_error_all_class(ridge_mc.test_X, ridge_mc.test_Y, W))
+        print('-'*70)
+
 
 if __name__ == '__main__':
 
