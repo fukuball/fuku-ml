@@ -14,6 +14,8 @@ Run demo dataset: Basic Naive Cycle PLA
 
     >>> pla_bc.load_train_data()
 
+    >>> pla_bc.setParam()
+
     >>> pla_bc.init_W()
 
     >>> pla_bc.train()
@@ -38,6 +40,8 @@ Run demo dataset: Basic Naive Cycle PLA with Linear Regression Accelerator
     >>> pla_bc = pla.BinaryClassifier()
 
     >>> pla_bc.load_train_data()
+
+    >>> pla_bc.setParam()
 
     >>> pla_bc.init_W('linear_regression_accelerator')
 
@@ -64,9 +68,11 @@ Run demo dataset: Random Cycle PLA
 
     >>> pla_bc.load_train_data()
 
+    >>> pla_bc.setParam(loop_mode='random')
+
     >>> pla_bc.init_W()
 
-    >>> pla_bc.train('random')
+    >>> pla_bc.train()
 
     >>> test_data = '0.97681 0.10723 0.64385 0.29556 1'
 
@@ -89,9 +95,11 @@ Run demo dataset: Random Cycle PLA alpha=0.5 step correction
 
     >>> pla_bc.load_train_data()
 
+    >>> pla_bc.setParam(loop_mode='random', step_alpha=0.5)
+
     >>> pla_bc.init_W()
 
-    >>> pla_bc.train('random', 0.5)
+    >>> pla_bc.train()
 
     >>> test_data = '0.97681 0.10723 0.64385 0.29556 1'
 
@@ -117,6 +125,8 @@ Run demo dataset: One vs One
 
     >>> pla_mc.load_train_data()
 
+    >>> pla_mc.setParam()
+
     >>> pla_mc.init_W('normal')
 
     >>> W = pla_mc.train()
@@ -137,6 +147,8 @@ Run demo dataset: One vs One with Linear Regression Accelerator
     >>> pla_mc = pla.MultiClassifier()
 
     >>> pla_mc.load_train_data()
+
+    >>> pla_mc.setParam()
 
     >>> pla_mc.init_W('linear_regression_accelerator')
 

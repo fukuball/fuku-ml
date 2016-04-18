@@ -26,6 +26,8 @@ class BinaryClassifier(ml.Learner):
         self.feature_transform_mode = ''
         self.feature_transform_degree = 1
 
+        self.loop_mode = 'naive_cycle'
+        self.step_alpha = 1
         self.tune_times = 0
 
     def load_train_data(self, input_data_file=''):
@@ -78,6 +80,13 @@ class BinaryClassifier(ml.Learner):
             )
 
         return self.test_X, self.test_Y
+
+    def setParam(self, loop_mode='naive_cycle', step_alpha=1):
+
+        self.loop_mode = loop_mode
+        self.step_alpha = step_alpha
+
+        return self.loop_mode, self.step_alpha
 
     def init_W(self, mode='normal'):
 
@@ -133,7 +142,7 @@ class BinaryClassifier(ml.Learner):
 
         return super(BinaryClassifier, self).calculate_avg_error()
 
-    def train(self, mode='naive_cycle', alpha=1):
+    def train(self):
 
         '''
         Train Perceptron Learning Algorithm
@@ -148,10 +157,10 @@ class BinaryClassifier(ml.Learner):
 
         self.status = 'train'
 
-        if (mode is 'random'):
+        if (self.loop_mode is 'random'):
             data_check_order = range(self.data_num)
             data_check_order = random.sample(data_check_order, self.data_num)
-        elif (mode is 'naive_cycle'):
+        elif (self.loop_mode is 'naive_cycle'):
             data_check_order = range(self.data_num)
         else:
             data_check_order = range(self.data_num)
@@ -176,7 +185,7 @@ class BinaryClassifier(ml.Learner):
             if self.error_function(self.score_function(self.train_X[point_wise_i], self.W), self.train_Y[point_wise_i]):
                 flag = False
                 self.tune_times += 1
-                self.W = self.W + alpha * (self.train_Y[point_wise_i] * self.train_X[point_wise_i])
+                self.W = self.W + self.step_alpha * (self.train_Y[point_wise_i] * self.train_X[point_wise_i])
             k += 1
 
         return self.W
@@ -208,6 +217,8 @@ class MultiClassifier(BinaryClassifier):
         self.feature_transform_mode = ''
         self.feature_transform_degree = 1
 
+        self.loop_mode = 'naive_cycle'
+        self.step_alpha = 1
         self.tune_times = 0
         self.class_list = []
         self.temp_train_X = []
@@ -252,6 +263,10 @@ class MultiClassifier(BinaryClassifier):
             )
 
         return self.test_X, self.test_Y
+
+    def setParam(self, loop_mode='naive_cycle', step_alpha=1):
+
+        return super(MultiClassifier, self).setParam(loop_mode, step_alpha)
 
     def init_W(self, mode='normal'):
 
@@ -352,7 +367,7 @@ class MultiClassifier(BinaryClassifier):
 
         return np.array(modify_X), np.array(modify_Y)
 
-    def train(self, mode='naive_cycle', alpha=1):
+    def train(self):
 
         if (self.status != 'init'):
             print("Please load train data and init W first.")
@@ -369,7 +384,7 @@ class MultiClassifier(BinaryClassifier):
             self.data_num = len(self.train_Y)
             self.temp_W = self.W
             self.W = self.temp_W[class_item]
-            self.temp_W[class_item] = super(MultiClassifier, self).train(mode, alpha)
+            self.temp_W[class_item] = super(MultiClassifier, self).train()
             self.train_X = self.temp_train_X
             self.train_Y = self.temp_train_Y
             self.temp_train_X = []

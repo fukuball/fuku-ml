@@ -18,6 +18,7 @@ class FukuMLTestCase(unittest.TestCase):
 
         pla_bc = pla.BinaryClassifier()
         pla_bc.load_train_data()
+        pla_bc.setParam()
         pla_bc.init_W()
         W = pla_bc.train()
 
@@ -59,6 +60,7 @@ class FukuMLTestCase(unittest.TestCase):
 
         pla_bc = pla.BinaryClassifier()
         pla_bc.load_train_data()
+        pla_bc.setParam()
         pla_bc.init_W('linear_regression_accelerator')
         W = pla_bc.train()
 
@@ -84,6 +86,7 @@ class FukuMLTestCase(unittest.TestCase):
 
         input_train_data_file = os.path.join(os.path.join(os.getcwd(), os.path.dirname(__file__)), 'FukuML/dataset/pla_binary_train.dat')
         pla_bc.load_train_data(input_train_data_file)
+        pla_bc.setParam()
         pla_bc.init_W()
         W = pla_bc.train()
         print("測試載入 Custom Dataset")
@@ -95,8 +98,9 @@ class FukuMLTestCase(unittest.TestCase):
 
         print("使用 Random Cycle：")
 
+        pla_bc.setParam(loop_mode='random')
         pla_bc.init_W()
-        W = pla_bc.train('random')
+        W = pla_bc.train()
 
         print("訓練得出權重模型：")
         print(W)
@@ -120,8 +124,9 @@ class FukuMLTestCase(unittest.TestCase):
 
         print("使用 Random Cycle alpha=0.5 step correction：")
 
+        pla_bc.setParam(loop_mode='random', step_alpha=0.5)
         pla_bc.init_W()
-        W = pla_bc.train('random', 0.5)
+        W = pla_bc.train()
 
         print("訓練得出權重模型：")
         print(W)
@@ -152,6 +157,7 @@ class FukuMLTestCase(unittest.TestCase):
         pla_mc = pla.MultiClassifier()
         pla_mc.load_train_data()
         pla_mc.load_test_data()
+        pla_mc.setParam()
         pla_mc.init_W()
         W = pla_mc.train()
         print("\n訓練得出權重模型：")
@@ -200,6 +206,7 @@ class FukuMLTestCase(unittest.TestCase):
 
         pla_bc = pla.BinaryClassifier()
         pla_bc.load_train_data(input_train_data_file)
+        pla_bc.setParam()
         pla_bc.init_W()
         W = pla_bc.train()
         pla_bc.load_test_data(input_test_data_file)
@@ -632,6 +639,7 @@ class FukuMLTestCase(unittest.TestCase):
 
         pla_bc = pla.BinaryClassifier()
         pla_bc.load_train_data(input_train_data_file)
+        pla_bc.setParam()
         pla_bc.init_W()
         W = pla_bc.train()
         pla_bc.load_test_data(input_test_data_file)
@@ -649,6 +657,7 @@ class FukuMLTestCase(unittest.TestCase):
         pla_bc = pla.BinaryClassifier()
         pla_bc.load_train_data(input_train_data_file)
         pla_bc.setFeatureTransform('polynomial', 2)
+        pla_bc.setParam()
         pla_bc.init_W()
         W = pla_bc.train()
         pla_bc.load_test_data(input_test_data_file)
@@ -666,6 +675,7 @@ class FukuMLTestCase(unittest.TestCase):
         pla_bc = pla.BinaryClassifier()
         pla_bc.load_train_data(input_train_data_file)
         pla_bc.setFeatureTransform('legendre', 2)
+        pla_bc.setParam()
         pla_bc.init_W()
         W = pla_bc.train()
         pla_bc.load_test_data(input_test_data_file)
@@ -838,6 +848,7 @@ class FukuMLTestCase(unittest.TestCase):
         pla_mc.load_train_data()
         pla_mc.setFeatureTransform('polynomial', 1)
         pla_mc.load_test_data()
+        pla_mc.setParam()
         pla_mc.init_W()
         W = pla_mc.train()
         print("\nPLA Polynomial 多類訓練得出權重模型：")
@@ -852,6 +863,7 @@ class FukuMLTestCase(unittest.TestCase):
         pla_mc.load_train_data()
         pla_mc.setFeatureTransform('legendre', 1)
         pla_mc.load_test_data()
+        pla_mc.setParam()
         pla_mc.init_W()
         W = pla_mc.train()
         print("\nPLA Legendre 多類訓練得出權重模型：")
@@ -965,6 +977,7 @@ class FukuMLTestCase(unittest.TestCase):
 
         pla_bc = pla.BinaryClassifier()
         pla_bc.load_train_data(input_train_data_file)
+        pla_bc.setParam()
         pocket_bc = pocket.BinaryClassifier()
         pocket_bc.load_train_data(input_train_data_file)
         linear_bc = linear_regression.BinaryClassifier()
@@ -1006,6 +1019,7 @@ class FukuMLTestCase(unittest.TestCase):
 
         pla_mc = pla.MultiClassifier()
         pla_mc.load_train_data()
+        pla_mc.setParam()
         pocket_mc = pocket.MultiClassifier()
         pocket_mc.load_train_data()
 
