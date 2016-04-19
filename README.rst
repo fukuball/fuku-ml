@@ -68,7 +68,15 @@ Algorithm
 
 - Ridge Regression Learning Algorithm
 
-- 10 Fold Cross Validator
+- Ridge Regression Binary Classification Learning Algorithm
+
+- Ridge Regression Multi Classification Learning Algorithm
+
+- Polynomial Feature Transform
+
+- Legendre Feature Transform
+
+- 10 Fold Cross Validation
 
 Usage
 ============

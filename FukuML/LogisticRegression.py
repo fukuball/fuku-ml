@@ -29,6 +29,10 @@ class LogisticRegression(ml.Learner):
         self.feature_transform_mode = ''
         self.feature_transform_degree = 1
 
+        self.feed_mode = 'batch'
+        self.step_ita = 0.126
+        self.updates = 2000
+
     def load_train_data(self, input_data_file=''):
 
         '''
@@ -79,6 +83,14 @@ class LogisticRegression(ml.Learner):
             )
 
         return self.test_X, self.test_Y
+
+    def setParam(self, feed_mode='batch', step_ita=0.126, updates=2000):
+
+        self.feed_mode = feed_mode
+        self.step_ita = step_ita
+        self.updates = updates
+
+        return self.feed_mode, self.step_ita, self.updates
 
     def init_W(self, mode='normal'):
 
@@ -172,7 +184,7 @@ class LogisticRegression(ml.Learner):
 
         return avg_error
 
-    def train(self, updates=2000, mode='batch', ita=0.126):
+    def train(self):
 
         '''
         Train Linear Regression Algorithm
@@ -189,8 +201,8 @@ class LogisticRegression(ml.Learner):
 
         self.status = 'train'
 
-        for i in range(0, updates):
-            if mode == 'stochastic':
+        for i in range(0, self.updates):
+            if self.feed_mode == 'stochastic':
                 stochastic_i = random.randint(0, self.data_num-1)
                 x = self.train_X[stochastic_i]
                 y = self.train_Y[stochastic_i]
@@ -199,7 +211,7 @@ class LogisticRegression(ml.Learner):
                 gradient = self.calculate_gradient(self.train_X, self.train_Y, self.W)
             if np.linalg.norm(gradient) == 0:
                 return self.W
-            self.W = self.W - ita * gradient
+            self.W = self.W - self.step_ita * gradient
 
         return self.W
 
@@ -225,6 +237,10 @@ class BinaryClassifier(LogisticRegression):
         self.feature_transform_mode = ''
         self.feature_transform_degree = 1
 
+        self.feed_mode = 'batch'
+        self.step_ita = 0.126
+        self.updates = 2000
+
     def load_train_data(self, input_data_file=''):
 
         return super(BinaryClassifier, self).load_train_data(input_data_file)
@@ -232,6 +248,10 @@ class BinaryClassifier(LogisticRegression):
     def load_test_data(self, input_data_file=''):
 
         return super(BinaryClassifier, self).load_test_data(input_data_file)
+
+    def setParam(self, feed_mode='batch', step_ita=0.126, updates=2000):
+
+        return super(BinaryClassifier, self).setParam(feed_mode, step_ita, updates)
 
     def init_W(self, mode='normal'):
 
@@ -287,9 +307,9 @@ class BinaryClassifier(LogisticRegression):
 
         return super(BinaryClassifier, self).calculate_avg_error()
 
-    def train(self, updates=2000, mode='batch', ita=0.126):
+    def train(self):
 
-        return super(BinaryClassifier, self).train(updates, mode, ita)
+        return super(BinaryClassifier, self).train()
 
     def prediction(self, input_data='', mode='test_data'):
 
@@ -320,6 +340,9 @@ class MultiClassifier(LogisticRegression):
         self.feature_transform_mode = ''
         self.feature_transform_degree = 1
 
+        self.feed_mode = 'batch'
+        self.step_ita = 0.126
+        self.updates = 2000
         self.class_list = []
         self.temp_train_X = []
         self.temp_train_Y = []
@@ -363,6 +386,10 @@ class MultiClassifier(LogisticRegression):
             )
 
         return self.test_X, self.test_Y
+
+    def setParam(self, feed_mode='batch', step_ita=0.126, updates=2000):
+
+        return super(MultiClassifier, self).setParam(feed_mode, step_ita, updates)
 
     def init_W(self, mode='normal', decomposition='ova'):
 
@@ -508,7 +535,7 @@ class MultiClassifier(LogisticRegression):
 
         return np.array(modify_X), np.array(modify_Y)
 
-    def train(self, updates=2000, mode='batch', ita=0.126):
+    def train(self):
 
         if (self.status != 'init'):
             print("Please load train data and init W first.")
@@ -526,7 +553,7 @@ class MultiClassifier(LogisticRegression):
                 self.data_num = len(self.train_Y)
                 self.temp_W = self.W
                 self.W = self.temp_W[class_item]
-                self.temp_W[class_item] = super(MultiClassifier, self).train(updates, mode, ita)
+                self.temp_W[class_item] = super(MultiClassifier, self).train()
                 self.train_X = self.temp_train_X
                 self.train_Y = self.temp_train_Y
                 self.temp_train_X = []
@@ -542,7 +569,7 @@ class MultiClassifier(LogisticRegression):
                 self.train_Y = modify_Y
                 self.temp_W = self.W
                 self.W = self.temp_W[class_item]
-                self.temp_W[class_item] = super(MultiClassifier, self).train(updates, mode, ita)
+                self.temp_W[class_item] = super(MultiClassifier, self).train()
                 self.train_Y = self.temp_train_Y
                 self.temp_train_Y = []
                 self.W = self.temp_W

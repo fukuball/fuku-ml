@@ -29,6 +29,9 @@ class BinaryClassifier(ml.Learner):
         self.feature_transform_mode = ''
         self.feature_transform_degree = 1
 
+        self.loop_mode = 'naive_cycle'
+        self.step_alpha = 1
+        self.updates = 50
         self.tune_times = 0
         self.temp_avg_error = float('Inf')
         self.put_in_pocket_times = 0
@@ -84,6 +87,14 @@ class BinaryClassifier(ml.Learner):
 
         return self.test_X, self.test_Y
 
+    def setParam(self, loop_mode='naive_cycle', step_alpha=1, updates=50):
+
+        self.loop_mode = loop_mode
+        self.step_alpha = step_alpha
+        self.updates = updates
+
+        return self.loop_mode, self.step_alpha, self.updates
+
     def init_W(self, mode='normal'):
 
         '''
@@ -138,7 +149,7 @@ class BinaryClassifier(ml.Learner):
 
         return super(BinaryClassifier, self).calculate_avg_error()
 
-    def train(self, updates=50, mode='random', alpha=1):
+    def train(self):
 
         '''
         Train Pocket Perceptron Learning Algorithm
@@ -157,10 +168,10 @@ class BinaryClassifier(ml.Learner):
 
         self.temp_avg_error = self.calculate_avg_error(self.train_X, self.train_Y, new_W)
 
-        for _ in range(updates):
-            if (mode is 'naive_cycle'):
+        for _ in range(self.updates):
+            if (self.loop_mode is 'naive_cycle'):
                 data_check_order = range(self.data_num)
-            elif (mode is 'random'):
+            elif (self.loop_mode is 'random'):
                 data_check_order = range(self.data_num)
                 data_check_order = random.sample(data_check_order, self.data_num)
             else:
@@ -170,7 +181,7 @@ class BinaryClassifier(ml.Learner):
 
                 if self.error_function(self.score_function(self.train_X[i], new_W), self.train_Y[i]):
                     self.tune_times += 1
-                    new_W = new_W + alpha * (self.train_Y[i] * self.train_X[i])
+                    new_W = new_W + self.step_alpha * (self.train_Y[i] * self.train_X[i])
                     new_avg_error = self.calculate_avg_error(self.train_X, self.train_Y, new_W)
                     if new_avg_error < self.temp_avg_error:
                         self.put_in_pocket_times += 1
@@ -209,6 +220,9 @@ class MultiClassifier(BinaryClassifier):
         self.feature_transform_mode = ''
         self.feature_transform_degree = 1
 
+        self.loop_mode = 'naive_cycle'
+        self.step_alpha = 1
+        self.updates = 50
         self.tune_times = 0
         self.temp_avg_error = float('Inf')
         self.put_in_pocket_times = 0
@@ -255,6 +269,10 @@ class MultiClassifier(BinaryClassifier):
             )
 
         return self.test_X, self.test_Y
+
+    def setParam(self, loop_mode='naive_cycle', step_alpha=1, updates=50):
+
+        return super(MultiClassifier, self).setParam(loop_mode, step_alpha, updates)
 
     def init_W(self, mode='normal'):
 
@@ -355,7 +373,7 @@ class MultiClassifier(BinaryClassifier):
 
         return np.array(modify_X), np.array(modify_Y)
 
-    def train(self, updates=50, mode='random', alpha=1):
+    def train(self):
 
         if (self.status != 'init'):
             print("Please load train data and init W first.")
@@ -373,7 +391,7 @@ class MultiClassifier(BinaryClassifier):
             self.data_num = len(self.train_Y)
             self.temp_W = self.W
             self.W = self.temp_W[class_item]
-            self.temp_W[class_item] = super(MultiClassifier, self).train(updates, mode, alpha)
+            self.temp_W[class_item] = super(MultiClassifier, self).train()
             self.train_X = self.temp_train_X
             self.train_Y = self.temp_train_Y
             self.temp_train_X = []
