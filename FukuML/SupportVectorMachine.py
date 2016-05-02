@@ -60,7 +60,7 @@ class BinaryClassifier(ml.Learner):
         '''
 
         if (input_data_file == ''):
-            input_data_file = os.path.normpath(os.path.join(os.path.join(os.getcwd(), os.path.dirname(__file__)), "dataset/pocket_pla_binary_test.dat"))
+            input_data_file = os.path.normpath(os.path.join(os.path.join(os.getcwd(), os.path.dirname(__file__)), "dataset/pla_binary_test.dat"))
         else:
             if (os.path.isfile(input_data_file) is not True):
                 print("Please make sure input_data_file path is correct.")
