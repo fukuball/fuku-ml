@@ -27,6 +27,10 @@ class BinaryClassifier(ml.Learner):
         self.feature_transform_degree = 1
 
         self.svm_kernel = 'primal_hard_margin'
+        self.sv_index = []
+        self.sv_alpha = []
+        self.sv_X = []
+        self.sv_Y = []
 
     def load_train_data(self, input_data_file=''):
 
@@ -71,7 +75,7 @@ class BinaryClassifier(ml.Learner):
         if (self.feature_transform_mode == 'polynomial') or (self.feature_transform_mode == 'legendre'):
             self.test_X = self.test_X[:, 1:]
 
-            self.test_X = utility.DatasetLoader.featureTransform(
+            self.test_X = utility.DatasetLoader.feature_transform(
                 self.test_X,
                 self.feature_transform_mode,
                 self.feature_transform_degree
@@ -149,32 +153,59 @@ class BinaryClassifier(ml.Learner):
 
         # P = Q, q = p, G = -A, h = -c
 
-        if (self.svm_kernel != 'primal_hard_margin'):
-            eye_process = np.eye(self.data_demension)
-            eye_process[0][0] = 0
-            P = cvxopt.matrix(eye_process)
-            q = cvxopt.matrix(np.zeros(self.data_demension))
-            G = cvxopt.matrix(np.reshape(self.train_Y, (-1, 1)) * self.train_X * -1)
-            h = cvxopt.matrix(np.ones(self.data_num) * -1)
+        if (self.svm_kernel == 'dual_hard_margin'):
+            original_X = self.train_X[:, 1:]
+
+            P = cvxopt.matrix(np.outer(self.train_Y, self.train_Y) * np.dot(original_X, np.transpose(original_X)))
+            q = cvxopt.matrix(np.ones(self.data_num) * -1)
+            G = cvxopt.matrix(np.diag(np.ones(self.data_num) * -1))
+            h = cvxopt.matrix(np.zeros(self.data_num) * -1)
+            A = cvxopt.matrix(self.train_Y, (1, self.data_num))
+            b = cvxopt.matrix(0.0)
+            cvxopt.solvers.options['show_progress'] = False
+            solution = cvxopt.solvers.qp(P, q, G, h, A, b)
+
+            # Lagrange multipliers
+            a = np.ravel(solution['x'])
+            # Support vectors have non zero lagrange multipliers
+            sv = a > 1e-5
+            self.sv_index = np.arange(len(a))[sv]
+            self.sv_alpha = a[sv]
+            self.sv_X = original_X[sv]
+            self.sv_Y = self.train_Y[sv]
+
+            short_w = np.zeros(self.data_demension-1)
+            for i in range(len(self.sv_alpha)):
+                short_w += self.sv_alpha[i] * self.sv_Y[i] * self.sv_X[i]
+
+            sum_short_b = 0
+            for i in range(len(self.sv_alpha)):
+                sum_short_b += self.sv_Y[i] - np.dot(np.transpose(short_w), original_X[self.sv_index[i]])
+            short_b = sum_short_b / len(self.sv_alpha)
+
+            self.W = np.insert(short_w, 0, short_b)
         else:
+            # primal_hard_margin
             eye_process = np.eye(self.data_demension)
             eye_process[0][0] = 0
             P = cvxopt.matrix(eye_process)
             q = cvxopt.matrix(np.zeros(self.data_demension))
             G = cvxopt.matrix(np.reshape(self.train_Y, (-1, 1)) * self.train_X * -1)
             h = cvxopt.matrix(np.ones(self.data_num) * -1)
-
-        cvxopt.solvers.options['show_progress'] = False
-
-        solution = cvxopt.solvers.qp(P, q, G, h)
-        self.W = np.array(solution['x'])
-        self.W = np.ravel(self.W)
+            cvxopt.solvers.options['show_progress'] = False
+            solution = cvxopt.solvers.qp(P, q, G, h)
+            self.W = np.array(solution['x'])
+            self.W = np.ravel(self.W)
 
         return self.W
 
     def getMarge(self):
 
         return 1/np.linalg.norm(self.W[1:])
+
+    def getSupportVectors(self):
+
+        return self.sv_X
 
     def prediction(self, input_data='', mode='test_data'):
 
