@@ -1033,7 +1033,7 @@ class FukuMLTestCase(unittest.TestCase):
         print("\n各模型驗證平均錯誤：")
         print(avg_errors)
         print("\n最小平均錯誤率：")
-        print(cross_validator.getMinAVGError())
+        print(cross_validator.get_min_avg_error())
 
         print("\n取得最佳模型：")
         best_model = cross_validator.getBestModel()
@@ -1070,7 +1070,7 @@ class FukuMLTestCase(unittest.TestCase):
         print("\n各模型驗證平均錯誤：")
         print(avg_errors)
         print("\n最小平均錯誤率：")
-        print(cross_validator.getMinAVGError())
+        print(cross_validator.get_min_avg_error())
 
         print("\n取得最佳模型：")
         best_model = cross_validator.getBestModel()
@@ -1138,7 +1138,7 @@ class FukuMLTestCase(unittest.TestCase):
         print("\n各模型驗證平均錯誤：")
         print(avg_errors)
         print("\n最小平均錯誤率：")
-        print(cross_validator.getMinAVGError())
+        print(cross_validator.get_min_avg_error())
 
         print("\n取得最佳模型：")
         best_model = cross_validator.getBestModel()

@@ -88,7 +88,7 @@ class CrossValidator(object):
 
         return self.avg_errors
 
-    def getMinAVGError(self):
+    def get_min_avg_error(self):
 
         return min(self.avg_errors)
 
