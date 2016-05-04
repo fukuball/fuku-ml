@@ -24,7 +24,7 @@ class DatasetLoader(object):
         return np.array(X), np.array(Y)
 
     @staticmethod
-    def featureTransform(X, mode='polynomial', degree=1):
+    def feature_transform(X, mode='polynomial', degree=1):
 
         poly = PolynomialFeatures(degree)
         process_X = poly.fit_transform(X)

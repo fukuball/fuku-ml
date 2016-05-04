@@ -30,7 +30,7 @@ class Learner(object):
     def load_test_data(self, input_data_file=''):
         return
 
-    def setFeatureTransform(self, mode='polynomial', degree=1):
+    def set_feature_transform(self, mode='polynomial', degree=1):
 
         '''
         Transform data feature to high level
@@ -45,7 +45,7 @@ class Learner(object):
 
         self.train_X = self.train_X[:, 1:]
 
-        self.train_X = utility.DatasetLoader.featureTransform(
+        self.train_X = utility.DatasetLoader.feature_transform(
             self.train_X,
             self.feature_transform_mode,
             self.feature_transform_degree

@@ -662,7 +662,7 @@ Polynomial Feature Transform
 
     >>> pla_bc.load_train_data()
 
-    >>> pla_bc.setFeatureTransform('polynomial', 2)
+    >>> pla_bc.set_feature_transform('polynomial', 2)
 
 Legendre Feature Transform
 ============
@@ -677,7 +677,7 @@ Legendre Feature Transform
 
     >>> pla_bc.load_train_data()
 
-    >>> pla_bc.setFeatureTransform('legendre', 2)
+    >>> pla_bc.set_feature_transform('legendre', 2)
 
 10 Fold Cross Validation
 ============

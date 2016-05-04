@@ -675,7 +675,7 @@ class FukuMLTestCase(unittest.TestCase):
 
         pla_bc = pla.BinaryClassifier()
         pla_bc.load_train_data(input_train_data_file)
-        pla_bc.setFeatureTransform('polynomial', 2)
+        pla_bc.set_feature_transform('polynomial', 2)
         pla_bc.setParam()
         pla_bc.init_W()
         W = pla_bc.train()
@@ -693,7 +693,7 @@ class FukuMLTestCase(unittest.TestCase):
 
         pla_bc = pla.BinaryClassifier()
         pla_bc.load_train_data(input_train_data_file)
-        pla_bc.setFeatureTransform('legendre', 2)
+        pla_bc.set_feature_transform('legendre', 2)
         pla_bc.setParam()
         pla_bc.init_W()
         W = pla_bc.train()
@@ -732,7 +732,7 @@ class FukuMLTestCase(unittest.TestCase):
 
         pocket_bc = pocket.BinaryClassifier()
         pocket_bc.load_train_data(input_train_data_file)
-        pocket_bc.setFeatureTransform('polynomial', 2)
+        pocket_bc.set_feature_transform('polynomial', 2)
         pocket_bc.setParam(loop_mode='naive_cycle', step_alpha=1, updates=50)
         pocket_bc.init_W()
         W = pocket_bc.train()
@@ -752,7 +752,7 @@ class FukuMLTestCase(unittest.TestCase):
 
         pocket_bc = pocket.BinaryClassifier()
         pocket_bc.load_train_data(input_train_data_file)
-        pocket_bc.setFeatureTransform('legendre', 2)
+        pocket_bc.set_feature_transform('legendre', 2)
         pocket_bc.setParam(loop_mode='naive_cycle', step_alpha=1, updates=50)
         pocket_bc.init_W()
         W = pocket_bc.train()
@@ -789,7 +789,7 @@ class FukuMLTestCase(unittest.TestCase):
 
         linear_bc = linear_regression.BinaryClassifier()
         linear_bc.load_train_data(input_train_data_file)
-        linear_bc.setFeatureTransform('polynomial', 2)
+        linear_bc.set_feature_transform('polynomial', 2)
         linear_bc.setParam()
         linear_bc.init_W()
         W = linear_bc.train()
@@ -805,7 +805,7 @@ class FukuMLTestCase(unittest.TestCase):
 
         linear_bc = linear_regression.BinaryClassifier()
         linear_bc.load_train_data(input_train_data_file)
-        linear_bc.setFeatureTransform('legendre', 2)
+        linear_bc.set_feature_transform('legendre', 2)
         linear_bc.setParam()
         linear_bc.init_W()
         W = linear_bc.train()
@@ -838,7 +838,7 @@ class FukuMLTestCase(unittest.TestCase):
 
         logistic_bc = logistic_regression.BinaryClassifier()
         logistic_bc.load_train_data(input_train_data_file)
-        logistic_bc.setFeatureTransform('polynomial', 2)
+        logistic_bc.set_feature_transform('polynomial', 2)
         logistic_bc.setParam()
         logistic_bc.init_W()
         W = logistic_bc.train()
@@ -854,7 +854,7 @@ class FukuMLTestCase(unittest.TestCase):
 
         logistic_bc = logistic_regression.BinaryClassifier()
         logistic_bc.load_train_data(input_train_data_file)
-        logistic_bc.setFeatureTransform('legendre', 2)
+        logistic_bc.set_feature_transform('legendre', 2)
         logistic_bc.setParam()
         logistic_bc.init_W()
         W = logistic_bc.train()
@@ -874,7 +874,7 @@ class FukuMLTestCase(unittest.TestCase):
 
         pla_mc = pla.MultiClassifier()
         pla_mc.load_train_data()
-        pla_mc.setFeatureTransform('polynomial', 1)
+        pla_mc.set_feature_transform('polynomial', 1)
         pla_mc.load_test_data()
         pla_mc.setParam()
         pla_mc.init_W()
@@ -889,7 +889,7 @@ class FukuMLTestCase(unittest.TestCase):
 
         pla_mc = pla.MultiClassifier()
         pla_mc.load_train_data()
-        pla_mc.setFeatureTransform('legendre', 1)
+        pla_mc.set_feature_transform('legendre', 1)
         pla_mc.load_test_data()
         pla_mc.setParam()
         pla_mc.init_W()
@@ -906,7 +906,7 @@ class FukuMLTestCase(unittest.TestCase):
 
         pocket_mc = pocket.MultiClassifier()
         pocket_mc.load_train_data()
-        pocket_mc.setFeatureTransform('polynomial', 1)
+        pocket_mc.set_feature_transform('polynomial', 1)
         pocket_mc.load_test_data()
         pocket_mc.setParam()
         pocket_mc.init_W()
@@ -921,7 +921,7 @@ class FukuMLTestCase(unittest.TestCase):
 
         pocket_mc = pocket.MultiClassifier()
         pocket_mc.load_train_data()
-        pocket_mc.setFeatureTransform('legendre', 1)
+        pocket_mc.set_feature_transform('legendre', 1)
         pocket_mc.load_test_data()
         pocket_mc.setParam()
         pocket_mc.init_W()
@@ -938,7 +938,7 @@ class FukuMLTestCase(unittest.TestCase):
 
         linear_mc = linear_regression.MultiClassifier()
         linear_mc.load_train_data()
-        linear_mc.setFeatureTransform('polynomial', 1)
+        linear_mc.set_feature_transform('polynomial', 1)
         linear_mc.load_test_data()
         linear_mc.setParam()
         linear_mc.init_W()
@@ -953,7 +953,7 @@ class FukuMLTestCase(unittest.TestCase):
 
         linear_mc = linear_regression.MultiClassifier()
         linear_mc.load_train_data()
-        linear_mc.setFeatureTransform('legendre', 1)
+        linear_mc.set_feature_transform('legendre', 1)
         linear_mc.load_test_data()
         linear_mc.setParam()
         linear_mc.init_W()
@@ -970,7 +970,7 @@ class FukuMLTestCase(unittest.TestCase):
 
         logistic_mc = logistic_regression.MultiClassifier()
         logistic_mc.load_train_data()
-        logistic_mc.setFeatureTransform('polynomial', 1)
+        logistic_mc.set_feature_transform('polynomial', 1)
         logistic_mc.load_test_data()
         logistic_mc.setParam()
         logistic_mc.init_W()
@@ -986,7 +986,7 @@ class FukuMLTestCase(unittest.TestCase):
 
         logistic_mc = logistic_regression.MultiClassifier()
         logistic_mc.load_train_data()
-        logistic_mc.setFeatureTransform('legendre', 1)
+        logistic_mc.set_feature_transform('legendre', 1)
         logistic_mc.load_test_data()
         logistic_mc.setParam()
         logistic_mc.init_W()

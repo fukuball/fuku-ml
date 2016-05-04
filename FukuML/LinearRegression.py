@@ -71,7 +71,7 @@ class LinearRegression(ml.Learner):
         if (self.feature_transform_mode == 'polynomial') or (self.feature_transform_mode == 'legendre'):
             self.test_X = self.test_X[:, 1:]
 
-            self.test_X = utility.DatasetLoader.featureTransform(
+            self.test_X = utility.DatasetLoader.feature_transform(
                 self.test_X,
                 self.feature_transform_mode,
                 self.feature_transform_degree
@@ -292,7 +292,7 @@ class MultiClassifier(BinaryClassifier):
         if (self.feature_transform_mode == 'polynomial') or (self.feature_transform_mode == 'legendre'):
             self.test_X = self.test_X[:, 1:]
 
-            self.test_X = utility.DatasetLoader.featureTransform(
+            self.test_X = utility.DatasetLoader.feature_transform(
                 self.test_X,
                 self.feature_transform_mode,
                 self.feature_transform_degree
