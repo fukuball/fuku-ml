@@ -698,9 +698,9 @@ Legendre Feature Transform
 
     >>> pocket_mc.setParam()
 
-    >>> cross_validator.addModel(pla_mc)
+    >>> cross_validator.add_model(pla_mc)
 
-    >>> cross_validator.addModel(pocket_mc)
+    >>> cross_validator.add_model(pocket_mc)
 
     >>> avg_errors = cross_validator.excute()
 

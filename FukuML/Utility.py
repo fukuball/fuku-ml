@@ -45,7 +45,7 @@ class CrossValidator(object):
         self.models = []
         self.avg_errors = []
 
-    def addModel(self, model):
+    def add_model(self, model):
 
         self.models.append(model)
 

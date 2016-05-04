@@ -1024,10 +1024,10 @@ class FukuMLTestCase(unittest.TestCase):
 
         print("\n10 fold cross validation：")
 
-        cross_validator.addModel(pla_bc)
-        cross_validator.addModel(pocket_bc)
-        cross_validator.addModel(linear_bc)
-        cross_validator.addModel(logistic_bc)
+        cross_validator.add_model(pla_bc)
+        cross_validator.add_model(pocket_bc)
+        cross_validator.add_model(linear_bc)
+        cross_validator.add_model(logistic_bc)
         avg_errors = cross_validator.excute()
 
         print("\n各模型驗證平均錯誤：")
@@ -1063,8 +1063,8 @@ class FukuMLTestCase(unittest.TestCase):
 
         print("\n10 fold cross validation：")
 
-        cross_validator.addModel(pla_mc)
-        cross_validator.addModel(pocket_mc)
+        cross_validator.add_model(pla_mc)
+        cross_validator.add_model(pocket_mc)
         avg_errors = cross_validator.excute()
 
         print("\n各模型驗證平均錯誤：")
@@ -1130,7 +1130,7 @@ class FukuMLTestCase(unittest.TestCase):
             ridge_bc = ridge_regression.BinaryClassifier()
             ridge_bc.load_train_data()
             ridge_bc.setParam(lambda_p=pow(10, lambda_p))
-            cross_validator.addModel(ridge_bc)
+            cross_validator.add_model(ridge_bc)
 
         print("\n10 fold cross validation：")
         avg_errors = cross_validator.excute()
