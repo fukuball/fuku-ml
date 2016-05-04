@@ -704,4 +704,4 @@ Legendre Feature Transform
 
     >>> avg_errors = cross_validator.excute()
 
-    >>> best_model = cross_validator.getBestModel()
+    >>> best_model = cross_validator.get_best_model()

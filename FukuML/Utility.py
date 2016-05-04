@@ -92,7 +92,7 @@ class CrossValidator(object):
 
         return min(self.avg_errors)
 
-    def getBestModel(self):
+    def get_best_model(self):
 
         min_error_index = self.avg_errors.index(min(self.avg_errors))
         return self.models[min_error_index]

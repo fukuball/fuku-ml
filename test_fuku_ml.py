@@ -1036,7 +1036,7 @@ class FukuMLTestCase(unittest.TestCase):
         print(cross_validator.get_min_avg_error())
 
         print("\n取得最佳模型：")
-        best_model = cross_validator.getBestModel()
+        best_model = cross_validator.get_best_model()
         print(best_model)
         best_model.init_W()
         W = best_model.train()
@@ -1073,7 +1073,7 @@ class FukuMLTestCase(unittest.TestCase):
         print(cross_validator.get_min_avg_error())
 
         print("\n取得最佳模型：")
-        best_model = cross_validator.getBestModel()
+        best_model = cross_validator.get_best_model()
         print(best_model)
         best_model.init_W()
         W = best_model.train()
@@ -1141,7 +1141,7 @@ class FukuMLTestCase(unittest.TestCase):
         print(cross_validator.get_min_avg_error())
 
         print("\n取得最佳模型：")
-        best_model = cross_validator.getBestModel()
+        best_model = cross_validator.get_best_model()
         print(best_model)
 
         best_model.load_test_data()
