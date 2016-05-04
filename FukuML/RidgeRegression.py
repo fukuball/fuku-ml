@@ -63,7 +63,7 @@ class RidgeRegression(ml.Learner):
 
         return self.test_X, self.test_Y
 
-    def setParam(self, lambda_p=0.0001):
+    def set_param(self, lambda_p=0.0001):
 
         self.lambda_p = lambda_p
 
@@ -177,9 +177,9 @@ class BinaryClassifier(RidgeRegression):
 
         return self.test_X, self.test_Y
 
-    def setParam(self, lambda_p=0.0001):
+    def set_param(self, lambda_p=0.0001):
 
-        return super(BinaryClassifier, self).setParam(lambda_p)
+        return super(BinaryClassifier, self).set_param(lambda_p)
 
     def init_W(self):
 
@@ -282,9 +282,9 @@ class MultiClassifier(BinaryClassifier):
 
         return self.test_X, self.test_Y
 
-    def setParam(self, lambda_p=0.0001):
+    def set_param(self, lambda_p=0.0001):
 
-        return super(MultiClassifier, self).setParam(lambda_p)
+        return super(MultiClassifier, self).set_param(lambda_p)
 
     def init_W(self, mode='normal'):
 

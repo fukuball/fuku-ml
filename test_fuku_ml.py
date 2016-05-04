@@ -19,7 +19,7 @@ class FukuMLTestCase(unittest.TestCase):
 
         pla_bc = pla.BinaryClassifier()
         pla_bc.load_train_data()
-        pla_bc.setParam()
+        pla_bc.set_param()
         pla_bc.init_W()
         W = pla_bc.train()
 
@@ -61,7 +61,7 @@ class FukuMLTestCase(unittest.TestCase):
 
         pla_bc = pla.BinaryClassifier()
         pla_bc.load_train_data()
-        pla_bc.setParam()
+        pla_bc.set_param()
         pla_bc.init_W('linear_regression_accelerator')
         W = pla_bc.train()
 
@@ -87,7 +87,7 @@ class FukuMLTestCase(unittest.TestCase):
 
         input_train_data_file = os.path.join(os.path.join(os.getcwd(), os.path.dirname(__file__)), 'FukuML/dataset/pla_binary_train.dat')
         pla_bc.load_train_data(input_train_data_file)
-        pla_bc.setParam()
+        pla_bc.set_param()
         pla_bc.init_W()
         W = pla_bc.train()
         print("測試載入 Custom Dataset")
@@ -99,7 +99,7 @@ class FukuMLTestCase(unittest.TestCase):
 
         print("使用 Random Cycle：")
 
-        pla_bc.setParam(loop_mode='random')
+        pla_bc.set_param(loop_mode='random')
         pla_bc.init_W()
         W = pla_bc.train()
 
@@ -125,7 +125,7 @@ class FukuMLTestCase(unittest.TestCase):
 
         print("使用 Random Cycle alpha=0.5 step correction：")
 
-        pla_bc.setParam(loop_mode='random', step_alpha=0.5)
+        pla_bc.set_param(loop_mode='random', step_alpha=0.5)
         pla_bc.init_W()
         W = pla_bc.train()
 
@@ -158,7 +158,7 @@ class FukuMLTestCase(unittest.TestCase):
         pla_mc = pla.MultiClassifier()
         pla_mc.load_train_data()
         pla_mc.load_test_data()
-        pla_mc.setParam()
+        pla_mc.set_param()
         pla_mc.init_W()
         W = pla_mc.train()
         print("\n訓練得出權重模型：")
@@ -183,7 +183,7 @@ class FukuMLTestCase(unittest.TestCase):
         print('-'*70)
 
         print("使用 Linear Regression 加速器：")
-        pla_mc.setParam()
+        pla_mc.set_param()
         pla_mc.init_W('linear_regression_accelerator')
         W = pla_mc.train()
         print("\n訓練得出權重模型：")
@@ -208,7 +208,7 @@ class FukuMLTestCase(unittest.TestCase):
 
         pla_bc = pla.BinaryClassifier()
         pla_bc.load_train_data(input_train_data_file)
-        pla_bc.setParam()
+        pla_bc.set_param()
         pla_bc.init_W()
         W = pla_bc.train()
         pla_bc.load_test_data(input_test_data_file)
@@ -228,7 +228,7 @@ class FukuMLTestCase(unittest.TestCase):
 
         pocket_bc = pocket.BinaryClassifier()
         pocket_bc.load_train_data()
-        pocket_bc.setParam(loop_mode='naive_cycle', step_alpha=1, updates=50)
+        pocket_bc.set_param(loop_mode='naive_cycle', step_alpha=1, updates=50)
         pocket_bc.init_W()
         W = pocket_bc.train()
         pocket_bc.load_test_data()
@@ -267,7 +267,7 @@ class FukuMLTestCase(unittest.TestCase):
 
         pocket_bc = pocket.BinaryClassifier()
         pocket_bc.load_train_data()
-        pocket_bc.setParam(loop_mode='naive_cycle', step_alpha=1, updates=50)
+        pocket_bc.set_param(loop_mode='naive_cycle', step_alpha=1, updates=50)
         pocket_bc.init_W('linear_regression_accelerator')
         W = pocket_bc.train()
         pocket_bc.load_test_data()
@@ -291,7 +291,7 @@ class FukuMLTestCase(unittest.TestCase):
         pocket_mc = pocket.MultiClassifier()
         pocket_mc.load_train_data()
         pocket_mc.load_test_data()
-        pocket_mc.setParam(loop_mode='naive_cycle', step_alpha=1, updates=50)
+        pocket_mc.set_param(loop_mode='naive_cycle', step_alpha=1, updates=50)
         pocket_mc.init_W()
         W = pocket_mc.train()
         print("\n訓練得出權重模型：")
@@ -316,7 +316,7 @@ class FukuMLTestCase(unittest.TestCase):
         print('-'*70)
 
         print("使用 Linear Regression 加速器：")
-        pocket_mc.setParam()
+        pocket_mc.set_param()
         pocket_mc.init_W('linear_regression_accelerator')
         W = pocket_mc.train()
         print("\n訓練得出權重模型：")
@@ -339,7 +339,7 @@ class FukuMLTestCase(unittest.TestCase):
         linear = linear_regression.LinearRegression()
         linear.load_train_data()
         linear.load_test_data()
-        linear.setParam()
+        linear.set_param()
         linear.init_W()
         W = linear.train()
 
@@ -370,7 +370,7 @@ class FukuMLTestCase(unittest.TestCase):
         linear_bc = linear_regression.BinaryClassifier()
         linear_bc.load_train_data()
         linear_bc.load_test_data()
-        linear_bc.setParam()
+        linear_bc.set_param()
         linear_bc.init_W()
         W = linear_bc.train()
 
@@ -401,7 +401,7 @@ class FukuMLTestCase(unittest.TestCase):
         linear_mc = linear_regression.MultiClassifier()
         linear_mc.load_train_data()
         linear_mc.load_test_data()
-        linear_mc.setParam()
+        linear_mc.set_param()
         linear_mc.init_W()
         W = linear_mc.train()
         print("\n訓練得出權重模型：")
@@ -432,7 +432,7 @@ class FukuMLTestCase(unittest.TestCase):
         logistic = logistic_regression.LogisticRegression()
         logistic.load_train_data()
         logistic.load_test_data()
-        logistic.setParam()
+        logistic.set_param()
         logistic.init_W()
         W = logistic.train()
 
@@ -463,7 +463,7 @@ class FukuMLTestCase(unittest.TestCase):
         logistic = logistic_regression.LogisticRegression()
         logistic.load_train_data()
         logistic.load_test_data()
-        logistic.setParam()
+        logistic.set_param()
         logistic.init_W('linear_regression_accelerator')
         W = logistic.train()
 
@@ -494,7 +494,7 @@ class FukuMLTestCase(unittest.TestCase):
         logistic = logistic_regression.BinaryClassifier()
         logistic.load_train_data()
         logistic.load_test_data()
-        logistic.setParam()
+        logistic.set_param()
         logistic.init_W()
         W = logistic.train()
 
@@ -518,7 +518,7 @@ class FukuMLTestCase(unittest.TestCase):
         print('-'*70)
 
         print("隨機梯度下降：")
-        logistic.setParam(feed_mode='stochastic', step_ita=0.1, updates=2000)
+        logistic.set_param(feed_mode='stochastic', step_ita=0.1, updates=2000)
         logistic.init_W()
         W = logistic.train()
         print("訓練得出權重模型：")
@@ -532,7 +532,7 @@ class FukuMLTestCase(unittest.TestCase):
         #------------------------------------------------------------
 
         print("使用 Linear Regression 加速器：")
-        logistic.setParam(feed_mode='batch', step_ita=0.126, updates=2000)
+        logistic.set_param(feed_mode='batch', step_ita=0.126, updates=2000)
         logistic.init_W('linear_regression_accelerator')
         W = logistic.train()
         print("\n訓練得出權重模型：")
@@ -550,7 +550,7 @@ class FukuMLTestCase(unittest.TestCase):
         logistic = logistic_regression.MultiClassifier()
         logistic.load_train_data()
         logistic.load_test_data()
-        logistic.setParam()
+        logistic.set_param()
         logistic.init_W()
         W = logistic.train()
 
@@ -576,7 +576,7 @@ class FukuMLTestCase(unittest.TestCase):
         print('-'*70)
 
         print("隨機梯度下降：")
-        logistic.setParam(feed_mode='stochastic', step_ita=0.126, updates=2000)
+        logistic.set_param(feed_mode='stochastic', step_ita=0.126, updates=2000)
         logistic.init_W()
         W = logistic.train()
         print("訓練得出權重模型：")
@@ -590,7 +590,7 @@ class FukuMLTestCase(unittest.TestCase):
         #------------------------------------------------------------
 
         print("使用 Linear Regression 加速器：")
-        logistic.setParam(feed_mode='batch', step_ita=0.126, updates=2000)
+        logistic.set_param(feed_mode='batch', step_ita=0.126, updates=2000)
         W = logistic.init_W('linear_regression_accelerator')
         print("\n加速初始化權重模型：")
         print(W)
@@ -606,7 +606,7 @@ class FukuMLTestCase(unittest.TestCase):
         #------------------------------------------------------------
 
         print("One to One Multiclassification：")
-        logistic.setParam()
+        logistic.set_param()
         logistic.init_W('normal', 'ovo')
         W = logistic.train()
         print("\n訓練得出權重模型：")
@@ -633,7 +633,7 @@ class FukuMLTestCase(unittest.TestCase):
         #------------------------------------------------------------
 
         print("One to One Multiclassification 使用 Linear Regression 加速器：")
-        logistic.setParam()
+        logistic.set_param()
         logistic.init_W('linear_regression_accelerator', 'ovo')
         W = logistic.train()
         print("\n訓練得出權重模型：")
@@ -658,7 +658,7 @@ class FukuMLTestCase(unittest.TestCase):
 
         pla_bc = pla.BinaryClassifier()
         pla_bc.load_train_data(input_train_data_file)
-        pla_bc.setParam()
+        pla_bc.set_param()
         pla_bc.init_W()
         W = pla_bc.train()
         pla_bc.load_test_data(input_test_data_file)
@@ -676,7 +676,7 @@ class FukuMLTestCase(unittest.TestCase):
         pla_bc = pla.BinaryClassifier()
         pla_bc.load_train_data(input_train_data_file)
         pla_bc.set_feature_transform('polynomial', 2)
-        pla_bc.setParam()
+        pla_bc.set_param()
         pla_bc.init_W()
         W = pla_bc.train()
         pla_bc.load_test_data(input_test_data_file)
@@ -694,7 +694,7 @@ class FukuMLTestCase(unittest.TestCase):
         pla_bc = pla.BinaryClassifier()
         pla_bc.load_train_data(input_train_data_file)
         pla_bc.set_feature_transform('legendre', 2)
-        pla_bc.setParam()
+        pla_bc.set_param()
         pla_bc.init_W()
         W = pla_bc.train()
         pla_bc.load_test_data(input_test_data_file)
@@ -713,7 +713,7 @@ class FukuMLTestCase(unittest.TestCase):
 
         pocket_bc = pocket.BinaryClassifier()
         pocket_bc.load_train_data(input_train_data_file)
-        pocket_bc.setParam(loop_mode='naive_cycle', step_alpha=1, updates=50)
+        pocket_bc.set_param(loop_mode='naive_cycle', step_alpha=1, updates=50)
         pocket_bc.init_W()
         W = pocket_bc.train()
         pocket_bc.load_test_data(input_test_data_file)
@@ -733,7 +733,7 @@ class FukuMLTestCase(unittest.TestCase):
         pocket_bc = pocket.BinaryClassifier()
         pocket_bc.load_train_data(input_train_data_file)
         pocket_bc.set_feature_transform('polynomial', 2)
-        pocket_bc.setParam(loop_mode='naive_cycle', step_alpha=1, updates=50)
+        pocket_bc.set_param(loop_mode='naive_cycle', step_alpha=1, updates=50)
         pocket_bc.init_W()
         W = pocket_bc.train()
         pocket_bc.load_test_data(input_test_data_file)
@@ -753,7 +753,7 @@ class FukuMLTestCase(unittest.TestCase):
         pocket_bc = pocket.BinaryClassifier()
         pocket_bc.load_train_data(input_train_data_file)
         pocket_bc.set_feature_transform('legendre', 2)
-        pocket_bc.setParam(loop_mode='naive_cycle', step_alpha=1, updates=50)
+        pocket_bc.set_param(loop_mode='naive_cycle', step_alpha=1, updates=50)
         pocket_bc.init_W()
         W = pocket_bc.train()
         pocket_bc.load_test_data(input_test_data_file)
@@ -774,7 +774,7 @@ class FukuMLTestCase(unittest.TestCase):
 
         linear_bc = linear_regression.BinaryClassifier()
         linear_bc.load_train_data(input_train_data_file)
-        linear_bc.setParam()
+        linear_bc.set_param()
         linear_bc.init_W()
         W = linear_bc.train()
         linear_bc.load_test_data(input_test_data_file)
@@ -790,7 +790,7 @@ class FukuMLTestCase(unittest.TestCase):
         linear_bc = linear_regression.BinaryClassifier()
         linear_bc.load_train_data(input_train_data_file)
         linear_bc.set_feature_transform('polynomial', 2)
-        linear_bc.setParam()
+        linear_bc.set_param()
         linear_bc.init_W()
         W = linear_bc.train()
         linear_bc.load_test_data(input_test_data_file)
@@ -806,7 +806,7 @@ class FukuMLTestCase(unittest.TestCase):
         linear_bc = linear_regression.BinaryClassifier()
         linear_bc.load_train_data(input_train_data_file)
         linear_bc.set_feature_transform('legendre', 2)
-        linear_bc.setParam()
+        linear_bc.set_param()
         linear_bc.init_W()
         W = linear_bc.train()
         linear_bc.load_test_data(input_test_data_file)
@@ -823,7 +823,7 @@ class FukuMLTestCase(unittest.TestCase):
 
         logistic_bc = logistic_regression.BinaryClassifier()
         logistic_bc.load_train_data(input_train_data_file)
-        logistic_bc.setParam()
+        logistic_bc.set_param()
         logistic_bc.init_W()
         W = logistic_bc.train()
         logistic_bc.load_test_data(input_test_data_file)
@@ -839,7 +839,7 @@ class FukuMLTestCase(unittest.TestCase):
         logistic_bc = logistic_regression.BinaryClassifier()
         logistic_bc.load_train_data(input_train_data_file)
         logistic_bc.set_feature_transform('polynomial', 2)
-        logistic_bc.setParam()
+        logistic_bc.set_param()
         logistic_bc.init_W()
         W = logistic_bc.train()
         logistic_bc.load_test_data(input_test_data_file)
@@ -855,7 +855,7 @@ class FukuMLTestCase(unittest.TestCase):
         logistic_bc = logistic_regression.BinaryClassifier()
         logistic_bc.load_train_data(input_train_data_file)
         logistic_bc.set_feature_transform('legendre', 2)
-        logistic_bc.setParam()
+        logistic_bc.set_param()
         logistic_bc.init_W()
         W = logistic_bc.train()
         logistic_bc.load_test_data(input_test_data_file)
@@ -876,7 +876,7 @@ class FukuMLTestCase(unittest.TestCase):
         pla_mc.load_train_data()
         pla_mc.set_feature_transform('polynomial', 1)
         pla_mc.load_test_data()
-        pla_mc.setParam()
+        pla_mc.set_param()
         pla_mc.init_W()
         W = pla_mc.train()
         print("\nPLA Polynomial 多類訓練得出權重模型：")
@@ -891,7 +891,7 @@ class FukuMLTestCase(unittest.TestCase):
         pla_mc.load_train_data()
         pla_mc.set_feature_transform('legendre', 1)
         pla_mc.load_test_data()
-        pla_mc.setParam()
+        pla_mc.set_param()
         pla_mc.init_W()
         W = pla_mc.train()
         print("\nPLA Legendre 多類訓練得出權重模型：")
@@ -908,7 +908,7 @@ class FukuMLTestCase(unittest.TestCase):
         pocket_mc.load_train_data()
         pocket_mc.set_feature_transform('polynomial', 1)
         pocket_mc.load_test_data()
-        pocket_mc.setParam()
+        pocket_mc.set_param()
         pocket_mc.init_W()
         W = pocket_mc.train()
         print("\nPocket Polynomial 多類訓練得出權重模型：")
@@ -923,7 +923,7 @@ class FukuMLTestCase(unittest.TestCase):
         pocket_mc.load_train_data()
         pocket_mc.set_feature_transform('legendre', 1)
         pocket_mc.load_test_data()
-        pocket_mc.setParam()
+        pocket_mc.set_param()
         pocket_mc.init_W()
         W = pocket_mc.train()
         print("\nPocket Legendre 多類訓練得出權重模型：")
@@ -940,7 +940,7 @@ class FukuMLTestCase(unittest.TestCase):
         linear_mc.load_train_data()
         linear_mc.set_feature_transform('polynomial', 1)
         linear_mc.load_test_data()
-        linear_mc.setParam()
+        linear_mc.set_param()
         linear_mc.init_W()
         W = linear_mc.train()
         print("\nLinear Regression Polynomial 多類訓練得出權重模型：")
@@ -955,7 +955,7 @@ class FukuMLTestCase(unittest.TestCase):
         linear_mc.load_train_data()
         linear_mc.set_feature_transform('legendre', 1)
         linear_mc.load_test_data()
-        linear_mc.setParam()
+        linear_mc.set_param()
         linear_mc.init_W()
         W = linear_mc.train()
         print("\nLinear Regression Legendre 多類訓練得出權重模型：")
@@ -972,7 +972,7 @@ class FukuMLTestCase(unittest.TestCase):
         logistic_mc.load_train_data()
         logistic_mc.set_feature_transform('polynomial', 1)
         logistic_mc.load_test_data()
-        logistic_mc.setParam()
+        logistic_mc.set_param()
         logistic_mc.init_W()
         W = logistic_mc.train()
 
@@ -988,7 +988,7 @@ class FukuMLTestCase(unittest.TestCase):
         logistic_mc.load_train_data()
         logistic_mc.set_feature_transform('legendre', 1)
         logistic_mc.load_test_data()
-        logistic_mc.setParam()
+        logistic_mc.set_param()
         logistic_mc.init_W()
         W = logistic_mc.train()
 
@@ -1011,16 +1011,16 @@ class FukuMLTestCase(unittest.TestCase):
 
         pla_bc = pla.BinaryClassifier()
         pla_bc.load_train_data(input_train_data_file)
-        pla_bc.setParam()
+        pla_bc.set_param()
         pocket_bc = pocket.BinaryClassifier()
         pocket_bc.load_train_data(input_train_data_file)
-        pocket_bc.setParam()
+        pocket_bc.set_param()
         linear_bc = linear_regression.BinaryClassifier()
         linear_bc.load_train_data(input_train_data_file)
-        linear_bc.setParam()
+        linear_bc.set_param()
         logistic_bc = logistic_regression.BinaryClassifier()
         logistic_bc.load_train_data(input_train_data_file)
-        logistic_bc.setParam()
+        logistic_bc.set_param()
 
         print("\n10 fold cross validation：")
 
@@ -1056,10 +1056,10 @@ class FukuMLTestCase(unittest.TestCase):
 
         pla_mc = pla.MultiClassifier()
         pla_mc.load_train_data()
-        pla_mc.setParam()
+        pla_mc.set_param()
         pocket_mc = pocket.MultiClassifier()
         pocket_mc.load_train_data()
-        pocket_mc.setParam()
+        pocket_mc.set_param()
 
         print("\n10 fold cross validation：")
 
@@ -1094,7 +1094,7 @@ class FukuMLTestCase(unittest.TestCase):
         ridge = ridge_regression.RidgeRegression()
         ridge.load_train_data()
         ridge.load_test_data()
-        ridge.setParam(lambda_p=pow(10, -3))
+        ridge.set_param(lambda_p=pow(10, -3))
         ridge.init_W()
         W = ridge.train()
 
@@ -1129,7 +1129,7 @@ class FukuMLTestCase(unittest.TestCase):
         for lambda_p in lambda_p_set:
             ridge_bc = ridge_regression.BinaryClassifier()
             ridge_bc.load_train_data()
-            ridge_bc.setParam(lambda_p=pow(10, lambda_p))
+            ridge_bc.set_param(lambda_p=pow(10, lambda_p))
             cross_validator.add_model(ridge_bc)
 
         print("\n10 fold cross validation：")
@@ -1175,7 +1175,7 @@ class FukuMLTestCase(unittest.TestCase):
         ridge_mc = ridge_regression.MultiClassifier()
         ridge_mc.load_train_data()
         ridge_mc.load_test_data()
-        ridge_mc.setParam(lambda_p=pow(10, -3))
+        ridge_mc.set_param(lambda_p=pow(10, -3))
         ridge_mc.init_W()
         W = ridge_mc.train()
         print("\n訓練得出權重模型：")
@@ -1206,7 +1206,7 @@ class FukuMLTestCase(unittest.TestCase):
         svm_bc = svm.BinaryClassifier()
         svm_bc.load_train_data()
         svm_bc.load_test_data()
-        svm_bc.setParam(svm_kernel='primal_hard_margin')
+        svm_bc.set_param(svm_kernel='primal_hard_margin')
         svm_bc.init_W()
         W = svm_bc.train()
         print("\n訓練得出權重模型：")
@@ -1247,7 +1247,7 @@ class FukuMLTestCase(unittest.TestCase):
         svm_bc = svm.BinaryClassifier()
         svm_bc.load_train_data()
         svm_bc.load_test_data()
-        svm_bc.setParam(svm_kernel='dual_hard_margin')
+        svm_bc.set_param(svm_kernel='dual_hard_margin')
         svm_bc.init_W()
         W = svm_bc.train()
         print("\n訓練得出權重模型：")

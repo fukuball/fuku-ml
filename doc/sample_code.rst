@@ -14,7 +14,7 @@ Run demo dataset: Basic Naive Cycle PLA
 
     >>> pla_bc.load_train_data()
 
-    >>> pla_bc.setParam()
+    >>> pla_bc.set_param()
 
     >>> pla_bc.init_W()
 
@@ -41,7 +41,7 @@ Run demo dataset: Basic Naive Cycle PLA with Linear Regression Accelerator
 
     >>> pla_bc.load_train_data()
 
-    >>> pla_bc.setParam()
+    >>> pla_bc.set_param()
 
     >>> pla_bc.init_W('linear_regression_accelerator')
 
@@ -68,7 +68,7 @@ Run demo dataset: Random Cycle PLA
 
     >>> pla_bc.load_train_data()
 
-    >>> pla_bc.setParam(loop_mode='random')
+    >>> pla_bc.set_param(loop_mode='random')
 
     >>> pla_bc.init_W()
 
@@ -95,7 +95,7 @@ Run demo dataset: Random Cycle PLA alpha=0.5 step correction
 
     >>> pla_bc.load_train_data()
 
-    >>> pla_bc.setParam(loop_mode='random', step_alpha=0.5)
+    >>> pla_bc.set_param(loop_mode='random', step_alpha=0.5)
 
     >>> pla_bc.init_W()
 
@@ -125,7 +125,7 @@ Run demo dataset: One vs One
 
     >>> pla_mc.load_train_data()
 
-    >>> pla_mc.setParam()
+    >>> pla_mc.set_param()
 
     >>> pla_mc.init_W()
 
@@ -148,7 +148,7 @@ Run demo dataset: One vs One with Linear Regression Accelerator
 
     >>> pla_mc.load_train_data()
 
-    >>> pla_mc.setParam()
+    >>> pla_mc.set_param()
 
     >>> pla_mc.init_W('linear_regression_accelerator')
 
@@ -174,7 +174,7 @@ Run demo dataset
 
     >>> pocket_bc.load_train_data()
 
-    >>> pocket_bc.setParam(loop_mode='naive_cycle', step_alpha=1, updates=50)
+    >>> pocket_bc.set_param(loop_mode='naive_cycle', step_alpha=1, updates=50)
 
     >>> pocket_bc.init_W()
 
@@ -205,7 +205,7 @@ Run demo dataset with Linear Regression Accelerator
 
     >>> pocket_bc.load_train_data()
 
-    >>> pocket_bc.setParam(loop_mode='naive_cycle', step_alpha=1, updates=50)
+    >>> pocket_bc.set_param(loop_mode='naive_cycle', step_alpha=1, updates=50)
 
     >>> pocket_bc.init_W('linear_regression_accelerator')
 
@@ -239,7 +239,7 @@ Run demo dataset: One vs One
 
     >>> pocket_mc.load_train_data()
 
-    >>> pocket_mc.setParam(loop_mode='naive_cycle', step_alpha=1, updates=50)
+    >>> pocket_mc.set_param(loop_mode='naive_cycle', step_alpha=1, updates=50)
 
     >>> pocket_mc.init_W()
 
@@ -262,7 +262,7 @@ Run demo dataset: One vs One with Linear Regression Accelerator
 
     >>> pocket_mc.load_train_data()
 
-    >>> pocket_mc.setParam(loop_mode='naive_cycle', step_alpha=1, updates=50)
+    >>> pocket_mc.set_param(loop_mode='naive_cycle', step_alpha=1, updates=50)
 
     >>> pocket_mc.init_W('linear_regression_accelerator')
 
@@ -377,7 +377,7 @@ Run demo dataset
 
     >>> logistic.load_train_data()
 
-    >>> logistic.setParam()
+    >>> logistic.set_param()
 
     >>> logistic.init_W()
 
@@ -400,7 +400,7 @@ Run demo dataset with Linear Regression Accelerator
 
     >>> logistic.load_train_data()
 
-    >>> logistic.setParam()
+    >>> logistic.set_param()
 
     >>> logistic.init_W('linear_regression_accelerator')
 
@@ -426,7 +426,7 @@ Run demo dataset
 
     >>> logistic.load_train_data()
 
-    >>> logistic.setParam()
+    >>> logistic.set_param()
 
     >>> logistic.init_W()
 
@@ -449,7 +449,7 @@ Run demo dataset with Linear Regression Accelerator
 
     >>> logistic.load_train_data()
 
-    >>> logistic.setParam()
+    >>> logistic.set_param()
 
     >>> logistic.init_W('linear_regression_accelerator')
 
@@ -475,7 +475,7 @@ Run demo dataset: One vs All
 
     >>> logistic.load_train_data()
 
-    >>> logistic.setParam()
+    >>> logistic.set_param()
 
     >>> logistic.init_W()
 
@@ -498,7 +498,7 @@ Run demo dataset: One vs All with Linear Regression Accelerator
 
     >>> logistic.load_train_data()
 
-    >>> logistic.setParam()
+    >>> logistic.set_param()
 
     >>> logistic.init_W('linear_regression_accelerator')
 
@@ -521,7 +521,7 @@ Run demo dataset: One vs One
 
     >>> logistic.load_train_data()
 
-    >>> logistic.setParam()
+    >>> logistic.set_param()
 
     >>> logistic.init_W('normal', 'ovo')
 
@@ -544,7 +544,7 @@ Run demo dataset: One vs One with Linear Regression Accelerator
 
     >>> logistic.load_train_data()
 
-    >>> logistic.setParam()
+    >>> logistic.set_param()
 
     >>> logistic.init_W('linear_regression_accelerator', 'ovo')
 
@@ -570,7 +570,7 @@ Run demo dataset
 
     >>> ridge.load_train_data()
 
-    >>> ridge.setParam(lambda_p=pow(10, -3))
+    >>> ridge.set_param(lambda_p=pow(10, -3))
 
     >>> ridge.init_W()
 
@@ -604,7 +604,7 @@ Run demo dataset
 
     >>> ridge_bc.load_train_data()
 
-    >>> ridge_bc.setParam(lambda_p=pow(10, -3))
+    >>> ridge_bc.set_param(lambda_p=pow(10, -3))
 
     >>> ridge_bc.init_W()
 
@@ -639,7 +639,7 @@ Run demo dataset: One vs One
 
     >>> ridge_mc.load_train_data()
 
-    >>> ridge_mc.setParam(lambda_p=pow(10, -3))
+    >>> ridge_mc.set_param(lambda_p=pow(10, -3))
 
     >>> ridge_mc.init_W()
 
@@ -690,13 +690,13 @@ Legendre Feature Transform
 
     >>> pla_mc.load_train_data()
 
-    >>> pla_mc.setParam()
+    >>> pla_mc.set_param()
 
     >>> pocket_mc = pocket.MultiClassifier()
 
     >>> pocket_mc.load_train_data()
 
-    >>> pocket_mc.setParam()
+    >>> pocket_mc.set_param()
 
     >>> cross_validator.add_model(pla_mc)
 

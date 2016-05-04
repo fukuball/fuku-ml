@@ -98,7 +98,7 @@ Usage
     >>> pla_bc.load_train_data(your_input_data_file)
     # load train data
 
-    >>> pla_bc.setParam()
+    >>> pla_bc.set_param()
     # set parameter
 
     >>> pla_bc.init_W()

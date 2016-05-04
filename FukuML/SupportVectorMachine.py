@@ -83,7 +83,7 @@ class BinaryClassifier(ml.Learner):
 
         return self.test_X, self.test_Y
 
-    def setParam(self, svm_kernel='primal_hard_margin'):
+    def set_param(self, svm_kernel='primal_hard_margin'):
 
         self.svm_kernel = svm_kernel
 

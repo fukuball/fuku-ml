@@ -81,7 +81,7 @@ class BinaryClassifier(ml.Learner):
 
         return self.test_X, self.test_Y
 
-    def setParam(self, loop_mode='naive_cycle', step_alpha=1):
+    def set_param(self, loop_mode='naive_cycle', step_alpha=1):
 
         self.loop_mode = loop_mode
         self.step_alpha = step_alpha
@@ -264,9 +264,9 @@ class MultiClassifier(BinaryClassifier):
 
         return self.test_X, self.test_Y
 
-    def setParam(self, loop_mode='naive_cycle', step_alpha=1):
+    def set_param(self, loop_mode='naive_cycle', step_alpha=1):
 
-        return super(MultiClassifier, self).setParam(loop_mode, step_alpha)
+        return super(MultiClassifier, self).set_param(loop_mode, step_alpha)
 
     def init_W(self, mode='normal'):
 

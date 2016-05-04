@@ -84,7 +84,7 @@ class LogisticRegression(ml.Learner):
 
         return self.test_X, self.test_Y
 
-    def setParam(self, feed_mode='batch', step_ita=0.126, updates=2000):
+    def set_param(self, feed_mode='batch', step_ita=0.126, updates=2000):
 
         self.feed_mode = feed_mode
         self.step_ita = step_ita
@@ -249,9 +249,9 @@ class BinaryClassifier(LogisticRegression):
 
         return super(BinaryClassifier, self).load_test_data(input_data_file)
 
-    def setParam(self, feed_mode='batch', step_ita=0.126, updates=2000):
+    def set_param(self, feed_mode='batch', step_ita=0.126, updates=2000):
 
-        return super(BinaryClassifier, self).setParam(feed_mode, step_ita, updates)
+        return super(BinaryClassifier, self).set_param(feed_mode, step_ita, updates)
 
     def init_W(self, mode='normal'):
 
@@ -387,9 +387,9 @@ class MultiClassifier(LogisticRegression):
 
         return self.test_X, self.test_Y
 
-    def setParam(self, feed_mode='batch', step_ita=0.126, updates=2000):
+    def set_param(self, feed_mode='batch', step_ita=0.126, updates=2000):
 
-        return super(MultiClassifier, self).setParam(feed_mode, step_ita, updates)
+        return super(MultiClassifier, self).set_param(feed_mode, step_ita, updates)
 
     def init_W(self, mode='normal', decomposition='ova'):
 

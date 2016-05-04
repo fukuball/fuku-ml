@@ -53,7 +53,7 @@ class Learner(object):
 
         return self.train_X
 
-    def setParam(self):
+    def set_param(self):
         return
 
     @abstractmethod
