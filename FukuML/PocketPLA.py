@@ -147,7 +147,7 @@ class BinaryClassifier(ml.Learner):
 
     def calculate_test_data_avg_error(self):
 
-        return super(BinaryClassifier, self).calculate_avg_error()
+        return super(BinaryClassifier, self).calculate_test_data_avg_error()
 
     def train(self):
 
@@ -356,7 +356,7 @@ class MultiClassifier(BinaryClassifier):
 
     def calculate_test_data_avg_error(self):
 
-        return super(MultiClassifier, self).calculate_avg_error()
+        return super(MultiClassifier, self).calculate_test_data_avg_error()
 
     def modify_XY(self, X, Y, class_item):
 

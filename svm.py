@@ -117,6 +117,12 @@ if __name__ == "__main__":
         X2 = np.random.multivariate_normal(mean2, cov, 50)
         X2 = np.vstack((X2, np.random.multivariate_normal(mean4, cov, 50)))
         y2 = np.ones(len(X2)) * -1
+
+        print X1
+        print y1
+        print X2
+        print y2
+
         return X1, y1, X2, y2
 
     def gen_lin_separable_overlap_data():
@@ -233,4 +239,4 @@ if __name__ == "__main__":
 
         plot_contour(X_train[y_train==1], X_train[y_train==-1], clf)
 
-    test_linear()
+    test_non_linear()
