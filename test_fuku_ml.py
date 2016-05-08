@@ -1300,6 +1300,17 @@ class FukuMLTestCase(unittest.TestCase):
         print("SVM Marging：")
         print(svm_bc.getMarge())
 
+        test_data = '-3.53133797 5.23661847 -1'
+        prediction = svm_bc.prediction(test_data)
+        self.assertEqual(prediction['input_data_y'], prediction['prediction'])
+
+        print("測試資料 x：")
+        print(prediction['input_data_x'])
+        print("測試資料 y：")
+        print(prediction['input_data_y'])
+        print("預測結果：")
+        print(prediction['prediction'])
+
         print("W 平均錯誤率（Ein）：")
         print(svm_bc.calculate_avg_error(svm_bc.train_X, svm_bc.train_Y, W))
         print("W 平均錯誤率（Eout）：")
@@ -1308,6 +1319,7 @@ class FukuMLTestCase(unittest.TestCase):
 
         svm_bc = svm.BinaryClassifier()
         svm_bc.load_train_data(input_train_data_file)
+        svm_bc.set_feature_transform('legendre', 3)
         svm_bc.load_test_data(input_test_data_file)
         svm_bc.set_param(svm_kernel='dual_hard_margin')
         svm_bc.init_W()

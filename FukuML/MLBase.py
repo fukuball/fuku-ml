@@ -1,6 +1,7 @@
 #encoding=utf8
 
 from abc import ABCMeta, abstractmethod
+import numpy as np
 import FukuML.Utility as utility
 
 
@@ -15,7 +16,7 @@ class Learner(object):
     data_demension = 0
     test_X = []
     test_Y = []
-    feature_transform_mode = ''
+    feature_transform_mode = 'polynomial'
     feature_transform_degree = 1
 
     @abstractmethod
@@ -118,12 +119,24 @@ class Learner(object):
 
         if mode == 'future_data':
             data = input_data.split()
-            input_data_x = [1] + [float(v) for v in data]
+            input_data_x = [float(v) for v in data]
+            input_data_x = utility.DatasetLoader.feature_transform(
+                np.array(input_data_x).reshape(1, -1),
+                self.feature_transform_mode,
+                self.feature_transform_degree
+            )
+            input_data_x = np.ravel(input_data_x)
             prediction = self.score_function(input_data_x, self.W)
             return {"input_data_x": input_data_x, "input_data_y": None, "prediction": prediction}
         else:
             data = input_data.split()
-            input_data_x = [1] + [float(v) for v in data[:-1]]
+            input_data_x = [float(v) for v in data[:-1]]
+            input_data_x = utility.DatasetLoader.feature_transform(
+                np.array(input_data_x).reshape(1, -1),
+                self.feature_transform_mode,
+                self.feature_transform_degree
+            )
+            input_data_x = np.ravel(input_data_x)
             input_data_y = float(data[-1])
             prediction = self.score_function(input_data_x, self.W)
             return {"input_data_x": input_data_x, "input_data_y": input_data_y, "prediction": prediction}
