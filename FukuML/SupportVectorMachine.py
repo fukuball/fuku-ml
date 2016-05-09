@@ -168,7 +168,7 @@ class BinaryClassifier(ml.Learner):
             # Lagrange multipliers
             a = np.ravel(solution['x'])
             # Support vectors have non zero lagrange multipliers
-            sv = a > 1e-5
+            sv = a > 1e-7
             self.sv_index = np.arange(len(a))[sv]
             self.sv_alpha = a[sv]
             self.sv_X = original_X[sv]
