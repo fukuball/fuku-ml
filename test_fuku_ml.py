@@ -13,7 +13,6 @@ import FukuML.Utility as utility
 
 class FukuMLTestCase(unittest.TestCase):
 
-    '''
     def test_pla_binary_classifier(self):
 
         #------------------------------------------------------------
@@ -1199,7 +1198,6 @@ class FukuMLTestCase(unittest.TestCase):
         print("W 平均錯誤率（Eout）：")
         print(ridge_mc.calculate_avg_error_all_class(ridge_mc.test_X, ridge_mc.test_Y, W))
         print('-'*70)
-    '''
 
     def test_primal_hard_margin_svm_binary_classifier(self):
 
