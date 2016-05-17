@@ -27,10 +27,14 @@ class BinaryClassifier(ml.Learner):
         self.feature_transform_degree = 1
 
         self.svm_kernel = 'primal_hard_margin'
+        self.zeta = 0
+        self.gamma = 1
+        self.Q = 1
         self.sv_index = []
         self.sv_alpha = []
         self.sv_X = []
         self.sv_Y = []
+        self.sv_avg_b = 0
 
     def load_train_data(self, input_data_file=''):
 
@@ -83,9 +87,12 @@ class BinaryClassifier(ml.Learner):
 
         return self.test_X, self.test_Y
 
-    def set_param(self, svm_kernel='primal_hard_margin'):
+    def set_param(self, svm_kernel='primal_hard_margin', zeta=0, gamma=1, Q=1):
 
         self.svm_kernel = svm_kernel
+        self.zeta = zeta
+        self.gamma = gamma
+        self.Q = Q
 
         return self.svm_kernel
 
@@ -106,9 +113,10 @@ class BinaryClassifier(ml.Learner):
         self.data_demension = len(self.train_X[0])
         self.W = np.zeros(self.data_demension)
 
-        if mode == 'linear_regression_accelerator':
-            accelerator = linear_regression.Accelerator()
-            self.W = accelerator.init_W(self)
+        if (self.svm_kernel != 'polynomial_kernel'):
+            if mode == 'linear_regression_accelerator':
+                accelerator = linear_regression.Accelerator()
+                self.W = accelerator.init_W(self)
 
         return self.W
 
@@ -119,7 +127,15 @@ class BinaryClassifier(ml.Learner):
         Score function to calculate score
         '''
 
-        score = np.sign(np.inner(x, W))
+        if (self.svm_kernel == 'polynomial_kernel'):
+            original_X = self.train_X[:, 1:]
+            x = x[1:]
+            score = 0
+            for i in range(len(self.sv_alpha)):
+                score += self.sv_alpha[i] * self.sv_Y[i] * self.polynomial_kernel(original_X[self.sv_index[i]], x)
+            score = np.sign(score + self.sv_avg_b)
+        else:
+            score = np.sign(np.inner(x, W))
 
         return score
 
@@ -153,7 +169,41 @@ class BinaryClassifier(ml.Learner):
 
         # P = Q, q = p, G = -A, h = -c
 
-        if (self.svm_kernel == 'dual_hard_margin'):
+        if (self.svm_kernel == 'polynomial_kernel'):
+
+            original_X = self.train_X[:, 1:]
+
+            K = self.kernel_matrix(original_X)
+
+            P = cvxopt.matrix(np.outer(self.train_Y, self.train_Y) * K)
+            q = cvxopt.matrix(np.ones(self.data_num) * -1)
+            G = cvxopt.matrix(np.diag(np.ones(self.data_num) * -1))
+            h = cvxopt.matrix(np.zeros(self.data_num) * -1)
+            A = cvxopt.matrix(self.train_Y, (1, self.data_num))
+            b = cvxopt.matrix(0.0)
+            cvxopt.solvers.options['show_progress'] = False
+            solution = cvxopt.solvers.qp(P, q, G, h, A, b)
+
+            # Lagrange multipliers
+            a = np.ravel(solution['x'])
+            # Support vectors have non zero lagrange multipliers
+            sv = a > 1e-7
+            self.sv_index = np.arange(len(a))[sv]
+            self.sv_alpha = a[sv]
+            self.sv_X = original_X[sv]
+            self.sv_Y = self.train_Y[sv]
+
+            sum_short_b = 0
+            for i in range(len(self.sv_alpha)):
+                sum_short_b += self.sv_Y[i]
+                for j in range(len(self.sv_alpha)):
+                    sum_short_b -= self.sv_alpha[j] * self.sv_Y[j] * self.polynomial_kernel(original_X[self.sv_index[j]], original_X[self.sv_index[i]])
+            short_b = sum_short_b / len(self.sv_alpha)
+
+            self.sv_avg_b = short_b
+
+        elif (self.svm_kernel == 'dual_hard_margin'):
+
             original_X = self.train_X[:, 1:]
 
             P = cvxopt.matrix(np.outer(self.train_Y, self.train_Y) * np.dot(original_X, np.transpose(original_X)))
@@ -183,7 +233,10 @@ class BinaryClassifier(ml.Learner):
                 sum_short_b += self.sv_Y[i] - np.dot(np.transpose(short_w), original_X[self.sv_index[i]])
             short_b = sum_short_b / len(self.sv_alpha)
 
+            self.sv_avg_b = short_b
+
             self.W = np.insert(short_w, 0, short_b)
+
         else:
             # primal_hard_margin
             eye_process = np.eye(self.data_demension)
@@ -199,13 +252,33 @@ class BinaryClassifier(ml.Learner):
 
         return self.W
 
-    def getMarge(self):
+    def get_marge(self):
 
-        return 1/np.linalg.norm(self.W[1:])
+        nonzero = np.count_nonzero(self.W[1:])
 
-    def getSupportVectors(self):
+        if nonzero == 0:
+            return 0
+        else:
+            return 1/np.linalg.norm(self.W[1:])
+
+    def get_support_vectors(self):
 
         return self.sv_X
+
+    def kernel_matrix(self, original_X):
+
+        K = np.zeros((self.data_num, self.data_num))
+
+        for i in range(self.data_num):
+            for j in range(self.data_num):
+                if (self.svm_kernel == 'polynomial_kernel'):
+                    K[i, j] = self.polynomial_kernel(original_X[i], original_X[j])
+
+        return K
+
+    def polynomial_kernel(self, x1, x2):
+
+        return (self.zeta + self.gamma * np.dot(x1, x2)) ** self.Q
 
     def prediction(self, input_data='', mode='test_data'):
 

@@ -1212,7 +1212,7 @@ class FukuMLTestCase(unittest.TestCase):
         print("\n訓練得出權重模型：")
         print(W)
         print("SVM Marging：")
-        print(svm_bc.getMarge())
+        print(svm_bc.get_marge())
 
         test_data = '0.97681 0.10723 0.64385 0.29556 1'
         prediction = svm_bc.prediction(test_data)
@@ -1250,12 +1250,13 @@ class FukuMLTestCase(unittest.TestCase):
         svm_bc.set_param(svm_kernel='dual_hard_margin')
         svm_bc.init_W()
         W = svm_bc.train()
+
         print("\n訓練得出權重模型：")
         print(W)
         print("SVM Marging：")
-        print(svm_bc.getMarge())
+        print(svm_bc.get_marge())
         print("Support Vectors")
-        print(svm_bc.getSupportVectors())
+        print(svm_bc.get_support_vectors())
 
         test_data = '0.97681 0.10723 0.64385 0.29556 1'
         prediction = svm_bc.prediction(test_data)
@@ -1298,7 +1299,7 @@ class FukuMLTestCase(unittest.TestCase):
         print("\n訓練得出權重模型：")
         print(W)
         print("SVM Marging：")
-        print(svm_bc.getMarge())
+        print(svm_bc.get_marge())
 
         test_data = '-3.53133797 5.23661847 -1'
         prediction = svm_bc.prediction(test_data)
@@ -1327,9 +1328,33 @@ class FukuMLTestCase(unittest.TestCase):
         print("\n訓練得出權重模型：")
         print(W)
         print("SVM Marging：")
-        print(svm_bc.getMarge())
+        print(svm_bc.get_marge())
         print("Support Vectors")
-        print(svm_bc.getSupportVectors())
+        print(svm_bc.get_support_vectors())
+
+        print("W 平均錯誤率（Ein）：")
+        print(svm_bc.calculate_avg_error(svm_bc.train_X, svm_bc.train_Y, W))
+        print("W 平均錯誤率（Eout）：")
+        print(svm_bc.calculate_test_data_avg_error())
+        print('-'*70)
+
+    def test_polynomial_kernel_svm_binary_classifier(self):
+
+        input_train_data_file = os.path.join(os.path.join(os.getcwd(), os.path.dirname(__file__)), 'FukuML/dataset/non_linear_train.dat')
+        input_test_data_file = os.path.join(os.path.join(os.getcwd(), os.path.dirname(__file__)), 'FukuML/dataset/non_linear_test.dat')
+
+        svm_bc = svm.BinaryClassifier()
+        svm_bc.load_train_data(input_train_data_file)
+        svm_bc.load_test_data(input_test_data_file)
+        svm_bc.set_param(svm_kernel='polynomial_kernel', zeta=100, gamma=1, Q=3)
+        svm_bc.init_W()
+        W = svm_bc.train()
+        print("\n訓練得出權重模型：")
+        print(W)
+        print("SVM Marging：")
+        print(svm_bc.get_marge())
+        print("Support Vectors")
+        print(svm_bc.get_support_vectors())
 
         print("W 平均錯誤率（Ein）：")
         print(svm_bc.calculate_avg_error(svm_bc.train_X, svm_bc.train_Y, W))
