@@ -518,7 +518,7 @@ class FukuMLTestCase(unittest.TestCase):
         print('-'*70)
 
         print("隨機梯度下降：")
-        logistic.set_param(feed_mode='stochastic', step_ita=0.1, updates=2000)
+        logistic.set_param(feed_mode='stochastic', step_eta=0.1, updates=2000)
         logistic.init_W()
         W = logistic.train()
         print("訓練得出權重模型：")
@@ -532,7 +532,7 @@ class FukuMLTestCase(unittest.TestCase):
         #------------------------------------------------------------
 
         print("使用 Linear Regression 加速器：")
-        logistic.set_param(feed_mode='batch', step_ita=0.126, updates=2000)
+        logistic.set_param(feed_mode='batch', step_eta=0.126, updates=2000)
         logistic.init_W('linear_regression_accelerator')
         W = logistic.train()
         print("\n訓練得出權重模型：")
@@ -576,7 +576,7 @@ class FukuMLTestCase(unittest.TestCase):
         print('-'*70)
 
         print("隨機梯度下降：")
-        logistic.set_param(feed_mode='stochastic', step_ita=0.126, updates=2000)
+        logistic.set_param(feed_mode='stochastic', step_eta=0.126, updates=2000)
         logistic.init_W()
         W = logistic.train()
         print("訓練得出權重模型：")
@@ -590,7 +590,7 @@ class FukuMLTestCase(unittest.TestCase):
         #------------------------------------------------------------
 
         print("使用 Linear Regression 加速器：")
-        logistic.set_param(feed_mode='batch', step_ita=0.126, updates=2000)
+        logistic.set_param(feed_mode='batch', step_eta=0.126, updates=2000)
         W = logistic.init_W('linear_regression_accelerator')
         print("\n加速初始化權重模型：")
         print(W)

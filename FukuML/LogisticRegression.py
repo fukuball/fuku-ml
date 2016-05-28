@@ -30,7 +30,7 @@ class LogisticRegression(ml.Learner):
         self.feature_transform_degree = 1
 
         self.feed_mode = 'batch'
-        self.step_ita = 0.126
+        self.step_eta = 0.126
         self.updates = 2000
 
     def load_train_data(self, input_data_file=''):
@@ -84,13 +84,13 @@ class LogisticRegression(ml.Learner):
 
         return self.test_X, self.test_Y
 
-    def set_param(self, feed_mode='batch', step_ita=0.126, updates=2000):
+    def set_param(self, feed_mode='batch', step_eta=0.126, updates=2000):
 
         self.feed_mode = feed_mode
-        self.step_ita = step_ita
+        self.step_eta = step_eta
         self.updates = updates
 
-        return self.feed_mode, self.step_ita, self.updates
+        return self.feed_mode, self.step_eta, self.updates
 
     def init_W(self, mode='normal'):
 
@@ -211,7 +211,7 @@ class LogisticRegression(ml.Learner):
                 gradient = self.calculate_gradient(self.train_X, self.train_Y, self.W)
             if np.linalg.norm(gradient) == 0:
                 return self.W
-            self.W = self.W - self.step_ita * gradient
+            self.W = self.W - self.step_eta * gradient
 
         return self.W
 
@@ -238,7 +238,7 @@ class BinaryClassifier(LogisticRegression):
         self.feature_transform_degree = 1
 
         self.feed_mode = 'batch'
-        self.step_ita = 0.126
+        self.step_eta = 0.126
         self.updates = 2000
 
     def load_train_data(self, input_data_file=''):
@@ -249,9 +249,9 @@ class BinaryClassifier(LogisticRegression):
 
         return super(BinaryClassifier, self).load_test_data(input_data_file)
 
-    def set_param(self, feed_mode='batch', step_ita=0.126, updates=2000):
+    def set_param(self, feed_mode='batch', step_eta=0.126, updates=2000):
 
-        return super(BinaryClassifier, self).set_param(feed_mode, step_ita, updates)
+        return super(BinaryClassifier, self).set_param(feed_mode, step_eta, updates)
 
     def init_W(self, mode='normal'):
 
@@ -341,7 +341,7 @@ class MultiClassifier(LogisticRegression):
         self.feature_transform_degree = 1
 
         self.feed_mode = 'batch'
-        self.step_ita = 0.126
+        self.step_eta = 0.126
         self.updates = 2000
         self.class_list = []
         self.temp_train_X = []
@@ -387,9 +387,9 @@ class MultiClassifier(LogisticRegression):
 
         return self.test_X, self.test_Y
 
-    def set_param(self, feed_mode='batch', step_ita=0.126, updates=2000):
+    def set_param(self, feed_mode='batch', step_eta=0.126, updates=2000):
 
-        return super(MultiClassifier, self).set_param(feed_mode, step_ita, updates)
+        return super(MultiClassifier, self).set_param(feed_mode, step_eta, updates)
 
     def init_W(self, mode='normal', decomposition='ova'):
 
