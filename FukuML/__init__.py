@@ -21,6 +21,7 @@ __all__ = [
     'RidgeRegression.RidgeRegression',
     'RidgeRegression.BinaryClassifier',
     'RidgeRegression.MultiClassifier',
+    'SupportVectorMachine.BinaryClassifier',
     'Utility',
     'Utility.DatasetLoader',
     'Utility.CrossValidator',

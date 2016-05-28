@@ -1370,7 +1370,7 @@ class FukuMLTestCase(unittest.TestCase):
         svm_bc = svm.BinaryClassifier()
         svm_bc.load_train_data(input_train_data_file)
         svm_bc.load_test_data(input_test_data_file)
-        svm_bc.set_param(svm_kernel='gaussian_kernel', gamma=1)
+        svm_bc.set_param(svm_kernel='gaussian_kernel', gamma=0.001)
         svm_bc.init_W()
         W = svm_bc.train()
         print("\n訓練得出權重模型：")

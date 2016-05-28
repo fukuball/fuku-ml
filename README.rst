@@ -72,6 +72,14 @@ Algorithm
 
 - Ridge Regression Multi Classification Learning Algorithm
 
+- Primal Hard Margin Support Vector Machine Binary Classification Learning Algorithm
+
+- Dual Hard Margin Support Vector Machine Binary Classification Learning Algorithm
+
+- Polynomial Kernel Support Vector Machine Binary Classification Learning Algorithm
+
+- Gaussian Kernel Support Vector Machine Binary Classification Learning Algorithm
+
 - Polynomial Feature Transform
 
 - Legendre Feature Transform
