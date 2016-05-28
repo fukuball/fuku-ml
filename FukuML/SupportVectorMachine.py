@@ -113,7 +113,7 @@ class BinaryClassifier(ml.Learner):
         self.data_demension = len(self.train_X[0])
         self.W = np.zeros(self.data_demension)
 
-        if (self.svm_kernel != 'polynomial_kernel'):
+        if (self.svm_kernel != 'polynomial_kernel' and self.svm_kernel != 'gaussian_kernel'):
             if mode == 'linear_regression_accelerator':
                 accelerator = linear_regression.Accelerator()
                 self.W = accelerator.init_W(self)
@@ -127,12 +127,15 @@ class BinaryClassifier(ml.Learner):
         Score function to calculate score
         '''
 
-        if (self.svm_kernel == 'polynomial_kernel'):
+        if (self.svm_kernel == 'polynomial_kernel' or self.svm_kernel == 'gaussian_kernel'):
             original_X = self.train_X[:, 1:]
             x = x[1:]
             score = 0
             for i in range(len(self.sv_alpha)):
-                score += self.sv_alpha[i] * self.sv_Y[i] * self.polynomial_kernel(original_X[self.sv_index[i]], x)
+                if (self.svm_kernel == 'polynomial_kernel'):
+                    score += self.sv_alpha[i] * self.sv_Y[i] * self.polynomial_kernel(original_X[self.sv_index[i]], x)
+                elif (self.svm_kernel == 'gaussian_kernel'):
+                    score += self.sv_alpha[i] * self.sv_Y[i] * self.gaussian_kernel(original_X[self.sv_index[i]], x)
             score = np.sign(score + self.sv_avg_b)
         else:
             score = np.sign(np.inner(x, W))
@@ -169,7 +172,7 @@ class BinaryClassifier(ml.Learner):
 
         # P = Q, q = p, G = -A, h = -c
 
-        if (self.svm_kernel == 'polynomial_kernel'):
+        if (self.svm_kernel == 'polynomial_kernel' or self.svm_kernel == 'gaussian_kernel'):
 
             original_X = self.train_X[:, 1:]
 
@@ -197,7 +200,10 @@ class BinaryClassifier(ml.Learner):
             for i in range(len(self.sv_alpha)):
                 sum_short_b += self.sv_Y[i]
                 for j in range(len(self.sv_alpha)):
-                    sum_short_b -= self.sv_alpha[j] * self.sv_Y[j] * self.polynomial_kernel(original_X[self.sv_index[j]], original_X[self.sv_index[i]])
+                    if (self.svm_kernel == 'polynomial_kernel'):
+                        sum_short_b -= self.sv_alpha[j] * self.sv_Y[j] * self.polynomial_kernel(original_X[self.sv_index[j]], original_X[self.sv_index[i]])
+                    elif (self.svm_kernel == 'gaussian_kernel'):
+                        sum_short_b -= self.sv_alpha[j] * self.sv_Y[j] * self.gaussian_kernel(original_X[self.sv_index[j]], original_X[self.sv_index[i]])
             short_b = sum_short_b / len(self.sv_alpha)
 
             self.sv_avg_b = short_b
@@ -273,12 +279,18 @@ class BinaryClassifier(ml.Learner):
             for j in range(self.data_num):
                 if (self.svm_kernel == 'polynomial_kernel'):
                     K[i, j] = self.polynomial_kernel(original_X[i], original_X[j])
+                elif (self.svm_kernel == 'gaussian_kernel'):
+                    K[i, j] = self.gaussian_kernel(original_X[i], original_X[j])
 
         return K
 
     def polynomial_kernel(self, x1, x2):
 
         return (self.zeta + self.gamma * np.dot(x1, x2)) ** self.Q
+
+    def gaussian_kernel(self, x1, x2):
+
+        return np.exp(-self.gamma * (np.linalg.norm(x1-x2) ** 2))
 
     def prediction(self, input_data='', mode='test_data'):
 
