@@ -13,6 +13,12 @@ import FukuML.Utility as utility
 
 class FukuMLTestCase(unittest.TestCase):
 
+    def test_utility_method(self):
+
+        utility.DatasetLoader.gen_lin_separable_data()
+        utility.DatasetLoader.gen_non_lin_separable_data()
+        utility.DatasetLoader.gen_lin_separable_overlap_data()
+
     def test_pla_binary_classifier(self):
 
         #------------------------------------------------------------
@@ -1373,6 +1379,56 @@ class FukuMLTestCase(unittest.TestCase):
         svm_bc.set_param(svm_kernel='gaussian_kernel', gamma=0.001)
         svm_bc.init_W()
         W = svm_bc.train()
+        print("\n訓練得出權重模型：")
+        print(W)
+        print("SVM Marging：")
+        print(svm_bc.get_marge())
+        print("Support Vectors")
+        print(svm_bc.get_support_vectors())
+
+        print("W 平均錯誤率（Ein）：")
+        print(svm_bc.calculate_avg_error(svm_bc.train_X, svm_bc.train_Y, W))
+        print("W 平均錯誤率（Eout）：")
+        print(svm_bc.calculate_test_data_avg_error())
+        print('-'*70)
+
+    def test_soft_polynomial_kernel_svm_binary_classifier(self):
+
+        input_train_data_file = os.path.join(os.path.join(os.getcwd(), os.path.dirname(__file__)), 'FukuML/dataset/overlap_train.dat')
+        input_test_data_file = os.path.join(os.path.join(os.getcwd(), os.path.dirname(__file__)), 'FukuML/dataset/overlap_test.dat')
+
+        svm_bc = svm.BinaryClassifier()
+        svm_bc.load_train_data(input_train_data_file)
+        svm_bc.load_test_data(input_test_data_file)
+        svm_bc.set_param(svm_kernel='soft_polynomial_kernel', zeta=0, gamma=1, Q=1, C=0.1)
+        svm_bc.init_W()
+        W = svm_bc.train()
+
+        print("\n訓練得出權重模型：")
+        print(W)
+        print("SVM Marging：")
+        print(svm_bc.get_marge())
+        print("Support Vectors")
+        print(svm_bc.get_support_vectors())
+
+        print("W 平均錯誤率（Ein）：")
+        print(svm_bc.calculate_avg_error(svm_bc.train_X, svm_bc.train_Y, W))
+        print("W 平均錯誤率（Eout）：")
+        print(svm_bc.calculate_test_data_avg_error())
+        print('-'*70)
+
+    def test_soft_gaussian_kernel_svm_binary_classifier(self):
+
+        input_train_data_file = os.path.join(os.path.join(os.getcwd(), os.path.dirname(__file__)), 'FukuML/dataset/overlap_train.dat')
+        input_test_data_file = os.path.join(os.path.join(os.getcwd(), os.path.dirname(__file__)), 'FukuML/dataset/overlap_test.dat')
+
+        svm_bc = svm.BinaryClassifier()
+        svm_bc.load_train_data(input_train_data_file)
+        svm_bc.load_test_data(input_test_data_file)
+        svm_bc.set_param(svm_kernel='soft_gaussian_kernel', gamma=1, C=1000)
+        svm_bc.init_W()
+        W = svm_bc.train()
+
         print("\n訓練得出權重模型：")
         print(W)
         print("SVM Marging：")

@@ -30,10 +30,15 @@ class BinaryClassifier(ml.Learner):
         self.zeta = 0
         self.gamma = 1
         self.Q = 1
+        self.C = 0.1
         self.sv_index = []
         self.sv_alpha = []
         self.sv_X = []
         self.sv_Y = []
+        self.free_sv_index = []
+        self.free_sv_alpha = []
+        self.free_sv_X = []
+        self.free_sv_Y = []
         self.sv_avg_b = 0
 
     def load_train_data(self, input_data_file=''):
@@ -87,12 +92,13 @@ class BinaryClassifier(ml.Learner):
 
         return self.test_X, self.test_Y
 
-    def set_param(self, svm_kernel='primal_hard_margin', zeta=0, gamma=1, Q=1):
+    def set_param(self, svm_kernel='primal_hard_margin', zeta=0, gamma=1, Q=1, C=0.1):
 
         self.svm_kernel = svm_kernel
         self.zeta = zeta
         self.gamma = gamma
         self.Q = Q
+        self.C = C
 
         return self.svm_kernel
 
@@ -127,14 +133,14 @@ class BinaryClassifier(ml.Learner):
         Score function to calculate score
         '''
 
-        if (self.svm_kernel == 'polynomial_kernel' or self.svm_kernel == 'gaussian_kernel'):
+        if (self.svm_kernel == 'polynomial_kernel' or self.svm_kernel == 'gaussian_kernel' or self.svm_kernel == 'soft_polynomial_kernel' or self.svm_kernel == 'soft_gaussian_kernel'):
             original_X = self.train_X[:, 1:]
             x = x[1:]
             score = 0
             for i in range(len(self.sv_alpha)):
-                if (self.svm_kernel == 'polynomial_kernel'):
+                if (self.svm_kernel == 'polynomial_kernel' or self.svm_kernel == 'soft_polynomial_kernel'):
                     score += self.sv_alpha[i] * self.sv_Y[i] * self.polynomial_kernel(original_X[self.sv_index[i]], x)
-                elif (self.svm_kernel == 'gaussian_kernel'):
+                elif (self.svm_kernel == 'gaussian_kernel' or self.svm_kernel == 'soft_gaussian_kernel'):
                     score += self.sv_alpha[i] * self.sv_Y[i] * self.gaussian_kernel(original_X[self.sv_index[i]], x)
             score = np.sign(score + self.sv_avg_b)
         else:
@@ -172,7 +178,53 @@ class BinaryClassifier(ml.Learner):
 
         # P = Q, q = p, G = -A, h = -c
 
-        if (self.svm_kernel == 'polynomial_kernel' or self.svm_kernel == 'gaussian_kernel'):
+        if (self.svm_kernel == 'soft_polynomial_kernel' or self.svm_kernel == 'soft_gaussian_kernel'):
+
+            original_X = self.train_X[:, 1:]
+
+            K = self.kernel_matrix(original_X)
+
+            P = cvxopt.matrix(np.outer(self.train_Y, self.train_Y) * K)
+            q = cvxopt.matrix(np.ones(self.data_num) * -1)
+            constrain1 = np.diag(np.ones(self.data_num) * -1)
+            constrain2 = np.identity(self.data_num)
+            G = cvxopt.matrix(np.vstack((constrain1, constrain2)))
+            constrain1 = np.zeros(self.data_num) * -1
+            constrain2 = np.ones(self.data_num) * self.C
+            h = cvxopt.matrix(np.hstack((constrain1, constrain2)))
+            A = cvxopt.matrix(self.train_Y, (1, self.data_num))
+            b = cvxopt.matrix(0.0)
+            cvxopt.solvers.options['show_progress'] = False
+            solution = cvxopt.solvers.qp(P, q, G, h, A, b)
+
+            # Lagrange multipliers
+            a = np.ravel(solution['x'])
+            # Support vectors have non zero lagrange multipliers
+            sv = a > 1e-7
+            self.sv_index = np.arange(len(a))[sv]
+            self.sv_alpha = a[sv]
+            self.sv_X = original_X[sv]
+            self.sv_Y = self.train_Y[sv]
+
+            free_sv = np.logical_and(a > 1e-7, a < self.C)
+            self.free_sv_index = np.arange(len(a))[free_sv]
+            self.free_sv_alpha = a[free_sv]
+            self.free_sv_X = original_X[free_sv]
+            self.free_sv_Y = self.train_Y[free_sv]
+
+            sum_short_b = 0
+            for i in range(len(self.free_sv_alpha)):
+                sum_short_b += self.free_sv_Y[i]
+                for j in range(len(self.free_sv_alpha)):
+                    if (self.svm_kernel == 'soft_polynomial_kernel'):
+                        sum_short_b -= self.free_sv_alpha[j] * self.free_sv_Y[j] * self.polynomial_kernel(original_X[self.free_sv_index[j]], original_X[self.free_sv_index[i]])
+                    elif (self.svm_kernel == 'soft_gaussian_kernel'):
+                        sum_short_b -= self.free_sv_alpha[j] * self.free_sv_Y[j] * self.gaussian_kernel(original_X[self.free_sv_index[j]], original_X[self.free_sv_index[i]])
+            short_b = sum_short_b / len(self.free_sv_alpha)
+
+            self.sv_avg_b = short_b
+
+        elif (self.svm_kernel == 'polynomial_kernel' or self.svm_kernel == 'gaussian_kernel'):
 
             original_X = self.train_X[:, 1:]
 
@@ -277,9 +329,9 @@ class BinaryClassifier(ml.Learner):
 
         for i in range(self.data_num):
             for j in range(self.data_num):
-                if (self.svm_kernel == 'polynomial_kernel'):
+                if (self.svm_kernel == 'polynomial_kernel' or self.svm_kernel == 'soft_polynomial_kernel'):
                     K[i, j] = self.polynomial_kernel(original_X[i], original_X[j])
-                elif (self.svm_kernel == 'gaussian_kernel'):
+                elif (self.svm_kernel == 'gaussian_kernel' or self.svm_kernel == 'soft_gaussian_kernel'):
                     K[i, j] = self.gaussian_kernel(original_X[i], original_X[j])
 
         return K
