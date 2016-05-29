@@ -785,6 +785,74 @@ Run demo dataset
 
     >>> svm_bc.calculate_avg_error(svm_bc.test_X, svm_bc.test_Y, W)
 
+Soft Polynomial Kernel Support Vector Machine Binary Classification Learning Algorithm
+============
+
+Run demo dataset
+-----------------
+
+.. code-block:: py
+
+    >>> import numpy as np
+
+    >>> import FukuML.SupportVectorMachine as svm
+
+    >>> svm_bc = svm.BinaryClassifier()
+
+    >>> svm_bc.load_train_data()
+
+    >>> svm_bc.set_param(svm_kernel='soft_polynomial_kernel', zeta=100, gamma=1, Q=3, C=0.1)
+
+    >>> svm_bc.init_W()
+
+    >>> W = svm_bc.train()
+
+    >>> test_data = '0.97681 0.10723 0.64385 0.29556 1'
+
+    >>> prediction = svm_bc.prediction(test_data)
+
+    >>> test_data = '0.97681 0.10723 0.64385 0.29556'
+
+    >>> prediction = svm_bc.prediction(future_data, 'future_data')
+
+    >>> svm_bc.load_test_data()
+
+    >>> svm_bc.calculate_avg_error(svm_bc.test_X, svm_bc.test_Y, W)
+
+Soft Gaussian Kernel Support Vector Machine Binary Classification Learning Algorithm
+============
+
+Run demo dataset
+-----------------
+
+.. code-block:: py
+
+    >>> import numpy as np
+
+    >>> import FukuML.SupportVectorMachine as svm
+
+    >>> svm_bc = svm.BinaryClassifier()
+
+    >>> svm_bc.load_train_data()
+
+    >>> svm_bc.set_param(svm_kernel='soft_gaussian_kernel', gamma=1, C=0.1)
+
+    >>> svm_bc.init_W()
+
+    >>> W = svm_bc.train()
+
+    >>> test_data = '0.97681 0.10723 0.64385 0.29556 1'
+
+    >>> prediction = svm_bc.prediction(test_data)
+
+    >>> test_data = '0.97681 0.10723 0.64385 0.29556'
+
+    >>> prediction = svm_bc.prediction(future_data, 'future_data')
+
+    >>> svm_bc.load_test_data()
+
+    >>> svm_bc.calculate_avg_error(svm_bc.test_X, svm_bc.test_Y, W)
+
 Polynomial Feature Transform
 ============
 
