@@ -25,6 +25,13 @@ Installation
 
     $ pip install FukuML
 
+Tutorial
+============
+
+`Perceptron Binary Classification Learning Algorithm Tutorial`_
+
+.. _Perceptron Binary Classification Learning Algorithm Tutorial: https://github.com/fukuball/fuku-ml/blob/master/tutorial/Perceptron%20Binary%20Classification%20Learning%20Algorithm%20Tutorial.ipynb
+
 Algorithm
 ============
 
