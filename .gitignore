@@ -11,6 +11,9 @@ include
 lib
 pip-selfcheck.json
 
+# IPython Notebook
+.ipynb_checkpoints
+
 .coverage
 htmlcov/
 
