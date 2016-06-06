@@ -1,12 +1,8 @@
 #encoding=utf8
 
-import os
-import random
 #import operator
 #import itertools
 import numpy as np
-import FukuML.Utility as utility
-import FukuML.LinearRegression as linear_regression
 import FukuML.LogisticRegression as logistic_regression
 
 
