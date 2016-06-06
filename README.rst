@@ -16,7 +16,7 @@ FukuML
 .. image:: https://img.shields.io/badge/made%20with-%e2%9d%a4-ff69b4.svg
     :target: http://www.fukuball.com
 
-Simple machine learning library
+Simple machine learning library / 簡單易用的機器學習套件
 
 Installation
 ============
