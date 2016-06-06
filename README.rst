@@ -32,9 +32,9 @@ Tutorial
 
 - Appendix 1: `Play With Your Own Dataset`_
 
-.. _Perceptron Binary Classification Learning Algorithm: https://github.com/fukuball/fuku-ml/blob/master/tutorial/Perceptron%20Binary%20Classification%20Learning%20Algorithm%20Tutorial.ipynb
+.. _Perceptron Binary Classification Learning Algorithm: https://github.com/fukuball/FukuML-Tutorial/blob/master/Perceptron%20Binary%20Classification%20Learning%20Algorithm%20Tutorial.ipynb
 
-.. _Play With Your Own Dataset: https://github.com/fukuball/fuku-ml/blob/master/tutorial/Play%20With%20Your%20Own%20Dataset%20Tutorial.ipynb
+.. _Play With Your Own Dataset: https://github.com/fukuball/FukuML-Tutorial/blob/master/Play%20With%20Your%20Own%20Dataset%20Tutorial.ipynb
 
 Algorithm
 ============
