@@ -94,6 +94,7 @@ class BinaryClassifier(ml.Learner):
 
     def set_param(self, svm_kernel='primal_hard_margin', zeta=0, gamma=1, Q=1, C=0.1):
 
+        # larger C => weaker regularization, smaller C => stronger regularization
         self.svm_kernel = svm_kernel
         self.zeta = zeta
         self.gamma = gamma

@@ -65,6 +65,8 @@ class RidgeRegression(ml.Learner):
 
     def set_param(self, lambda_p=0.0001):
 
+        # larger C => weaker regularization, smaller C => stronger regularization
+        # smaller lambda => weaker regularization, larger lambda => stronger regularization
         self.lambda_p = lambda_p
 
         return self.lambda_p
