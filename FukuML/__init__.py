@@ -17,6 +17,8 @@ __all__ = [
     'LogisticRegression.LogisticRegression',
     'LogisticRegression.BinaryClassifier',
     'LogisticRegression.MultiClassifier',
+    'L2RLogisticRegression.L2RLogisticRegression',
+    'L2RLogisticRegression.BinaryClassifier',
     'RidgeRegression',
     'RidgeRegression.RidgeRegression',
     'RidgeRegression.BinaryClassifier',

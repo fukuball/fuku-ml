@@ -77,6 +77,10 @@ Algorithm
 
 - Logistic Regression One vs One Multi Classification Learning Algorithm with Linear Regression Accelerator
 
+- L2 Regularized Logistic Regression Learning Algorithm
+
+- L2 Regularized Logistic Regression Binary Classification Learning Algorithm
+
 - Ridge Regression Learning Algorithm
 
 - Ridge Regression Binary Classification Learning Algorithm
