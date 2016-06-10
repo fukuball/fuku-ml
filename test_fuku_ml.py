@@ -9,6 +9,7 @@ import FukuML.LogisticRegression as logistic_regression
 import FukuML.L2RLogisticRegression as l2r_logistic_regression
 import FukuML.RidgeRegression as ridge_regression
 import FukuML.SupportVectorMachine as svm
+import FukuML.DecisionStump as decision_stump
 import FukuML.Utility as utility
 
 
@@ -1528,6 +1529,29 @@ class FukuMLTestCase(unittest.TestCase):
         print(svm_bc.calculate_avg_error(svm_bc.train_X, svm_bc.train_Y, W))
         print("W 平均錯誤率（Eout）：")
         print(svm_bc.calculate_test_data_avg_error())
+        print('-'*70)
+
+    def test_decision_stump_binary_classifier(self):
+
+        #------------------------------------------------------------
+
+        decision_stump_bc = decision_stump.BinaryClassifier()
+        decision_stump_bc.load_train_data()
+        decision_stump_bc.set_param()
+        decision_stump_bc.init_W()
+        decision_stump_bc.train()
+        decision_stump_bc.load_test_data()
+
+        print("\n訓練得出 sign：")
+        print(decision_stump_bc.sign)
+        print("訓練得出 feature index：")
+        print(decision_stump_bc.feature_index)
+        print("訓練得出 theta")
+        print(decision_stump_bc.theta)
+        print("平均錯誤率（Ein）：")
+        print(decision_stump_bc.calculate_avg_error(decision_stump_bc.train_X, decision_stump_bc.train_Y, decision_stump_bc.W))
+        print("W 平均錯誤率（Eout）：")
+        print(decision_stump_bc.calculate_avg_error(decision_stump_bc.test_X, decision_stump_bc.test_Y, decision_stump_bc.W))
         print('-'*70)
 
 if __name__ == '__main__':
