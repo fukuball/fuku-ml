@@ -1,6 +1,6 @@
 #encoding=utf8
 
-__version__ = '0.2.2'
+__version__ = '0.2.3'
 __all__ = [
     'MLBase',
     'PLA',
@@ -24,6 +24,7 @@ __all__ = [
     'RidgeRegression.BinaryClassifier',
     'RidgeRegression.MultiClassifier',
     'SupportVectorMachine.BinaryClassifier',
+    'DecisionStump.BinaryClassifier',
     'Utility',
     'Utility.DatasetLoader',
     'Utility.CrossValidator',

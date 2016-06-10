@@ -99,6 +99,8 @@ Algorithm
 
 - Soft Gaussian Kernel Support Vector Machine Binary Classification Learning Algorithm
 
+- Decision Stump Binary Classification Learning Algorithm
+
 - Polynomial Feature Transform
 
 - Legendre Feature Transform

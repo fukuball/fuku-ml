@@ -905,6 +905,32 @@ Run demo dataset
 
     >>> svm_bc.calculate_avg_error(svm_bc.test_X, svm_bc.test_Y, W)
 
+Decision Stump Binary Classification Learning Algorithm
+============
+
+Run demo dataset
+-----------------
+
+.. code-block:: py
+
+    >>> import numpy as np
+
+    >>> import FukuML.DecisionStump as decision_stump
+
+    >>> decision_stump = decision_stump.BinaryClassifier()
+
+    >>> decision_stump.load_train_data()
+
+    >>> decision_stump.set_param()
+
+    >>> decision_stump.init_W()
+
+    >>> decision_stump.train()
+
+    >>> test_data = '-8.451 7.694 -1.887 1.017 3.708 7.244 9.748 -2.362 -3.618 1'
+
+    >>> prediction = decision_stump.prediction(test_data)
+
 Polynomial Feature Transform
 ============
 
