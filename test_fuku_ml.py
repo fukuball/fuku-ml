@@ -1532,30 +1532,7 @@ class FukuMLTestCase(unittest.TestCase):
         print(svm_bc.calculate_test_data_avg_error())
         print('-'*70)
 
-    def test_decision_stump_binary_classifier(self):
-
-        #------------------------------------------------------------
-
-        decision_stump_bc = decision_stump.BinaryClassifier()
-        decision_stump_bc.load_train_data()
-        decision_stump_bc.set_param()
-        decision_stump_bc.init_W()
-        decision_stump_bc.train()
-        decision_stump_bc.load_test_data()
-
-        print("\n訓練得出 sign：")
-        print(decision_stump_bc.sign)
-        print("訓練得出 feature index：")
-        print(decision_stump_bc.feature_index)
-        print("訓練得出 theta")
-        print(decision_stump_bc.theta)
-        print("平均錯誤率（Ein）：")
-        print(decision_stump_bc.calculate_avg_error(decision_stump_bc.train_X, decision_stump_bc.train_Y, decision_stump_bc.W))
-        print("W 平均錯誤率（Eout）：")
-        print(decision_stump_bc.calculate_avg_error(decision_stump_bc.test_X, decision_stump_bc.test_Y, decision_stump_bc.W))
-        print('-'*70)
-
-    def test_probabilistic_svm_regression(self):
+    def test_probabilistic_svm(self):
 
         #------------------------------------------------------------
 
@@ -1581,6 +1558,29 @@ class FukuMLTestCase(unittest.TestCase):
         print(probabilistic.calculate_avg_error(probabilistic.train_X, probabilistic.train_Y, probabilistic.W))
         print("W 平均錯誤值（Eout）：")
         print(probabilistic.calculate_avg_error(probabilistic.test_X, probabilistic.test_Y, probabilistic.W))
+        print('-'*70)
+
+    def test_decision_stump_binary_classifier(self):
+
+        #------------------------------------------------------------
+
+        decision_stump_bc = decision_stump.BinaryClassifier()
+        decision_stump_bc.load_train_data()
+        decision_stump_bc.set_param()
+        decision_stump_bc.init_W()
+        decision_stump_bc.train()
+        decision_stump_bc.load_test_data()
+
+        print("\n訓練得出 sign：")
+        print(decision_stump_bc.sign)
+        print("訓練得出 feature index：")
+        print(decision_stump_bc.feature_index)
+        print("訓練得出 theta")
+        print(decision_stump_bc.theta)
+        print("平均錯誤率（Ein）：")
+        print(decision_stump_bc.calculate_avg_error(decision_stump_bc.train_X, decision_stump_bc.train_Y, decision_stump_bc.W))
+        print("W 平均錯誤率（Eout）：")
+        print(decision_stump_bc.calculate_avg_error(decision_stump_bc.test_X, decision_stump_bc.test_Y, decision_stump_bc.W))
         print('-'*70)
 
 if __name__ == '__main__':

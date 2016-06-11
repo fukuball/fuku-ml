@@ -41,19 +41,11 @@ Algorithm
 
 - Perceptron Binary Classification Learning Algorithm
 
-- Perceptron Binary Classification Learning Algorithm with Linear Regression Accelerator
-
 - Perceptron Multi Classification Learning Algorithm
-
-- Perceptron Multi Classification Learning Algorithm with Linear Regression Accelerator
 
 - Pocket Perceptron Binary Classification Learning Algorithm
 
-- Pocket Perceptron Binary Classification Learning Algorithm with Linear Regression Accelerator
-
 - Pocket Perceptron Multi Classification Learning Algorithm
-
-- Pocket Perceptron Multi Classification Learning Algorithm with Linear Regression Accelerator
 
 - Linear Regression Learning Algorithm
 
@@ -63,19 +55,11 @@ Algorithm
 
 - Logistic Regression Learning Algorithm
 
-- Logistic Regression Learning Algorithm with Linear Regression Accelerator
-
 - Logistic Regression Binary Classification Learning Algorithm
-
-- Logistic Regression Binary Classification Learning Algorithm with Linear Regression Accelerator
 
 - Logistic Regression One vs All Multi Classification Learning Algorithm
 
-- Logistic Regression One vs All Multi Classification Learning Algorithm with Linear Regression Accelerator
-
 - Logistic Regression One vs One Multi Classification Learning Algorithm
-
-- Logistic Regression One vs One Multi Classification Learning Algorithm with Linear Regression Accelerator
 
 - L2 Regularized Logistic Regression Learning Algorithm
 
@@ -100,6 +84,8 @@ Algorithm
 - Soft Gaussian Kernel Support Vector Machine Binary Classification Learning Algorithm
 
 - Decision Stump Binary Classification Learning Algorithm
+
+- Linear Regression Accelerator
 
 - Polynomial Feature Transform
 
