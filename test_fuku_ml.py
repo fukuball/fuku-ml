@@ -9,8 +9,9 @@ import FukuML.LogisticRegression as logistic_regression
 import FukuML.L2RLogisticRegression as l2r_logistic_regression
 import FukuML.RidgeRegression as ridge_regression
 import FukuML.SupportVectorMachine as svm
-import FukuML.DecisionStump as decision_stump
 import FukuML.ProbabilisticSVM as probabilistic_svm
+import FukuML.DecisionStump as decision_stump
+import FukuML.DecisionTree as decision_tree
 import FukuML.Utility as utility
 
 
@@ -1581,6 +1582,30 @@ class FukuMLTestCase(unittest.TestCase):
         print(decision_stump_bc.calculate_avg_error(decision_stump_bc.train_X, decision_stump_bc.train_Y, decision_stump_bc.W))
         print("W 平均錯誤率（Eout）：")
         print(decision_stump_bc.calculate_avg_error(decision_stump_bc.test_X, decision_stump_bc.test_Y, decision_stump_bc.W))
+        print('-'*70)
+
+    def test_decision_tree_classifier(self):
+
+        #------------------------------------------------------------
+
+        decision_tree_c = decision_tree.CART()
+        decision_tree_c.load_train_data()
+        decision_tree_c.set_param(learn_type='classifier')
+        decision_tree_c.init_W()
+        decision_tree_c.train()
+
+        print("\n訓練得出 Decision Tree：")
+        decision_tree_c.plot(decision_tree_c.decision_tree)
+
+        test_data = '6.0 2.2 5.0 1.5 virginica'
+        prediction = decision_tree_c.prediction(test_data)
+
+        print("測試資料 x：")
+        print(prediction['input_data_x'])
+        print("測試資料 y：")
+        print(prediction['input_data_y'])
+        print("預測結果：")
+        print(prediction['prediction'])
         print('-'*70)
 
 if __name__ == '__main__':

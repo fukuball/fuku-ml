@@ -10,16 +10,25 @@ from scipy.special import legendre
 class DatasetLoader(object):
 
     @staticmethod
-    def load(input_data_file=''):
+    def load(input_data_file='', data_type='float'):
         """load file"""
         X = []
         Y = []
-        with open(input_data_file) as f:
-            for line in f:
-                data = line.split()
-                x = [1] + [float(v) for v in data[:-1]]
-                X.append(x)
-                Y.append(float(data[-1]))
+
+        if data_type == 'float':
+            with open(input_data_file) as f:
+                for line in f:
+                    data = line.split()
+                    x = [1] + [float(v) for v in data[:-1]]
+                    X.append(x)
+                    Y.append(float(data[-1]))
+        else:
+            with open(input_data_file) as f:
+                for line in f:
+                    data = line.split()
+                    x = [1] + [v for v in data[:-1]]
+                    X.append(x)
+                    Y.append(data[-1])
 
         return np.array(X), np.array(Y)
 
@@ -136,6 +145,33 @@ class CrossValidator(object):
 
         min_error_index = self.avg_errors.index(min(self.avg_errors))
         return self.models[min_error_index]
+
+
+class Kernel(object):
+
+    @staticmethod
+    def kernel_matrix(svm_model, original_X):
+
+        K = np.zeros((svm_model.data_num, svm_model.data_num))
+
+        for i in range(svm_model.data_num):
+            for j in range(svm_model.data_num):
+                if (svm_model.svm_kernel == 'polynomial_kernel' or svm_model.svm_kernel == 'soft_polynomial_kernel'):
+                    K[i, j] = Kernel.polynomial_kernel(svm_model, original_X[i], original_X[j])
+                elif (svm_model.svm_kernel == 'gaussian_kernel' or svm_model.svm_kernel == 'soft_gaussian_kernel'):
+                    K[i, j] = Kernel.gaussian_kernel(svm_model, original_X[i], original_X[j])
+
+        return K
+
+    @staticmethod
+    def polynomial_kernel(svm_model, x1, x2):
+
+        return (svm_model.zeta + svm_model.gamma * np.dot(x1, x2)) ** svm_model.Q
+
+    @staticmethod
+    def gaussian_kernel(svm_model, x1, x2):
+
+        return np.exp(-svm_model.gamma * (np.linalg.norm(x1-x2) ** 2))
 
 
 class Serializer(object):

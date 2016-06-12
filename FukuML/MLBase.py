@@ -107,7 +107,7 @@ class Learner(object):
         output the prediction
         '''
 
-        prediction = 0
+        prediction = {}
 
         if (self.status != 'train'):
             print("Please load train data and init W then train the W first.")

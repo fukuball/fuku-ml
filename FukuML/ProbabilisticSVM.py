@@ -137,7 +137,7 @@ class ProbabilisticSVM(ml.Learner):
         x = x[1:]
         score = 0
         for i in range(len(self.svm_processor.sv_alpha)):
-            score += self.svm_processor.sv_alpha[i] * self.svm_processor.sv_Y[i] * self.svm_processor.gaussian_kernel(original_X[self.svm_processor.sv_index[i]], x)
+            score += self.svm_processor.sv_alpha[i] * self.svm_processor.sv_Y[i] * utility.Kernel.gaussian_kernel(self, original_X[self.svm_processor.sv_index[i]], x)
         score = score + self.svm_processor.sv_avg_b
 
         return score
