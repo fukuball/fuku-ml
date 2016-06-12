@@ -66,7 +66,7 @@ def variance(rows):
 	return variance
 
 
-def growDecisionTreeFrom(rows, evaluationFunction=gini):
+def growDecisionTreeFrom(rows, evaluationFunction=entropy):
 	"""Grows and then returns a binary decision tree.
 	evaluationFunction: entropy or gini"""
 

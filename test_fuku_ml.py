@@ -1591,6 +1591,7 @@ class FukuMLTestCase(unittest.TestCase):
         decision_tree_c = decision_tree.CART()
         decision_tree_c.load_train_data()
         decision_tree_c.set_param(learn_type='classifier')
+        decision_tree_c.load_test_data()
         decision_tree_c.init_W()
         decision_tree_c.train()
 
@@ -1599,6 +1600,7 @@ class FukuMLTestCase(unittest.TestCase):
 
         test_data = '6.0 2.2 5.0 1.5 virginica'
         prediction = decision_tree_c.prediction(test_data)
+        self.assertEqual(prediction['input_data_y'], prediction['prediction'])
 
         print("測試資料 x：")
         print(prediction['input_data_x'])
@@ -1606,7 +1608,61 @@ class FukuMLTestCase(unittest.TestCase):
         print(prediction['input_data_y'])
         print("預測結果：")
         print(prediction['prediction'])
+
+        test_data = 'None None None 1.5'
+        prediction = decision_tree_c.prediction(input_data=test_data, mode='future_data', with_missing_data=True)
+        print("測試資料 x：")
+        print(prediction['input_data_x'])
+        print("測試資料 y：")
+        print(prediction['input_data_y'])
+        print("預測結果：")
+        print(prediction['prediction'])
+
+        print("W 平均錯誤率（Ein）：")
+        print(decision_tree_c.calculate_avg_error(decision_tree_c.train_X, decision_tree_c.train_Y, decision_tree_c.W))
+        print("W 平均錯誤率（Eout）：")
+        print(decision_tree_c.calculate_test_data_avg_error())
         print('-'*70)
+
+        input_train_data_file = os.path.join(os.path.join(os.getcwd(), os.path.dirname(__file__)), 'FukuML/dataset/decision_tree_2_train.dat')
+        input_test_data_file = os.path.join(os.path.join(os.getcwd(), os.path.dirname(__file__)), 'FukuML/dataset/decision_tree_2_test.dat')
+
+        decision_tree_c = decision_tree.CART()
+        decision_tree_c.load_train_data(input_train_data_file)
+        decision_tree_c.set_param(learn_type='classifier')
+        decision_tree_c.load_test_data(input_test_data_file)
+        decision_tree_c.init_W()
+        decision_tree_c.train()
+
+        print("\n訓練得出 Decision Tree：")
+        decision_tree_c.plot(decision_tree_c.decision_tree)
+
+        test_data = 'ohne leicht Streifen normal normal Tuberkulose'
+        prediction = decision_tree_c.prediction(test_data)
+        self.assertEqual(prediction['input_data_y'], prediction['prediction'])
+
+        print("測試資料 x：")
+        print(prediction['input_data_x'])
+        print("測試資料 y：")
+        print(prediction['input_data_y'])
+        print("預測結果：")
+        print(prediction['prediction'])
+
+        test_data = 'None leicht None Flocken fiepend'
+        prediction = decision_tree_c.prediction(input_data=test_data, mode='future_data', with_missing_data=True)
+        print("測試資料 x：")
+        print(prediction['input_data_x'])
+        print("測試資料 y：")
+        print(prediction['input_data_y'])
+        print("預測結果：")
+        print(prediction['prediction'])
+
+        print("W 平均錯誤率（Ein）：")
+        print(decision_tree_c.calculate_avg_error(decision_tree_c.train_X, decision_tree_c.train_Y, decision_tree_c.W))
+        print("W 平均錯誤率（Eout）：")
+        print(decision_tree_c.calculate_test_data_avg_error())
+        print('-'*70)
+
 
 if __name__ == '__main__':
 

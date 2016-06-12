@@ -1,6 +1,8 @@
 #encoding=utf8
 
 import os
+import operator
+import collections
 import numpy as np
 import FukuML.Utility as utility
 import FukuML.MLBase as ml
@@ -86,6 +88,77 @@ class CART(ml.Learner):
 
         return self.W
 
+    def score_function(self, x, W, with_missing_data=False):
+
+        if self.learn_type == 'classifier':
+            if with_missing_data:
+                each_class_counts = self.classify_with_missing_data(x, self.decision_tree)
+            else:
+                each_class_counts = self.classify_without_missing_data(x, self.decision_tree)
+        else:
+            if with_missing_data:
+                each_class_counts = self.classify_with_missing_data(x, self.decision_tree)
+            else:
+                each_class_counts = self.classify_without_missing_data(x, self.decision_tree)
+
+        return max(each_class_counts.iteritems(), key=operator.itemgetter(1))[0]
+
+    def error_function(self, y_prediction, y_truth):
+
+        if y_prediction != y_truth:
+            return 1
+        else:
+            return 0
+
+    def calculate_avg_error(self, X, Y, W):
+
+        return super(CART, self).calculate_avg_error(X, Y, W)
+
+    def calculate_test_data_avg_error(self):
+
+        return super(CART, self).calculate_test_data_avg_error()
+
+    def classify_with_missing_data(self, x, tree):
+
+        if tree.each_class_counts is not None:
+            # leaf
+            return tree.each_class_counts
+        else:
+            v = x[tree.col]
+
+            value_is_float = True
+            try:
+                v = float(v)
+            except ValueError:
+                value_is_float = False
+
+            if v == 'None':
+                true_branch = self.classify_with_missing_data(x, tree.true_branch)
+                false_branch = self.classify_with_missing_data(x, tree.false_branch)
+                true_branch_count = sum(true_branch.values())
+                false_branch_count = sum(false_branch.values())
+                true_branch_weight = float(true_branch_count)/(true_branch_count + false_branch_count)
+                false_branch_weight = float(false_branch_count)/(true_branch_count + false_branch_count)
+                each_class_counts = collections.defaultdict(int)
+                for k, v in true_branch.items():
+                    each_class_counts[k] += v*true_branch_weight
+                for k, v in false_branch.items():
+                    each_class_counts[k] += v*false_branch_weight
+                return dict(each_class_counts)
+            else:
+                branch = None
+                if value_is_float:
+                    if v >= float(tree.value):
+                        branch = tree.true_branch
+                    else:
+                        branch = tree.false_branch
+                else:
+                    if v == tree.value:
+                        branch = tree.true_branch
+                    else:
+                        branch = tree.false_branch
+            return self.classify_with_missing_data(x, branch)
+
     def classify_without_missing_data(self, x, tree):
 
         if tree.each_class_counts is not None:
@@ -114,30 +187,6 @@ class CART(ml.Learner):
                     branch = tree.false_branch
 
         return self.classify_without_missing_data(x, branch)
-
-    def score_function(self, x, W):
-
-        if self.learn_type == 'classifier':
-            score = self.classify_without_missing_data(x, self.decision_tree)
-        else:
-            score = self.classify_without_missing_data(x, self.decision_tree)
-
-        return score
-
-    def error_function(self, y_prediction, y_truth):
-
-        if y_prediction != y_truth:
-            return 1
-        else:
-            return 0
-
-    def calculate_avg_error(self, X, Y, W):
-
-        return super(CART, self).calculate_avg_error(X, Y, W)
-
-    def calculate_test_data_avg_error(self):
-
-        return super(CART, self).calculate_test_data_avg_error()
 
     def each_class_counts(self, Y):
         each_class_counts = {}
@@ -269,7 +318,7 @@ class CART(ml.Learner):
 
         return self.W
 
-    def prediction(self, input_data='', mode='test_data'):
+    def prediction(self, input_data='', mode='test_data', with_missing_data=False):
 
         prediction = {}
 
@@ -286,7 +335,7 @@ class CART(ml.Learner):
             input_data_x = [v for v in data]
             input_data_x = np.ravel(input_data_x)
             input_data_x = np.insert(input_data_x, 0, '1')
-            prediction = self.score_function(input_data_x, self.W)
+            prediction = self.score_function(input_data_x, self.W, with_missing_data)
             return {"input_data_x": input_data_x, "input_data_y": None, "prediction": prediction}
         else:
             data = input_data.split()
@@ -294,5 +343,5 @@ class CART(ml.Learner):
             input_data_x = np.ravel(input_data_x)
             input_data_x = np.insert(input_data_x, 0, '1')
             input_data_y = data[-1]
-            prediction = self.score_function(input_data_x, self.W)
+            prediction = self.score_function(input_data_x, self.W, with_missing_data)
             return {"input_data_x": input_data_x, "input_data_y": input_data_y, "prediction": prediction}
