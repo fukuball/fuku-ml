@@ -99,20 +99,23 @@ class CART(ml.Learner):
                 each_class_counts = self.classify_with_missing_data(x, self.decision_tree)
             else:
                 each_class_counts = self.classify_without_missing_data(x, self.decision_tree)
-        else:
+        elif self.learn_type == 'regression':
             if with_missing_data:
-                each_class_counts = self.classify_with_missing_data(x, self.decision_tree)
+                each_class_counts = self.regression_with_missing_data(x, self.decision_tree)
             else:
-                each_class_counts = self.classify_without_missing_data(x, self.decision_tree)
+                each_class_counts = self.regression_without_missing_data(x, self.decision_tree)
 
         return max(each_class_counts, key=lambda k: each_class_counts[k])
 
     def error_function(self, y_prediction, y_truth):
 
-        if y_prediction != y_truth:
-            return 1
-        else:
-            return 0
+        if self.learn_type == 'classifier':
+            if y_prediction != y_truth:
+                return 1
+            else:
+                return 0
+        elif self.learn_type == 'regression':
+            return (float(y_prediction) - float(y_truth)) ** 2
 
     def calculate_avg_error(self, X, Y, W):
 
@@ -145,7 +148,14 @@ class CART(ml.Learner):
                 if self.prune_notify:
                     print('A branch was pruned: gain = %f' % delta)
                 tree.true_branch, tree.false_branch = None, None
-                tree.each_class_counts = self.each_class_counts(true_false_branch)
+                if self.learn_type == 'classifier':
+                    tree.each_class_counts = self.each_class_counts(true_false_branch)
+                elif self.learn_type == 'regression':
+                    if len(true_false_branch) == 0:
+                        mean = 0
+                    data = [float(y) for y in true_false_branch]
+                    mean = sum(data) / len(data)
+                    tree.each_class_counts = {mean: 1}
 
         return self.decision_tree
 
@@ -219,6 +229,54 @@ class CART(ml.Learner):
 
         return self.classify_without_missing_data(x, branch)
 
+    def regression_with_missing_data(self, x, tree):
+
+        if tree.each_class_counts is not None:
+            # leaf
+            return tree.each_class_counts
+        else:
+            v = x[tree.col]
+
+            value_is_float = True
+            try:
+                v = float(v)
+            except ValueError:
+                value_is_float = False
+
+            if v == 'None':
+                true_branch = self.regression_with_missing_data(x, tree.true_branch)
+                false_branch = self.regression_with_missing_data(x, tree.false_branch)
+                true_branch_count = 0
+                true_branch_sum = 0
+                for key, value in list(true_branch.items()):
+                    true_branch_count += value
+                    true_branch_sum += key*value
+                false_branch_count = 0
+                false_branch_sum = 0
+                for key, value in list(false_branch.items()):
+                    false_branch_count += value
+                    false_branch_sum += key*value
+
+                mean = (float(true_branch_sum)+float(false_branch_sum))/(true_branch_count+false_branch_count)
+                return {mean: 1}
+            else:
+                branch = None
+                if value_is_float:
+                    if v >= float(tree.value):
+                        branch = tree.true_branch
+                    else:
+                        branch = tree.false_branch
+                else:
+                    if v == tree.value:
+                        branch = tree.true_branch
+                    else:
+                        branch = tree.false_branch
+            return self.regression_with_missing_data(x, branch)
+
+    def regression_without_missing_data(self, x, tree):
+
+        return self.classify_without_missing_data(x, tree)
+
     def each_class_counts(self, Y):
         each_class_counts = {}
         for y in Y:
@@ -237,6 +295,13 @@ class CART(ml.Learner):
             each_class_counts = self.each_class_counts(Y)
             for k in each_class_counts:
                 impurity -= (float(each_class_counts[k])/total_data_num)**2
+        elif self.learn_type == 'regression':
+            if len(Y) == 0:
+                return 0
+            data = [float(y) for y in Y]
+            mean = sum(data) / len(data)
+            variance = sum([(d-mean)**2 for d in data]) / len(data)
+            impurity = variance
 
         return impurity
 
@@ -310,7 +375,13 @@ class CART(ml.Learner):
             false_branch = self.grow_decision_tree_from(best_set[2], best_set[3])
             return DecisionTree(col=best_attribute[0], value=best_attribute[1], true_branch=true_branch, false_branch=false_branch)
         else:
-            return DecisionTree(each_class_counts=self.each_class_counts(Y))
+            if self.learn_type == 'classifier':
+                return DecisionTree(each_class_counts=self.each_class_counts(Y))
+            elif self.learn_type == 'regression':
+                data = [float(y) for y in Y]
+                mean = sum(data) / len(data)
+                mean_dict = {mean: 1}
+                return DecisionTree(each_class_counts=mean_dict)
 
     def plot(self, decision_tree):
 
