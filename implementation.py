@@ -207,7 +207,7 @@ def loadCSV(file):
 if __name__ == '__main__':
 
 	# Select the example you want to classify
-	example = 2
+	example = 1
 
 	# All examples do the following steps:
 	# 	1. Load training data
@@ -233,7 +233,7 @@ if __name__ == '__main__':
 	else:
 		# the bigger example
 		trainingData = loadCSV('fishiris.csv') # demo data from matlab
-		decisionTree = growDecisionTreeFrom(trainingData, evaluationFunction=gini)
+		decisionTree = growDecisionTreeFrom(trainingData)
 		plot(decisionTree)
 
 		prune(decisionTree, 0.5, notify=True) # notify, when a branch is pruned (one time in this example)

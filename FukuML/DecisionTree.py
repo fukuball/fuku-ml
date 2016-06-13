@@ -39,6 +39,8 @@ class CART(ml.Learner):
 
         self.learn_type = 'classifier'
         self.decision_tree = None
+        self.prune_gain = 0
+        self.prune_notify = False
 
     def load_train_data(self, input_data_file=''):
 
@@ -68,9 +70,11 @@ class CART(ml.Learner):
 
         return self.test_X, self.test_Y
 
-    def set_param(self, learn_type='classifier'):
+    def set_param(self, learn_type='classifier', prune_gain=0, prune_notify=False):
 
         self.learn_type = learn_type
+        self.prune_gain = prune_gain
+        self.prune_notify = prune_notify
 
         return self.learn_type
 
@@ -117,6 +121,33 @@ class CART(ml.Learner):
     def calculate_test_data_avg_error(self):
 
         return super(CART, self).calculate_test_data_avg_error()
+
+    def prune(self, tree):
+
+        if tree.true_branch.each_class_counts is None:
+            self.prune(tree.true_branch)
+        if tree.false_branch.each_class_counts is None:
+            self.prune(tree.false_branch)
+
+        if tree.true_branch.each_class_counts is not None and tree.false_branch.each_class_counts is not None:
+            true_branch, false_branch = [], []
+            for v, c in tree.true_branch.each_class_counts.items():
+                true_branch += [v] * c
+            for v, c in tree.false_branch.each_class_counts.items():
+                false_branch += [v] * c
+            true_false_branch = np.array(true_branch+false_branch)
+            true_branch = np.array(true_branch)
+            false_branch = np.array(false_branch)
+
+            p = float(len(true_branch)) / len(true_false_branch)
+            delta = self.impurity(true_false_branch) - p*self.impurity(true_branch) - (1-p)*self.impurity(false_branch)
+            if delta < self.prune_gain:
+                if self.prune_notify:
+                    print('A branch was pruned: gain = %f' % delta)
+                tree.true_branch, tree.false_branch = None, None
+                tree.each_class_counts = self.each_class_counts(true_false_branch)
+
+        return self.decision_tree
 
     def classify_with_missing_data(self, x, tree):
 
@@ -196,7 +227,7 @@ class CART(ml.Learner):
             each_class_counts[y] += 1
         return each_class_counts
 
-    def impurity(self, X, Y):
+    def impurity(self, Y):
 
         impurity = 1.0
 
@@ -243,7 +274,7 @@ class CART(ml.Learner):
         if len(Y) == '0':
             return
 
-        impurity_score = self.impurity(X, Y)
+        impurity_score = self.impurity(Y)
 
         best_gain = 0.0
         best_attribute = None
@@ -268,7 +299,7 @@ class CART(ml.Learner):
                     set2Y = np.array([])
 
                 p = float(len(set1Y)) / len(Y)
-                gain = impurity_score - p*self.impurity(set1X, set1Y) - (1-p)*self.impurity(set2X, set2Y)
+                gain = impurity_score - p*self.impurity(set1Y) - (1-p)*self.impurity(set2Y)
                 if gain > best_gain and len(set1Y) > 0 and len(set2Y) > 0:
                     best_gain = gain
                     best_attribute = (col, value[0])
@@ -313,6 +344,9 @@ class CART(ml.Learner):
             return self.W
 
         self.decision_tree = self.grow_decision_tree_from(self.train_X, self.train_Y)
+
+        if self.prune_gain > 0:
+            self.decision_tree = self.prune(self.decision_tree)
 
         self.status = 'train'
 
