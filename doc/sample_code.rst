@@ -905,6 +905,32 @@ Run demo dataset
 
     >>> svm_bc.calculate_avg_error(svm_bc.test_X, svm_bc.test_Y, W)
 
+Probabilistic Support Vector Machine Learning Algorithm
+============
+
+Run demo dataset
+-----------------
+
+.. code-block:: py
+
+    >>> import numpy as np
+
+    >>> import FukuML.ProbabilisticSVM as probabilistic_svm
+
+    >>> probabilistic = probabilistic_svm.ProbabilisticSVM()
+
+    >>> probabilistic.load_train_data()
+
+    >>> probabilistic.set_param()
+
+    >>> probabilistic.init_W()
+
+    >>> probabilistic.train()
+
+    >>> test_data = '0.26502 0.5486 0.971 0.19333 0.12207 0.81528 0.46743 0.45889 0.31004 0.3307 0.43078 0.50661 0.57281 0.052715 0.50443 0.78686 0.20099 0.85909 0.26772 0.13751 1'
+
+    >>> prediction = probabilistic.prediction(test_data)
+
 Decision Stump Binary Classification Learning Algorithm
 ============
 
@@ -930,6 +956,60 @@ Run demo dataset
     >>> test_data = '-8.451 7.694 -1.887 1.017 3.708 7.244 9.748 -2.362 -3.618 1'
 
     >>> prediction = decision_stump.prediction(test_data)
+
+Decision Tree Classification Learning Algorithm
+============
+
+Run demo dataset
+-----------------
+
+.. code-block:: py
+
+    >>> import numpy as np
+
+    >>> import FukuML.DecisionTree as decision_tree
+
+    >>> decision_tree_c = decision_tree.CART()
+
+    >>> decision_tree_c.load_train_data()
+
+    >>> decision_tree_c.set_param(learn_type='classifier')
+
+    >>> decision_tree_c.init_W()
+
+    >>> decision_tree_c.train()
+
+    >>> test_data = '6.0 2.2 5.0 1.5 virginica'
+
+    >>> prediction = decision_tree_c.prediction(test_data)
+
+Decision Tree Regression Learning Algorithm
+============
+
+Run demo dataset
+-----------------
+
+.. code-block:: py
+
+    >>> import numpy as np
+
+    >>> import FukuML.DecisionTree as decision_tree
+
+    >>> input_train_data_file = os.path.join(os.path.join(os.getcwd(), os.path.dirname(__file__)), 'FukuML/dataset/linear_regression_train.dat')
+
+    >>> decision_tree_c = decision_tree.CART()
+
+    >>> decision_tree_c.load_train_data(input_train_data_file)
+
+    >>> decision_tree_c.set_param(learn_type='regression')
+
+    >>> decision_tree_c.init_W()
+
+    >>> decision_tree_c.train()
+
+    >>> test_data = '55.7 43 285'
+
+    >>> prediction = decision_tree_c.prediction(test_data)
 
 Polynomial Feature Transform
 ============

@@ -1,7 +1,6 @@
 #encoding=utf8
 
 import os
-import operator
 import collections
 import numpy as np
 import FukuML.Utility as utility

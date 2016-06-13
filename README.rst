@@ -83,7 +83,13 @@ Algorithm
 
 - Soft Gaussian Kernel Support Vector Machine Binary Classification Learning Algorithm
 
+- Probabilistic Support Vector Machine Learning Algorithm
+
 - Decision Stump Binary Classification Learning Algorithm
+
+- Decision Tree Classification Learning Algorithm
+
+- Decision Tree Regression Learning Algorithm
 
 - Linear Regression Accelerator
 
