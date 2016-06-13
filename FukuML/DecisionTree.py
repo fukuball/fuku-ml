@@ -101,7 +101,7 @@ class CART(ml.Learner):
             else:
                 each_class_counts = self.classify_without_missing_data(x, self.decision_tree)
 
-        return max(each_class_counts.iteritems(), key=operator.itemgetter(1))[0]
+        return max(each_class_counts, key=lambda k: each_class_counts[k])
 
     def error_function(self, y_prediction, y_truth):
 

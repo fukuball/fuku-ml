@@ -236,8 +236,8 @@ if __name__ == '__main__':
 		decisionTree = growDecisionTreeFrom(trainingData, evaluationFunction=gini)
 		plot(decisionTree)
 
-		#prune(decisionTree, 0.5, notify=True) # notify, when a branch is pruned (one time in this example)
-		#plot(decisionTree)
+		prune(decisionTree, 0.5, notify=True) # notify, when a branch is pruned (one time in this example)
+		plot(decisionTree)
 
 		print(classify([6.0, 2.2, 5.0, 1.5], decisionTree)) # dataMissing=False is the default setting
 		print(classify([None, None, None, 1.5], decisionTree, dataMissing=True)) # no longer unique
