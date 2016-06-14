@@ -133,12 +133,17 @@ class ProbabilisticSVM(ml.Learner):
 
     def svm_score(self, x):
 
-        original_X = self.svm_processor.train_X[:, 1:]
         x = x[1:]
+
+        '''
+        original_X = self.svm_processor.train_X[:, 1:]
         score = 0
         for i in range(len(self.svm_processor.sv_alpha)):
             score += self.svm_processor.sv_alpha[i] * self.svm_processor.sv_Y[i] * utility.Kernel.gaussian_kernel(self, original_X[self.svm_processor.sv_index[i]], x)
         score = score + self.svm_processor.sv_avg_b
+        '''
+
+        score = np.sum(self.svm_processor.sv_alpha * self.svm_processor.sv_Y * utility.Kernel.kernel_matrix_xX(self, x, self.svm_processor.sv_X)) + self.svm_processor.sv_avg_b
 
         return score
 
@@ -158,6 +163,7 @@ class ProbabilisticSVM(ml.Learner):
         self.svm_processor.init_W()
         self.svm_processor.train()
 
+        # slow
         svm_transform_X = np.apply_along_axis(self.svm_score, axis=1, arr=self.train_X)
         svm_transform_X = np.reshape(svm_transform_X, (-1, 1))
         svm_transform_X0 = np.reshape(np.ones(self.data_num), (-1, 1))
