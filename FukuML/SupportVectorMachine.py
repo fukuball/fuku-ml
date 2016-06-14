@@ -135,8 +135,9 @@ class BinaryClassifier(ml.Learner):
         '''
 
         if (self.svm_kernel == 'polynomial_kernel' or self.svm_kernel == 'gaussian_kernel' or self.svm_kernel == 'soft_polynomial_kernel' or self.svm_kernel == 'soft_gaussian_kernel'):
-            original_X = self.train_X[:, 1:]
             x = x[1:]
+            '''
+            original_X = self.train_X[:, 1:]
             score = 0
             for i in range(len(self.sv_alpha)):
                 if (self.svm_kernel == 'polynomial_kernel' or self.svm_kernel == 'soft_polynomial_kernel'):
@@ -144,6 +145,8 @@ class BinaryClassifier(ml.Learner):
                 elif (self.svm_kernel == 'gaussian_kernel' or self.svm_kernel == 'soft_gaussian_kernel'):
                     score += self.sv_alpha[i] * self.sv_Y[i] * utility.Kernel.gaussian_kernel(self, original_X[self.sv_index[i]], x)
             score = np.sign(score + self.sv_avg_b)
+            '''
+            score = np.sign(np.sum(self.sv_alpha * self.sv_Y * utility.Kernel.kernel_matrix_xX(self, x, self.sv_X)) + self.sv_avg_b)
         else:
             score = np.sign(np.inner(x, W))
 
@@ -201,18 +204,19 @@ class BinaryClassifier(ml.Learner):
             # Lagrange multipliers
             a = np.ravel(solution['x'])
             # Support vectors have non zero lagrange multipliers
-            sv = a > 1e-7
+            sv = a > 1e-5
             self.sv_index = np.arange(len(a))[sv]
             self.sv_alpha = a[sv]
             self.sv_X = original_X[sv]
             self.sv_Y = self.train_Y[sv]
 
-            free_sv = np.logical_and(a > 1e-7, a < self.C)
+            free_sv = np.logical_and(a > 1e-5, a < self.C)
             self.free_sv_index = np.arange(len(a))[free_sv]
             self.free_sv_alpha = a[free_sv]
             self.free_sv_X = original_X[free_sv]
             self.free_sv_Y = self.train_Y[free_sv]
 
+            '''
             sum_short_b = 0
             for i in range(len(self.free_sv_alpha)):
                 sum_short_b += self.free_sv_Y[i]
@@ -222,6 +226,9 @@ class BinaryClassifier(ml.Learner):
                     elif (self.svm_kernel == 'soft_gaussian_kernel'):
                         sum_short_b -= self.free_sv_alpha[j] * self.free_sv_Y[j] * utility.Kernel.gaussian_kernel(self, original_X[self.free_sv_index[j]], original_X[self.free_sv_index[i]])
             short_b = sum_short_b / len(self.free_sv_alpha)
+            '''
+
+            short_b = (np.sum(self.free_sv_Y) - np.sum(np.ravel(self.free_sv_alpha * self.free_sv_Y * utility.Kernel.kernel_matrix(self, self.free_sv_X)))) / len(self.free_sv_alpha)
 
             self.sv_avg_b = short_b
 
@@ -243,12 +250,13 @@ class BinaryClassifier(ml.Learner):
             # Lagrange multipliers
             a = np.ravel(solution['x'])
             # Support vectors have non zero lagrange multipliers
-            sv = a > 1e-7
+            sv = a > 1e-5
             self.sv_index = np.arange(len(a))[sv]
             self.sv_alpha = a[sv]
             self.sv_X = original_X[sv]
             self.sv_Y = self.train_Y[sv]
 
+            '''
             sum_short_b = 0
             for i in range(len(self.sv_alpha)):
                 sum_short_b += self.sv_Y[i]
@@ -258,6 +266,9 @@ class BinaryClassifier(ml.Learner):
                     elif (self.svm_kernel == 'gaussian_kernel'):
                         sum_short_b -= self.sv_alpha[j] * self.sv_Y[j] * utility.Kernel.gaussian_kernel(self, original_X[self.sv_index[j]], original_X[self.sv_index[i]])
             short_b = sum_short_b / len(self.sv_alpha)
+            '''
+
+            short_b = (np.sum(self.sv_Y) - np.sum(np.ravel(self.sv_alpha * self.sv_Y * utility.Kernel.kernel_matrix(self, self.sv_X)))) / len(self.sv_alpha)
 
             self.sv_avg_b = short_b
 
@@ -277,7 +288,7 @@ class BinaryClassifier(ml.Learner):
             # Lagrange multipliers
             a = np.ravel(solution['x'])
             # Support vectors have non zero lagrange multipliers
-            sv = a > 1e-7
+            sv = a > 1e-5
             self.sv_index = np.arange(len(a))[sv]
             self.sv_alpha = a[sv]
             self.sv_X = original_X[sv]

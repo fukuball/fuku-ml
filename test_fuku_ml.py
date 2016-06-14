@@ -1807,7 +1807,6 @@ class FukuMLTestCase(unittest.TestCase):
         print(prediction['input_data_y'])
         print("預測結果：")
         print(prediction['prediction'])
-
         '''
         print("錯誤評估：")
         print(l2r_logistic.error_function(prediction['input_data_x'], prediction['input_data_y'], W))
