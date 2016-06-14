@@ -5,6 +5,7 @@ import pickle
 import math
 from sklearn.preprocessing import PolynomialFeatures
 from scipy.special import legendre
+from scipy.spatial.distance import pdist, cdist, squareform
 
 
 class DatasetLoader(object):
@@ -152,6 +153,13 @@ class Kernel(object):
     @staticmethod
     def kernel_matrix(svm_model, original_X):
 
+        if (svm_model.svm_kernel == 'polynomial_kernel' or svm_model.svm_kernel == 'soft_polynomial_kernel'):
+            K = (svm_model.zeta + svm_model.gamma * np.dot(original_X, original_X.T)) ** svm_model.Q
+        elif (svm_model.svm_kernel == 'gaussian_kernel' or svm_model.svm_kernel == 'soft_gaussian_kernel'):
+            pairwise_dists = squareform(pdist(original_X, 'euclidean'))
+            K = np.exp(-svm_model.gamma * (pairwise_dists ** 2))
+
+        '''
         K = np.zeros((svm_model.data_num, svm_model.data_num))
 
         for i in range(svm_model.data_num):
@@ -160,6 +168,28 @@ class Kernel(object):
                     K[i, j] = Kernel.polynomial_kernel(svm_model, original_X[i], original_X[j])
                 elif (svm_model.svm_kernel == 'gaussian_kernel' or svm_model.svm_kernel == 'soft_gaussian_kernel'):
                     K[i, j] = Kernel.gaussian_kernel(svm_model, original_X[i], original_X[j])
+        '''
+
+        return K
+
+    @staticmethod
+    def kernel_matrix_xX(svm_model, original_x, original_X):
+
+        if (svm_model.svm_kernel == 'polynomial_kernel' or svm_model.svm_kernel == 'soft_polynomial_kernel'):
+            K = (svm_model.zeta + svm_model.gamma * np.dot(original_x, original_X.T)) ** svm_model.Q
+        elif (svm_model.svm_kernel == 'gaussian_kernel' or svm_model.svm_kernel == 'soft_gaussian_kernel'):
+            K = np.exp(-svm_model.gamma * (cdist(original_X, np.atleast_2d(original_x), 'euclidean').T ** 2)).ravel()
+
+        '''
+        K = np.zeros((svm_model.data_num, svm_model.data_num))
+
+        for i in range(svm_model.data_num):
+            for j in range(svm_model.data_num):
+                if (svm_model.svm_kernel == 'polynomial_kernel' or svm_model.svm_kernel == 'soft_polynomial_kernel'):
+                    K[i, j] = Kernel.polynomial_kernel(svm_model, original_x, original_X[j])
+                elif (svm_model.svm_kernel == 'gaussian_kernel' or svm_model.svm_kernel == 'soft_gaussian_kernel'):
+                    K[i, j] = Kernel.gaussian_kernel(svm_model, original_x, original_X[j])
+        '''
 
         return K
 

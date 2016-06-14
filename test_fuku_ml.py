@@ -7,6 +7,7 @@ import FukuML.PocketPLA as pocket
 import FukuML.LinearRegression as linear_regression
 import FukuML.LogisticRegression as logistic_regression
 import FukuML.L2RLogisticRegression as l2r_logistic_regression
+import FukuML.KernelLogisticRegression as kernel_logistic_regression
 import FukuML.RidgeRegression as ridge_regression
 import FukuML.SupportVectorMachine as svm
 import FukuML.ProbabilisticSVM as probabilistic_svm
@@ -1782,6 +1783,40 @@ class FukuMLTestCase(unittest.TestCase):
         print("W 平均錯誤率（Eout）：")
         print(decision_tree_r.calculate_test_data_avg_error())
         print('-'*70)
+
+    def test_kernel_logistic_regression(self):
+
+        #------------------------------------------------------------
+
+        kernel_logistic = kernel_logistic_regression.KernelLogisticRegression()
+        kernel_logistic.load_train_data()
+        kernel_logistic.load_test_data()
+        kernel_logistic.set_param(feed_mode='stochastic', step_eta=0.126, updates=2000, lambda_p=0.0001, gamma=1, C=0.1)
+        kernel_logistic.init_W()
+        kernel_logistic.train()
+
+        print("\n訓練得出權重模型：")
+        print(kernel_logistic.beta)
+
+        test_data = '0.26502 0.5486 0.971 0.19333 0.12207 0.81528 0.46743 0.45889 0.31004 0.3307 0.43078 0.50661 0.57281 0.052715 0.50443 0.78686 0.20099 0.85909 0.26772 0.13751 1'
+        prediction = kernel_logistic.prediction(test_data)
+
+        print("測試資料 x：")
+        print(prediction['input_data_x'])
+        print("測試資料 y：")
+        print(prediction['input_data_y'])
+        print("預測結果：")
+        print(prediction['prediction'])
+
+        '''
+        print("錯誤評估：")
+        print(l2r_logistic.error_function(prediction['input_data_x'], prediction['input_data_y'], W))
+        print("W 平均錯誤值（Ein）：")
+        print(l2r_logistic.calculate_avg_error(l2r_logistic.train_X, l2r_logistic.train_Y, W))
+        print("W 平均錯誤值（Eout）：")
+        print(l2r_logistic.calculate_avg_error(l2r_logistic.test_X, l2r_logistic.test_Y, W))
+        print('-'*70)
+        '''
 
 if __name__ == '__main__':
 
