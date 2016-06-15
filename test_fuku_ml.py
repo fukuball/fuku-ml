@@ -1807,15 +1807,13 @@ class FukuMLTestCase(unittest.TestCase):
         print(prediction['input_data_y'])
         print("預測結果：")
         print(prediction['prediction'])
-        '''
         print("錯誤評估：")
-        print(l2r_logistic.error_function(prediction['input_data_x'], prediction['input_data_y'], W))
+        print(kernel_logistic.error_function(prediction['input_data_x'], prediction['input_data_y'], kernel_logistic.W))
         print("W 平均錯誤值（Ein）：")
-        print(l2r_logistic.calculate_avg_error(l2r_logistic.train_X, l2r_logistic.train_Y, W))
+        print(kernel_logistic.calculate_avg_error(kernel_logistic.train_X, kernel_logistic.train_Y, kernel_logistic.W))
         print("W 平均錯誤值（Eout）：")
-        print(l2r_logistic.calculate_avg_error(l2r_logistic.test_X, l2r_logistic.test_Y, W))
+        print(kernel_logistic.calculate_avg_error(kernel_logistic.test_X, kernel_logistic.test_Y, kernel_logistic.W))
         print('-'*70)
-        '''
 
 if __name__ == '__main__':
 

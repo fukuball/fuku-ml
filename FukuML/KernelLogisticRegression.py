@@ -79,22 +79,30 @@ class KernelLogisticRegression(l2r_logistic_regression.L2RLogisticRegression):
 
     def score_function(self, x, W):
 
-        original_X = self.train_X[:, 1:]
         x = x[1:]
+        original_X = self.train_X[:, 1:]
+        '''
         score = 0
-
         for i in range(len(self.beta)):
             if (self.svm_kernel == 'polynomial_kernel' or self.svm_kernel == 'soft_polynomial_kernel'):
                 score += self.beta[i] * utility.Kernel.polynomial_kernel(self, original_X[i], x)
             elif (self.svm_kernel == 'gaussian_kernel' or self.svm_kernel == 'soft_gaussian_kernel'):
                 score += self.beta[i] * utility.Kernel.gaussian_kernel(self, original_X[i], x)
         score = self.theta(score)
+        '''
+        score = np.sum(self.beta * utility.Kernel.kernel_matrix_xX(self, x, original_X))
+        score = self.theta(score)
 
         return score
 
     def error_function(self, x, y, W):
 
-        return super(KernelLogisticRegression, self).error_function(x, y, W)
+        x = x[1:]
+        original_X = self.train_X[:, 1:]
+        score = np.sum(self.beta * utility.Kernel.kernel_matrix_xX(self, x, original_X))
+        error = np.log(1 + np.exp((-1)*y*score))
+
+        return error
 
     def calculate_gradient(self, X, Y, beta):
 
