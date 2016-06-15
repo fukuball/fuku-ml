@@ -9,6 +9,7 @@ import FukuML.LogisticRegression as logistic_regression
 import FukuML.L2RLogisticRegression as l2r_logistic_regression
 import FukuML.KernelLogisticRegression as kernel_logistic_regression
 import FukuML.RidgeRegression as ridge_regression
+import FukuML.KernelRidgeRegression as kernel_ridge_regression
 import FukuML.SupportVectorMachine as svm
 import FukuML.ProbabilisticSVM as probabilistic_svm
 import FukuML.DecisionStump as decision_stump
@@ -1813,6 +1814,37 @@ class FukuMLTestCase(unittest.TestCase):
         print(kernel_logistic.calculate_avg_error(kernel_logistic.train_X, kernel_logistic.train_Y, kernel_logistic.W))
         print("W 平均錯誤值（Eout）：")
         print(kernel_logistic.calculate_avg_error(kernel_logistic.test_X, kernel_logistic.test_Y, kernel_logistic.W))
+        print('-'*70)
+
+    def test_kernel_ridge_regression(self):
+
+        #------------------------------------------------------------
+
+        kernel_ridge = kernel_ridge_regression.KernelRidgeRegression()
+        kernel_ridge.load_train_data()
+        kernel_ridge.load_test_data()
+        kernel_ridge.set_param(lambda_p=pow(10, -3))
+        kernel_ridge.init_W()
+        kernel_ridge.train()
+
+        print("\n訓練得出權重模型：")
+        print(kernel_ridge.beta)
+
+        test_data = '0.62771 0.11513 0.82235 0.14493 -1'
+        prediction = kernel_ridge.prediction(test_data)
+
+        print("測試資料 x：")
+        print(prediction['input_data_x'])
+        print("測試資料 y：")
+        print(prediction['input_data_y'])
+        print("預測結果：")
+        print(prediction['prediction'])
+        print("錯誤評估：")
+        print(kernel_ridge.error_function(prediction['prediction'], prediction['input_data_y']))
+        print("W 平均錯誤值（Ein）：")
+        print(kernel_ridge.calculate_avg_error(kernel_ridge.train_X, kernel_ridge.train_Y, kernel_ridge.W))
+        print("W 平均錯誤值（Eout）：")
+        print(kernel_ridge.calculate_avg_error(kernel_ridge.test_X, kernel_ridge.test_Y, kernel_ridge.W))
         print('-'*70)
 
 if __name__ == '__main__':
