@@ -53,6 +53,12 @@ Algorithm
 
 - Linear Regression Multi Classification Learning Algorithm
 
+- Ridge Regression Learning Algorithm
+
+- Ridge Regression Binary Classification Learning Algorithm
+
+- Ridge Regression Multi Classification Learning Algorithm
+
 - Logistic Regression Learning Algorithm
 
 - Logistic Regression Binary Classification Learning Algorithm
@@ -65,11 +71,7 @@ Algorithm
 
 - L2 Regularized Logistic Regression Binary Classification Learning Algorithm
 
-- Ridge Regression Learning Algorithm
-
-- Ridge Regression Binary Classification Learning Algorithm
-
-- Ridge Regression Multi Classification Learning Algorithm
+- Kernel Logistic Regression Learning Algorithm
 
 - Primal Hard Margin Support Vector Machine Binary Classification Learning Algorithm
 

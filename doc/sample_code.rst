@@ -1011,6 +1011,32 @@ Run demo dataset
 
     >>> prediction = decision_tree_c.prediction(test_data)
 
+Kernel Logistic Regression Learning Algorithm
+============
+
+Run demo dataset
+-----------------
+
+.. code-block:: py
+
+    >>> import numpy as np
+
+    >>> import FukuML.KernelLogisticRegression as kernel_logistic_regression
+
+    >>> kernel_logistic = kernel_logistic_regression.KernelLogisticRegression()
+
+    >>> kernel_logistic.load_train_data()
+
+    >>> kernel_logistic.set_param()
+
+    >>> kernel_logistic.init_W()
+
+    >>> W = kernel_logistic.train()
+
+    >>> test_data = '0.26502 0.5486 0.971 0.19333 0.12207 0.81528 0.46743 0.45889 0.31004 0.3307 0.43078 0.50661 0.57281 0.052715 0.50443 0.78686 0.20099 0.85909 0.26772 0.13751 1'
+
+    >>> prediction = kernel_logistic.prediction(test_data)
+
 Polynomial Feature Transform
 ============
 
