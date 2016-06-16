@@ -1883,7 +1883,7 @@ class FukuMLTestCase(unittest.TestCase):
 
         #------------------------------------------------------------
 
-        least_squares = least_squares_svm.LeastSquaresSVM()
+        least_squares = least_squares_svm.BinaryClassifier()
         least_squares.load_train_data()
         least_squares.load_test_data()
         least_squares.set_param(lambda_p=pow(10, -3), gamma=1, C=0.1)

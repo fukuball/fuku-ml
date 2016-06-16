@@ -1037,6 +1037,84 @@ Run demo dataset
 
     >>> prediction = kernel_logistic.prediction(test_data)
 
+Kernel Ridge Regression Learning Algorithm
+============
+
+Run demo dataset
+-----------------
+
+.. code-block:: py
+
+    >>> import numpy as np
+
+    >>> import FukuML.KernelRidgeRegression as kernel_ridge_regression
+
+    >>> kernel_ridge = kernel_ridge_regression.KernelRidgeRegression()
+
+    >>> kernel_ridge.load_train_data()
+
+    >>> kernel_ridge.set_param(lambda_p=pow(10, -3), gamma=1, C=0.1)
+
+    >>> kernel_ridge.init_W()
+
+    >>> kernel_ridge.train()
+
+    >>> test_data = '0.62771 0.11513 0.82235 0.14493 -1'
+
+    >>> prediction = kernel_ridge.prediction(test_data)
+
+Kernel Ridge Regression Binary Classification Learning Algorithm
+============
+
+Run demo dataset
+-----------------
+
+.. code-block:: py
+
+    >>> import numpy as np
+
+    >>> import FukuML.KernelRidgeRegression as kernel_ridge_regression
+
+    >>> kernel_ridge_bc = kernel_ridge_regression.BinaryClassifier()
+
+    >>> kernel_ridge_bc.load_train_data()
+
+    >>> kernel_ridge.set_param(lambda_p=pow(10, -3), gamma=1, C=0.1)
+
+    >>> kernel_ridge.init_W()
+
+    >>> kernel_ridge.train()
+
+    >>> test_data = '0.62771 0.11513 0.82235 0.14493 -1'
+
+    >>> prediction = kernel_ridge.prediction(test_data)
+
+Least Squares Support Vector Machine Binary Classification Learning Algorithm
+============
+
+Run demo dataset
+-----------------
+
+.. code-block:: py
+
+    >>> import numpy as np
+
+    >>> import FukuML.LeastSquaresSVM as least_squares_svm
+
+    >>> least_squares_svm = least_squares_svm.BinaryClassifier()
+
+    >>> least_squares_svm.load_train_data()
+
+    >>> least_squares_svm.set_param(lambda_p=pow(10, -3), gamma=1, C=0.1)
+
+    >>> least_squares_svm.init_W()
+
+    >>> least_squares_svm.train()
+
+    >>> test_data = '0.62771 0.11513 0.82235 0.14493 -1'
+
+    >>> prediction = least_squares_svm.prediction(test_data)
+
 Polynomial Feature Transform
 ============
 

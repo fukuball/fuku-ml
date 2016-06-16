@@ -3,7 +3,7 @@
 import FukuML.KernelRidgeRegression as kernel_ridge_regression
 
 
-class LeastSquaresSVM(kernel_ridge_regression.BinaryClassifier):
+class BinaryClassifier(kernel_ridge_regression.BinaryClassifier):
 
     def __init__(self):
 
@@ -30,40 +30,40 @@ class LeastSquaresSVM(kernel_ridge_regression.BinaryClassifier):
 
     def load_train_data(self, input_data_file=''):
 
-        return super(LeastSquaresSVM, self).load_train_data(input_data_file)
+        return super(BinaryClassifier, self).load_train_data(input_data_file)
 
     def load_test_data(self, input_data_file=''):
 
-        return super(LeastSquaresSVM, self).load_test_data(input_data_file)
+        return super(BinaryClassifier, self).load_test_data(input_data_file)
 
     def set_param(self, lambda_p=0.0001, gamma=1, C=0.1):
 
-        return super(LeastSquaresSVM, self).set_param(lambda_p, gamma, C)
+        return super(BinaryClassifier, self).set_param(lambda_p, gamma, C)
 
     def init_W(self):
 
-        return super(LeastSquaresSVM, self).init_W()
+        return super(BinaryClassifier, self).init_W()
 
     def score_function(self, x, W):
 
-        return super(LeastSquaresSVM, self).score_function(x, W)
+        return super(BinaryClassifier, self).score_function(x, W)
 
     def error_function(self, y_prediction, y_truth):
 
-        return super(LeastSquaresSVM, self).error_function(y_prediction, y_truth)
+        return super(BinaryClassifier, self).error_function(y_prediction, y_truth)
 
     def calculate_avg_error(self, X, Y, W):
 
-        return super(LeastSquaresSVM, self).calculate_avg_error(X, Y, W)
+        return super(BinaryClassifier, self).calculate_avg_error(X, Y, W)
 
     def calculate_test_data_avg_error(self):
 
-        return super(LeastSquaresSVM, self).calculate_test_data_avg_error()
+        return super(BinaryClassifier, self).calculate_test_data_avg_error()
 
     def train(self):
 
-        return super(LeastSquaresSVM, self).train()
+        return super(BinaryClassifier, self).train()
 
     def prediction(self, input_data='', mode='test_data'):
 
-        return super(LeastSquaresSVM, self).prediction(input_data, mode)
+        return super(BinaryClassifier, self).prediction(input_data, mode)
