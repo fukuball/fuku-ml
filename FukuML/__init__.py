@@ -32,6 +32,7 @@ __all__ = [
     'KernelLogisticRegression.KernelLogisticRegression',
     'SupportVectorMachine',
     'SupportVectorMachine.BinaryClassifier',
+    'SupportVectorMachine.MultiClassifier',
     'ProbabilisticSVM',
     'ProbabilisticSVM.ProbabilisticSVM',
     'LeastSquaresSVM',

@@ -89,6 +89,14 @@ Algorithm
 
 - Soft Gaussian Kernel Support Vector Machine Binary Classification Learning Algorithm
 
+- Polynomial Kernel Support Vector Machine Multi Classification Learning Algorithm
+
+- Gaussian Kernel Support Vector Machine Multi Classification Learning Algorithm
+
+- Soft Polynomial Kernel Support Vector Machine Multi Classification Learning Algorithm
+
+- Soft Gaussian Kernel Support Vector Machine Multi Classification Learning Algorithm
+
 - Probabilistic Support Vector Machine Learning Algorithm
 
 - Least Squares Support Vector Machine Learning Algorithm
