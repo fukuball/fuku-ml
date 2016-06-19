@@ -417,7 +417,7 @@ class MultiClassifier(LogisticRegression):
             accelerator = linear_regression.Accelerator()
             for class_item in self.class_list:
                 if self.decomposition == 'ovo':
-                    modify_X, modify_Y = self.modify_XY(self.train_X, self.train_Y, class_item)
+                    modify_X, modify_Y = utility.DatasetLoader.modify_XY(self.train_X, self.train_Y, class_item)
                     self.temp_train_X = self.train_X
                     self.temp_train_Y = self.train_Y
                     self.train_X = modify_X
@@ -436,7 +436,7 @@ class MultiClassifier(LogisticRegression):
                     self.W = self.temp_W
                     self.temp_W = {}
                 elif self.decomposition == 'ova':
-                    modify_Y = self.modify_Y(self.train_Y, class_item)
+                    modify_Y = utility.DatasetLoader.modify_Y(self.train_Y, class_item)
                     self.temp_train_Y = self.train_Y
                     self.train_Y = modify_Y
                     self.temp_W = self.W
@@ -509,32 +509,6 @@ class MultiClassifier(LogisticRegression):
 
         return super(MultiClassifier, self).calculate_test_data_avg_error()
 
-    def modify_Y(self, Y, class_item):
-
-        modify_Y = []
-        for yi in Y:
-            if yi == class_item:
-                modify_Y.append(1)
-            else:
-                modify_Y.append(-1)
-
-        return np.array(modify_Y)
-
-    def modify_XY(self, X, Y, class_item):
-
-        modify_X = []
-        modify_Y = []
-
-        for idx, val in enumerate(Y):
-            if val == class_item[0]:
-                modify_Y.append(1)
-                modify_X.append(X[idx])
-            elif val == class_item[1]:
-                modify_Y.append(-1)
-                modify_X.append(X[idx])
-
-        return np.array(modify_X), np.array(modify_Y)
-
     def train(self):
 
         if (self.status != 'init'):
@@ -544,7 +518,7 @@ class MultiClassifier(LogisticRegression):
         for class_item in self.class_list:
             self.status = 'init'
             if self.decomposition == 'ovo':
-                modify_X, modify_Y = self.modify_XY(self.train_X, self.train_Y, class_item)
+                modify_X, modify_Y = utility.DatasetLoader.modify_XY(self.train_X, self.train_Y, class_item)
                 self.temp_train_X = self.train_X
                 self.temp_train_Y = self.train_Y
                 self.train_X = modify_X
@@ -564,7 +538,7 @@ class MultiClassifier(LogisticRegression):
                 self.temp_W = {}
                 print("class %d to %d learned." % (class_item[0], class_item[1]))
             elif self.decomposition == 'ova':
-                modify_Y = self.modify_Y(self.train_Y, class_item)
+                modify_Y = utility.DatasetLoader.modify_Y(self.train_Y, class_item)
                 self.temp_train_Y = self.train_Y
                 self.train_Y = modify_Y
                 self.temp_W = self.W

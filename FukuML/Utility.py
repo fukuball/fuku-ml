@@ -85,6 +85,34 @@ class DatasetLoader(object):
         y2 = np.ones(len(X2)) * -1
         return X1, y1, X2, y2
 
+    @staticmethod
+    def modify_XY(X, Y, class_item):
+
+        modify_X = []
+        modify_Y = []
+
+        for idx, val in enumerate(Y):
+            if val == class_item[0]:
+                modify_Y.append(float(1))
+                modify_X.append(X[idx])
+            elif val == class_item[1]:
+                modify_Y.append(float(-1))
+                modify_X.append(X[idx])
+
+        return np.array(modify_X), np.array(modify_Y)
+
+    @staticmethod
+    def modify_Y(Y, class_item):
+
+        modify_Y = []
+        for yi in Y:
+            if yi == class_item:
+                modify_Y.append(float(1))
+            else:
+                modify_Y.append(float(-1))
+
+        return np.array(modify_Y)
+
 
 class CrossValidator(object):
 
