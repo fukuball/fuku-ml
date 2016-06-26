@@ -10,13 +10,14 @@ import FukuML.MLBase as ml
 class DecisionTree:
 
     """Binary tree implementation with true and false branch. """
-    def __init__(self, col=-1, value=None, true_branch=None, false_branch=None, each_class_counts=None):
+    def __init__(self, col=-1, value=None, true_branch=None, false_branch=None, each_class_counts=None, height_position=0, is_leaf=True):
         self.col = col
         self.value = value
         self.true_branch = true_branch
         self.false_branch = false_branch
-        # None for nodes, not None for leaves
         self.each_class_counts = each_class_counts
+        self.height_position = height_position
+        self.is_leaf = is_leaf
 
 
 class CART(ml.Learner):
@@ -40,6 +41,7 @@ class CART(ml.Learner):
         self.decision_tree = None
         self.prune_gain = 0
         self.prune_notify = False
+        self.tree_height_limit = 0
 
     def load_train_data(self, input_data_file=''):
 
@@ -69,11 +71,12 @@ class CART(ml.Learner):
 
         return self.test_X, self.test_Y
 
-    def set_param(self, learn_type='classifier', prune_gain=0, prune_notify=False):
+    def set_param(self, learn_type='classifier', prune_gain=0, prune_notify=False, tree_height_limit=0):
 
         self.learn_type = learn_type
         self.prune_gain = prune_gain
         self.prune_notify = prune_notify
+        self.tree_height_limit = tree_height_limit
 
         return self.learn_type
 
@@ -124,14 +127,46 @@ class CART(ml.Learner):
 
         return super(CART, self).calculate_test_data_avg_error()
 
+    def prune_by_height(self, tree, tree_height_limit):
+
+        if not tree.true_branch.is_leaf:
+            self.prune_by_height(tree.true_branch, tree_height_limit)
+        if not tree.false_branch.is_leaf:
+            self.prune_by_height(tree.false_branch, tree_height_limit)
+
+        if tree.height_position > tree_height_limit:
+
+            true_branch, false_branch = [], []
+
+            for v, c in tree.true_branch.each_class_counts.items():
+                true_branch += [v] * c
+            for v, c in tree.false_branch.each_class_counts.items():
+                false_branch += [v] * c
+
+            true_false_branch = np.array(true_branch+false_branch)
+            true_branch = np.array(true_branch)
+            false_branch = np.array(false_branch)
+
+            tree.true_branch, tree.false_branch, tree.is_leaf = None, None, True
+            if self.learn_type == 'classifier':
+                tree.each_class_counts = self.each_class_counts(true_false_branch)
+            elif self.learn_type == 'regression':
+                if len(true_false_branch) == 0:
+                    mean = 0
+                data = [float(y) for y in true_false_branch]
+                mean = sum(data) / len(data)
+                tree.each_class_counts = {mean: 1}
+
+        return self.decision_tree
+
     def prune(self, tree):
 
-        if tree.true_branch.each_class_counts is None:
+        if not tree.true_branch.is_leaf:
             self.prune(tree.true_branch)
-        if tree.false_branch.each_class_counts is None:
+        if not tree.false_branch.is_leaf:
             self.prune(tree.false_branch)
 
-        if tree.true_branch.each_class_counts is not None and tree.false_branch.each_class_counts is not None:
+        if tree.true_branch.is_leaf and tree.false_branch.is_leaf:
             true_branch, false_branch = [], []
             for v, c in tree.true_branch.each_class_counts.items():
                 true_branch += [v] * c
@@ -146,7 +181,7 @@ class CART(ml.Learner):
             if delta < self.prune_gain:
                 if self.prune_notify:
                     print('A branch was pruned: gain = %f' % delta)
-                tree.true_branch, tree.false_branch = None, None
+                tree.true_branch, tree.false_branch, tree.is_leaf = None, None, True
                 if self.learn_type == 'classifier':
                     tree.each_class_counts = self.each_class_counts(true_false_branch)
                 elif self.learn_type == 'regression':
@@ -160,7 +195,7 @@ class CART(ml.Learner):
 
     def classify_with_missing_data(self, x, tree):
 
-        if tree.each_class_counts is not None:
+        if tree.is_leaf:
             # leaf
             return tree.each_class_counts
         else:
@@ -201,7 +236,7 @@ class CART(ml.Learner):
 
     def classify_without_missing_data(self, x, tree):
 
-        if tree.each_class_counts is not None:
+        if tree.is_leaf:
             # leaf
             return tree.each_class_counts
         else:
@@ -230,7 +265,7 @@ class CART(ml.Learner):
 
     def regression_with_missing_data(self, x, tree):
 
-        if tree.each_class_counts is not None:
+        if tree.is_leaf:
             # leaf
             return tree.each_class_counts
         else:
@@ -333,10 +368,10 @@ class CART(ml.Learner):
 
         return (list1, list2)
 
-    def grow_decision_tree_from(self, X, Y):
+    def grow_decision_tree_from(self, X, Y, height_position):
 
         if len(Y) == '0':
-            return
+            return None
 
         impurity_score = self.impurity(Y)
 
@@ -370,23 +405,32 @@ class CART(ml.Learner):
                     best_set = (set1X, set1Y, set2X, set2Y)
 
         if best_gain > 0:
-            true_branch = self.grow_decision_tree_from(best_set[0], best_set[1])
-            false_branch = self.grow_decision_tree_from(best_set[2], best_set[3])
-            return DecisionTree(col=best_attribute[0], value=best_attribute[1], true_branch=true_branch, false_branch=false_branch)
-        else:
+            true_branch = self.grow_decision_tree_from(best_set[0], best_set[1], height_position+1)
+            false_branch = self.grow_decision_tree_from(best_set[2], best_set[3], height_position+1)
+            is_leaf = False
+            if true_branch is None and false_branch is None:
+                is_leaf = True
             if self.learn_type == 'classifier':
-                return DecisionTree(each_class_counts=self.each_class_counts(Y))
+                return DecisionTree(col=best_attribute[0], value=best_attribute[1], true_branch=true_branch, false_branch=false_branch, each_class_counts=self.each_class_counts(Y), height_position=height_position, is_leaf=is_leaf)
             elif self.learn_type == 'regression':
                 data = [float(y) for y in Y]
                 mean = sum(data) / len(data)
                 mean_dict = {mean: 1}
-                return DecisionTree(each_class_counts=mean_dict)
+                return DecisionTree(col=best_attribute[0], value=best_attribute[1], true_branch=true_branch, false_branch=false_branch, each_class_counts=mean_dict, height_position=height_position, is_leaf=is_leaf)
+        else:
+            if self.learn_type == 'classifier':
+                return DecisionTree(each_class_counts=self.each_class_counts(Y), height_position=height_position, is_leaf=True)
+            elif self.learn_type == 'regression':
+                data = [float(y) for y in Y]
+                mean = sum(data) / len(data)
+                mean_dict = {mean: 1}
+                return DecisionTree(each_class_counts=mean_dict, height_position=height_position, is_leaf=True)
 
     def plot(self, decision_tree):
 
         def toString(decision_tree, indent=''):
 
-            if decision_tree.each_class_counts is not None:
+            if decision_tree.is_leaf:
                 # leaf node
                 return str(decision_tree.each_class_counts)
             else:
@@ -396,9 +440,9 @@ class CART(ml.Learner):
                 except ValueError:
                     value_is_float = False
                 if value_is_float:
-                    decision = 'Column %s: x >= %s?' % (decision_tree.col, decision_tree.value)
+                    decision = 'Height %s Column %s: x >= %s?' % (decision_tree.height_position, decision_tree.col, decision_tree.value)
                 else:
-                    decision = 'Column %s: x == %s?' % (decision_tree.col, decision_tree.value)
+                    decision = 'Height %s Column %s: x == %s?' % (decision_tree.height_position, decision_tree.col, decision_tree.value)
                 true_branch = indent + 'yes -> ' + toString(decision_tree.true_branch, indent + '\t\t')
                 false_branch = indent + 'no  -> ' + toString(decision_tree.false_branch, indent + '\t\t')
                 return (decision + '\n' + true_branch + '\n' + false_branch)
@@ -413,10 +457,12 @@ class CART(ml.Learner):
             print("Please load train data and init W first.")
             return self.W
 
-        self.decision_tree = self.grow_decision_tree_from(self.train_X, self.train_Y)
+        self.decision_tree = self.grow_decision_tree_from(self.train_X, self.train_Y, height_position=1)
 
         if self.prune_gain > 0:
             self.decision_tree = self.prune(self.decision_tree)
+        elif self.tree_height_limit > 0:
+            self.decision_tree = self.prune_by_height(self.decision_tree, self.tree_height_limit)
 
         self.status = 'train'
 

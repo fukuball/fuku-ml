@@ -32,6 +32,7 @@ class BinaryClassifier(ml.Learner):
         self.gamma = 1
         self.Q = 1
         self.C = 0.1
+        self.alpha = []
         self.sv_index = []
         self.sv_alpha = []
         self.sv_X = []
@@ -204,6 +205,7 @@ class BinaryClassifier(ml.Learner):
 
             # Lagrange multipliers
             a = np.ravel(solution['x'])
+            self.alpha = a
             # Support vectors have non zero lagrange multipliers
             sv = a > 1e-5
             self.sv_index = np.arange(len(a))[sv]
@@ -250,6 +252,7 @@ class BinaryClassifier(ml.Learner):
 
             # Lagrange multipliers
             a = np.ravel(solution['x'])
+            self.alpha = a
             # Support vectors have non zero lagrange multipliers
             sv = a > 1e-5
             self.sv_index = np.arange(len(a))[sv]
@@ -288,6 +291,7 @@ class BinaryClassifier(ml.Learner):
 
             # Lagrange multipliers
             a = np.ravel(solution['x'])
+            self.alpha = a
             # Support vectors have non zero lagrange multipliers
             sv = a > 1e-5
             self.sv_index = np.arange(len(a))[sv]

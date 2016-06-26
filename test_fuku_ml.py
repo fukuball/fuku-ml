@@ -15,6 +15,7 @@ import FukuML.ProbabilisticSVM as probabilistic_svm
 import FukuML.LeastSquaresSVM as least_squares_svm
 import FukuML.DecisionStump as decision_stump
 import FukuML.DecisionTree as decision_tree
+import FukuML.AdaBoostStump as adaboost_stump
 import FukuML.Utility as utility
 
 
@@ -1587,6 +1588,25 @@ class FukuMLTestCase(unittest.TestCase):
         print(decision_stump_bc.calculate_avg_error(decision_stump_bc.test_X, decision_stump_bc.test_Y, decision_stump_bc.W))
         print('-'*70)
 
+        input_train_data_file = os.path.join(os.path.join(os.getcwd(), os.path.dirname(__file__)), 'FukuML/dataset/decision_stump_train.dat')
+        input_test_data_file = os.path.join(os.path.join(os.getcwd(), os.path.dirname(__file__)), 'FukuML/dataset/decision_stump_test.dat')
+
+        decision_tree_c = decision_tree.CART()
+        decision_tree_c.load_train_data(input_train_data_file)
+        decision_tree_c.set_param(learn_type='classifier', tree_height_limit=1)
+        decision_tree_c.load_test_data(input_test_data_file)
+        decision_tree_c.init_W()
+        decision_tree_c.train()
+
+        print("\n訓練得出 Decision Tree：")
+        decision_tree_c.plot(decision_tree_c.decision_tree)
+
+        print("W 平均錯誤率（Ein）：")
+        print(decision_tree_c.calculate_avg_error(decision_tree_c.train_X, decision_tree_c.train_Y, decision_tree_c.W))
+        print("W 平均錯誤率（Eout）：")
+        print(decision_tree_c.calculate_test_data_avg_error())
+        print('-'*70)
+
     def test_decision_tree_classifier(self):
 
         #------------------------------------------------------------
@@ -1937,6 +1957,33 @@ class FukuMLTestCase(unittest.TestCase):
         print(svm_mc.calculate_avg_error_all_class(svm_mc.train_X, svm_mc.train_Y, svm_mc.W))
         print("W 平均錯誤率（Eout）：")
         print(svm_mc.calculate_avg_error_all_class(svm_mc.test_X, svm_mc.test_Y, svm_mc.W))
+        print('-'*70)
+
+    def test_adaboost_stump_classifier(self):
+
+        #------------------------------------------------------------
+
+        adaboost_stump_bc = adaboost_stump.BinaryClassifier()
+        adaboost_stump_bc.load_train_data()
+        adaboost_stump_bc.load_test_data()
+        adaboost_stump_bc.set_param(run_t=10)
+        adaboost_stump_bc.init_W()
+        adaboost_stump_bc.train()
+
+        test_data = '-9.706 1.392 6.562 -6.543 -1.980 -6.261 -6.067 1.254 -1.071 1'
+        prediction = adaboost_stump_bc.prediction(test_data)
+
+        print("測試資料 x：")
+        print(prediction['input_data_x'])
+        print("測試資料 y：")
+        print(prediction['input_data_y'])
+        print("預測結果：")
+        print(prediction['prediction'])
+
+        print("平均錯誤率（Ein）：")
+        print(adaboost_stump_bc.calculate_avg_error(adaboost_stump_bc.train_X, adaboost_stump_bc.train_Y, adaboost_stump_bc.W))
+        print("平均錯誤率（Eout）：")
+        print(adaboost_stump_bc.calculate_avg_error(adaboost_stump_bc.test_X, adaboost_stump_bc.test_Y, adaboost_stump_bc.W))
         print('-'*70)
 
 if __name__ == '__main__':

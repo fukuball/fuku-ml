@@ -1,10 +1,10 @@
 #encoding=utf8
 
-from __future__ import division
 import os
 import numpy as np
 import FukuML.Utility as utility
 import FukuML.MLBase as ml
+import FukuML.DecisionStump as decision_stump
 
 
 class BinaryClassifier(ml.Learner):
@@ -24,19 +24,12 @@ class BinaryClassifier(ml.Learner):
         self.feature_transform_mode = ''
         self.feature_transform_degree = 1
 
-        self.sign = 1
-        self.feature_index = 0
-        self.theta = 0
-        self.u = None
+        self.run_t = 40
+        self.weak_learner = []
+        self.alpha = []
+        self.temp_train_X = []
 
     def load_train_data(self, input_data_file=''):
-
-        '''
-        Load train data
-        Please check dataset/pla_binary_train.dat to understand the data format
-        Each feature of data x separated with spaces
-        And the ground truth y put in the end of line separated by a space
-        '''
 
         self.status = 'load_train_data'
 
@@ -52,13 +45,6 @@ class BinaryClassifier(ml.Learner):
         return self.train_X, self.train_Y
 
     def load_test_data(self, input_data_file=''):
-
-        '''
-        Load test data
-        Please check dataset/pocket_pla_binary_test.dat to understand the data format
-        Each feature of data x separated with spaces
-        And the ground truth y put in the end of line separated by a space
-        '''
 
         if (input_data_file == ''):
             input_data_file = os.path.normpath(os.path.join(os.path.join(os.getcwd(), os.path.dirname(__file__)), "dataset/decision_stump_test.dat"))
@@ -80,18 +66,13 @@ class BinaryClassifier(ml.Learner):
 
         return self.test_X, self.test_Y
 
-    def set_param(self, u=None):
+    def set_param(self, run_t):
 
-        self.u = u
+        self.run_t = run_t
 
-        return self.u
+        return self.run_t
 
     def init_W(self, mode='normal'):
-
-        '''
-        Init the W
-        Simple way is init W all zeros
-        '''
 
         if (self.status != 'load_train_data') and (self.status != 'train'):
             print("Please load train data first.")
@@ -101,30 +82,27 @@ class BinaryClassifier(ml.Learner):
 
         self.data_num = len(self.train_Y)
         self.data_demension = len(self.train_X[0])
+        self.weak_learner = [None] * self.run_t
+        self.alpha = [0.0] * self.run_t
         self.W = np.zeros(self.data_demension)
-
-        if self.u is None:
-            self.u = np.array([(1.0 / self.data_num)] * self.data_num)
 
         return self.W
 
     def score_function(self, x, W):
-        # need refector
 
-        '''
-        Score function to calculate score
-        '''
+        score = 0.0
 
-        score = self.sign * np.sign(x[self.feature_index] - self.theta)
+        for i, weak_learner in enumerate(self.weak_learner):
+            predict_string = np.array(map(str, x))
+            predict_string = ' '.join(predict_string[1:])
+            prediction = weak_learner.prediction(predict_string, 'future_data')
+            score = score + (self.alpha[i] * prediction['prediction'])
+
+        score = np.sign(score)
 
         return score
 
     def error_function(self, y_prediction, y_truth):
-        # need refector
-
-        '''
-        Error function to calculate error
-        '''
 
         if y_prediction != y_truth:
             return 1
@@ -139,6 +117,36 @@ class BinaryClassifier(ml.Learner):
 
         return super(BinaryClassifier, self).calculate_test_data_avg_error()
 
+    def calculate_alpha_u(self, weak_learner, u):
+
+        alpha = 0.0
+        epsiloin = 0.0
+        data_num = len(weak_learner.train_Y)
+
+        for i in range(data_num):
+            predict_string = np.array(map(str, weak_learner.train_X[i]))
+            predict_string = ' '.join(predict_string[1:]) + ' ' + str(weak_learner.train_Y[i])
+            prediction = weak_learner.prediction(predict_string, 'test_data')
+            if (float(prediction['prediction']) != float(prediction['input_data_y'])):
+                epsiloin += (u[i] * 1.0)
+
+        epsiloin = epsiloin / np.sum(u)
+        tune_alpha = np.sqrt((1.0-epsiloin)/epsiloin)
+        alpha = np.log(tune_alpha)
+
+        new_u = []
+
+        for i in range(data_num):
+            predict_string = np.array(map(str, weak_learner.train_X[i]))
+            predict_string = ' '.join(predict_string[1:]) + ' ' + str(weak_learner.train_Y[i])
+            prediction = weak_learner.prediction(predict_string, 'test_data')
+            if (float(prediction['prediction']) != float(prediction['input_data_y'])):
+                new_u.append(u[i] * tune_alpha)
+            else:
+                new_u.append(u[i] / tune_alpha)
+
+        return alpha, np.array(new_u)
+
     def train(self):
 
         if (self.status != 'init'):
@@ -147,45 +155,24 @@ class BinaryClassifier(ml.Learner):
 
         self.status = 'train'
 
-        error_in = self.data_num/self.data_num
+        u = np.array([(1.0 / self.data_num)] * self.data_num)
 
-        for i in range(0, self.train_X.shape[1]):
+        for t in range(self.run_t):
 
-            dim_X = self.train_X[:, i]
-            dim_XY = np.transpose(np.array([dim_X, self.train_Y]))
-            sort_index = np.argsort(dim_XY[:, 0])
-            sort_dim_XY = dim_XY[sort_index]
-            sort_u = self.u[sort_index]
+            print("Round "+str(t+1))
 
-            sort_dim_X = sort_dim_XY[:, 0]
-            sort_dim_Y = sort_dim_XY[:, 1]
+            decision_stump_bc = decision_stump.BinaryClassifier()
+            decision_stump_bc.status = 'load_train_data'
+            decision_stump_bc.train_X = self.train_X
+            decision_stump_bc.train_Y = self.train_Y
+            decision_stump_bc.set_param(u)
+            decision_stump_bc.init_W()
+            decision_stump_bc.train()
 
-            thetas = np.array([float("-inf")] + [(sort_dim_X[j] + sort_dim_X[j+1])/2 for j in range(0, self.data_num-1)] + [float("inf")])
-            error_in_i = sum(sort_u)
-            sign_i = 1
-            theta_i = 0.0
+            alpha, u = self.calculate_alpha_u(decision_stump_bc, u)
 
-            for theta in thetas:
-                y_positive = np.where(sort_dim_X > theta, 1, -1)
-                y_negative = np.where(sort_dim_X < theta, 1, -1)
-                error_positive = sum((y_positive != sort_dim_Y)*sort_u)
-                error_negative = sum((y_negative != sort_dim_Y)*sort_u)
-                if error_positive > error_negative:
-                    if error_in_i > error_negative:
-                        error_in_i = error_negative
-                        sign_i = -1
-                        theta_i = theta
-                else:
-                    if error_in_i > error_positive:
-                        error_in_i = error_positive
-                        sign_i = 1
-                        theta_i = theta
-
-            if error_in > error_in_i:
-                error_in = error_in_i
-                self.sign = sign_i
-                self.feature_index = i
-                self.theta = theta_i
+            self.weak_learner[t] = decision_stump_bc
+            self.alpha[t] = alpha
 
         return self.W
 
