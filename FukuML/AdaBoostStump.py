@@ -93,7 +93,7 @@ class BinaryClassifier(ml.Learner):
         score = 0.0
 
         for i, weak_learner in enumerate(self.weak_learner):
-            predict_string = np.array(map(str, x))
+            predict_string = np.array(list(map(str, x)))
             predict_string = ' '.join(predict_string[1:])
             prediction = weak_learner.prediction(predict_string, 'future_data')
             score = score + (self.alpha[i] * prediction['prediction'])
@@ -124,7 +124,7 @@ class BinaryClassifier(ml.Learner):
         data_num = len(weak_learner.train_Y)
 
         for i in range(data_num):
-            predict_string = np.array(map(str, weak_learner.train_X[i]))
+            predict_string = np.array(list(map(str, weak_learner.train_X[i])))
             predict_string = ' '.join(predict_string[1:]) + ' ' + str(weak_learner.train_Y[i])
             prediction = weak_learner.prediction(predict_string, 'test_data')
             if (float(prediction['prediction']) != float(prediction['input_data_y'])):
@@ -137,7 +137,7 @@ class BinaryClassifier(ml.Learner):
         new_u = []
 
         for i in range(data_num):
-            predict_string = np.array(map(str, weak_learner.train_X[i]))
+            predict_string = np.array(list(map(str, weak_learner.train_X[i])))
             predict_string = ' '.join(predict_string[1:]) + ' ' + str(weak_learner.train_Y[i])
             prediction = weak_learner.prediction(predict_string, 'test_data')
             if (float(prediction['prediction']) != float(prediction['input_data_y'])):
@@ -158,6 +158,8 @@ class BinaryClassifier(ml.Learner):
         u = np.array([(1.0 / self.data_num)] * self.data_num)
 
         for t in range(self.run_t):
+
+            #np.random.choice(np.arange(self.data_num), self.data_num, p=(u/sum(u)))
 
             print("Round "+str(t+1))
 
