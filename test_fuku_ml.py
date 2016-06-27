@@ -13,6 +13,7 @@ import FukuML.KernelRidgeRegression as kernel_ridge_regression
 import FukuML.SupportVectorMachine as svm
 import FukuML.ProbabilisticSVM as probabilistic_svm
 import FukuML.LeastSquaresSVM as least_squares_svm
+import FukuML.SupportVectorRegression as svr
 import FukuML.DecisionStump as decision_stump
 import FukuML.DecisionTree as decision_tree
 import FukuML.AdaBoostStump as adaboost_stump
@@ -1984,6 +1985,34 @@ class FukuMLTestCase(unittest.TestCase):
         print(adaboost_stump_bc.calculate_avg_error(adaboost_stump_bc.train_X, adaboost_stump_bc.train_Y, adaboost_stump_bc.W))
         print("平均錯誤率（Eout）：")
         print(adaboost_stump_bc.calculate_avg_error(adaboost_stump_bc.test_X, adaboost_stump_bc.test_Y, adaboost_stump_bc.W))
+        print('-'*70)
+
+    def test_support_vector_regression(self):
+
+        #------------------------------------------------------------
+
+        sv_regression = svr.SupportVectorRegression()
+        sv_regression.load_train_data()
+        sv_regression.load_test_data()
+        sv_regression.set_param(gamma=1, C=1, epsilon=0.1)
+        sv_regression.init_W()
+        sv_regression.train()
+
+        test_data = '0.62771 0.11513 0.82235 0.14493 -1'
+        prediction = sv_regression.prediction(test_data)
+
+        print("測試資料 x：")
+        print(prediction['input_data_x'])
+        print("測試資料 y：")
+        print(prediction['input_data_y'])
+        print("預測結果：")
+        print(prediction['prediction'])
+        print("錯誤評估：")
+        print(sv_regression.error_function(prediction['prediction'], prediction['input_data_y']))
+        print("W 平均錯誤值（Ein）：")
+        print(sv_regression.calculate_avg_error(sv_regression.train_X, sv_regression.train_Y, sv_regression.W))
+        print("W 平均錯誤值（Eout）：")
+        print(sv_regression.calculate_avg_error(sv_regression.test_X, sv_regression.test_Y, sv_regression.W))
         print('-'*70)
 
 if __name__ == '__main__':
