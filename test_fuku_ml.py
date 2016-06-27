@@ -22,6 +22,7 @@ import FukuML.Utility as utility
 
 class FukuMLTestCase(unittest.TestCase):
 
+    '''
     def test_utility_method(self):
 
         utility.DatasetLoader.gen_lin_separable_data()
@@ -1986,6 +1987,7 @@ class FukuMLTestCase(unittest.TestCase):
         print("平均錯誤率（Eout）：")
         print(adaboost_stump_bc.calculate_avg_error(adaboost_stump_bc.test_X, adaboost_stump_bc.test_Y, adaboost_stump_bc.W))
         print('-'*70)
+    '''
 
     def test_support_vector_regression(self):
 
