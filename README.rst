@@ -101,7 +101,11 @@ Algorithm
 
 - Least Squares Support Vector Machine Learning Algorithm
 
+- Support Vector Regression Learning Algorithm
+
 - Decision Stump Binary Classification Learning Algorithm
+
+- AdaBoost Stump Binary Classification Learning Algorithm
 
 - Decision Tree Classification Learning Algorithm
 
