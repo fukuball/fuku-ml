@@ -38,10 +38,14 @@ class SupportVectorRegression(ml.Learner):
         self.sv_beta = []
         self.sv_X = []
         self.sv_Y = []
-        self.free_sv_index = []
-        self.free_sv_beta = []
-        self.free_sv_X = []
-        self.free_sv_Y = []
+        self.free_sv_index_upper = []
+        self.free_sv_alpha_upper = []
+        self.free_sv_X_upper = []
+        self.free_sv_Y_upper = []
+        self.free_sv_index_lower = []
+        self.free_sv_alpha_lower = []
+        self.free_sv_X_lower = []
+        self.free_sv_Y_lower = []
         self.sv_avg_b = 0
 
     def load_train_data(self, input_data_file=''):
@@ -110,6 +114,7 @@ class SupportVectorRegression(ml.Learner):
     def score_function(self, x, W):
 
         x = x[1:]
+        #score = np.sum(self.sv_beta * utility.Kernel.kernel_matrix_xX(self, x, self.sv_X)) + self.sv_avg_b
         score = np.sum(self.sv_beta * utility.Kernel.kernel_matrix_xX(self, x, self.sv_X))
 
         return score
@@ -146,10 +151,10 @@ class SupportVectorRegression(ml.Learner):
         q = cvxopt.matrix(np.bmat([self.epsilon-self.train_Y, self.epsilon+self.train_Y]).reshape((-1, 1)))
         G = cvxopt.matrix(np.bmat([[-np.eye(2*self.data_num)], [np.eye(2*self.data_num)]]))
         h = cvxopt.matrix(np.bmat([[np.zeros((2*self.data_num, 1))], [self.C*np.ones((2*self.data_num, 1))]]))
-        A = cvxopt.matrix(np.append(np.ones(self.data_num), -1 * np.ones(self.data_num)), (1, 2*self.data_num))
-        b = cvxopt.matrix(0.0)
+        #A = cvxopt.matrix(np.append(np.ones(self.data_num), -1 * np.ones(self.data_num)), (1, 2*self.data_num))
+        #b = cvxopt.matrix(0.0)
         cvxopt.solvers.options['show_progress'] = False
-        solution = cvxopt.solvers.qp(cvxopt.matrix(P), cvxopt.matrix(q), cvxopt.matrix(G), cvxopt.matrix(h), A, b)
+        solution = cvxopt.solvers.qp(P, q, G, h)
 
         # Lagrange multipliers
         alpha = np.array(solution['x']).reshape((2, -1))
@@ -163,15 +168,22 @@ class SupportVectorRegression(ml.Learner):
         self.sv_X = original_X[sv]
         self.sv_Y = self.train_Y[sv]
 
-        free_sv = np.logical_and(self.beta > 1e-5, self.beta < self.C)
-        self.free_sv_index = np.arange(len(self.beta))[free_sv]
-        self.free_sv_beta = self.beta[free_sv]
-        self.free_sv_X = original_X[free_sv]
-        self.free_sv_Y = self.train_Y[free_sv]
+        free_sv_upper = np.logical_and(self.alpha_upper > 1e-5, self.alpha_upper < self.C)
+        self.free_sv_index_upper = np.arange(len(self.alpha_upper))[free_sv_upper]
+        self.free_sv_alpha_upper = self.alpha_upper[free_sv_upper]
+        self.free_sv_X_upper = original_X[free_sv_upper]
+        self.free_sv_Y_upper = self.train_Y[free_sv_upper]
 
-        short_b = (np.sum(self.free_sv_Y) - np.sum(np.ravel(self.free_sv_beta * utility.Kernel.kernel_matrix(self, self.free_sv_X)))) / len(self.free_sv_beta)
+        free_sv_lower = np.logical_and(self.alpha_lower > 1e-5, self.alpha_lower < self.C)
+        self.free_sv_index_lower = np.arange(len(self.alpha_lower))[free_sv_lower]
+        self.free_sv_alpha_lower = self.alpha_lower[free_sv_lower]
+        self.free_sv_X_lower = original_X[free_sv_lower]
+        self.free_sv_Y_lower = self.train_Y[free_sv_lower]
 
-        self.sv_avg_b = short_b
+        short_b_upper = self.free_sv_Y_upper[0] - np.sum(self.sv_beta * utility.Kernel.kernel_matrix_xX(self, self.free_sv_X_upper[0], self.sv_X)) - self.epsilon
+        short_b_lower = self.free_sv_Y_lower[0] - np.sum(self.sv_beta * utility.Kernel.kernel_matrix_xX(self, self.free_sv_X_lower[0], self.sv_X)) + self.epsilon
+
+        self.sv_avg_b = (short_b_upper+short_b_lower)/2
 
         return self.W
 
