@@ -12,15 +12,14 @@ cross_validator = utility.CrossValidator()
 
 svm_mc = svm.MultiClassifier()
 svm_mc.load_train_data(input_train_data_file)
-svm_mc.set_param(svm_kernel='soft_gaussian_kernel', gamma=1, C=9)
+svm_mc.set_param(svm_kernel='soft_gaussian_kernel', gamma=1, C=20)
 cross_validator.add_model(svm_mc)
 avg_errors = cross_validator.excute()
 print(avg_errors)
 
 svm_mc = svm.MultiClassifier()
 svm_mc.load_train_data(input_train_data_file)
-svm_mc.load_test_data(input_other_data_file)
-svm_mc.set_param(svm_kernel='soft_gaussian_kernel', gamma=1, C=9)
+svm_mc.set_param(svm_kernel='soft_gaussian_kernel', gamma=1, C=20)
 svm_mc.init_W()
 svm_mc.train()
 
@@ -49,6 +48,7 @@ for i in range(data_num):
         print(prediction)
 '''
 
+'''
 data_num = len(svm_mc.test_Y)
 
 for i in range(data_num):
@@ -57,3 +57,4 @@ for i in range(data_num):
     prediction = svm_mc.prediction(x_string, 'future_data')
     print(i+1)
     print(prediction)
+'''

@@ -135,7 +135,7 @@ class CrossValidator(object):
 
             avg_error = 0
 
-            validate_num = math.ceil(len(model.train_Y)/10)
+            validate_num = int(math.ceil(len(model.train_Y)/10))
 
             model.train_Y = np.reshape(model.train_Y, (-1, 1))
             dataset = np.concatenate((model.train_X, model.train_Y), axis=1)
