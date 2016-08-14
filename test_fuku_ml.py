@@ -2039,7 +2039,7 @@ class FukuMLTestCase(unittest.TestCase):
         neural_network = nn.BinaryClassifier()
         neural_network.load_train_data()
         neural_network.load_test_data()
-        neural_network.set_param(network_structure=[8, 3, 1], w_range_high=0.1, w_range_low=-0.1, feed_mode='stochastic', step_eta=0.01, updates=50000)
+        neural_network.set_param(network_structure=[8, 4, 1], w_range_high=0.1, w_range_low=-0.1, feed_mode='stochastic', step_eta=0.01, updates=50000)
         neural_network.init_W()
         neural_network.train()
 

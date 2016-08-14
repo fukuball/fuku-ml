@@ -1193,6 +1193,58 @@ Run demo dataset
 
     >>> prediction = sv_regression.prediction(test_data)
 
+Neural Network Learning Algorithm
+============
+
+Run demo dataset
+-----------------
+
+.. code-block:: py
+
+    >>> import numpy as np
+
+    >>> import FukuML.NeuralNetwork as nn
+
+    >>> neural_network = nn.NeuralNetwork()
+
+    >>> neural_network.load_train_data()
+
+    >>> neural_network.set_param(network_structure=[8, 3, 1], w_range_high=0.1, w_range_low=-0.1, feed_mode='stochastic', step_eta=0.01, updates=50000)
+
+    >>> neural_network.init_W()
+
+    >>> neural_network.train()
+
+    >>> test_data = '0.135592 0.0317051 -1'
+
+    >>> prediction = neural_network.prediction(test_data)
+
+Neural Network Binary Classification Learning Algorithm
+============
+
+Run demo dataset
+-----------------
+
+.. code-block:: py
+
+    >>> import numpy as np
+
+    >>> import FukuML.NeuralNetwork as nn
+
+    >>> neural_network = nn.BinaryClassifier()
+
+    >>> neural_network.load_train_data()
+
+    >>> neural_network.set_param(network_structure=[8, 4, 1], w_range_high=0.1, w_range_low=-0.1, feed_mode='stochastic', step_eta=0.01, updates=50000)
+
+    >>> neural_network.init_W()
+
+    >>> neural_network.train()
+
+    >>> test_data = '0.135592 0.0317051 -1'
+
+    >>> prediction = neural_network.prediction(test_data)
+
 Polynomial Feature Transform
 ============
 

@@ -111,6 +111,10 @@ Algorithm
 
 - Decision Tree Regression Learning Algorithm
 
+- Neural Network Learning Algorithm
+
+- Neural Network Binary Classification Learning Algorithm
+
 - Linear Regression Accelerator
 
 - Polynomial Feature Transform
