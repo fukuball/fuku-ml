@@ -63,6 +63,8 @@ Algorithm
 
 - Kernel Ridge Regression Binary Classification Learning Algorithm
 
+- Kernel Ridge Regression Multi Classification Learning Algorithm
+
 - Logistic Regression Learning Algorithm
 
 - Logistic Regression Binary Classification Learning Algorithm
@@ -99,7 +101,9 @@ Algorithm
 
 - Probabilistic Support Vector Machine Learning Algorithm
 
-- Least Squares Support Vector Machine Learning Algorithm
+- Least Squares Support Vector Machine Binary Classification Learning Algorithm
+
+- Least Squares Support Vector Machine Multi Classification Learning Algorithm
 
 - Support Vector Regression Learning Algorithm
 

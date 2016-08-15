@@ -9,6 +9,7 @@ import FukuML.MLBase as ml
 
 class BinaryClassifier(ml.Learner):
 
+    # too slow for high dimension data, can't do digits multi classifier
     def __init__(self):
 
         """init"""
