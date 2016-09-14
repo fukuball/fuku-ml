@@ -11,14 +11,14 @@ cross_validator = utility.CrossValidator()
 
 svm_mc = svm.MultiClassifier()
 svm_mc.load_train_data(input_train_data_file)
-svm_mc.set_param(svm_kernel='soft_gaussian_kernel', gamma=1, C=6)
+svm_mc.set_param(svm_kernel='soft_gaussian_kernel', gamma=1, C=5)
 cross_validator.add_model(svm_mc)
 avg_errors = cross_validator.excute()
 print(avg_errors)
 
 svm_mc = svm.MultiClassifier()
 svm_mc.load_train_data(input_train_data_file)
-svm_mc.set_param(svm_kernel='soft_gaussian_kernel', gamma=1, C=6)
+svm_mc.set_param(svm_kernel='soft_gaussian_kernel', gamma=1, C=5)
 svm_mc.init_W()
 svm_mc.train()
 
@@ -33,7 +33,6 @@ for class_item in svm_mc.class_list:
 print("W 平均錯誤值（Ein）：")
 print(svm_mc.calculate_avg_error_all_class(svm_mc.train_X, svm_mc.train_Y, svm_mc.W))
 
-'''
 data_num = len(svm_mc.train_Y)
 
 for i in range(data_num):
@@ -43,4 +42,3 @@ for i in range(data_num):
     if (float(prediction['prediction']) != float(prediction['input_data_y'])):
         print(i+1)
         print(prediction)
-'''

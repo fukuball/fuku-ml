@@ -175,6 +175,60 @@ class CrossValidator(object):
         min_error_index = self.avg_errors.index(min(self.avg_errors))
         return self.models[min_error_index]
 
+class UniformBlendingClassifier(object):
+
+    def __init__(self):
+
+        self.models = []
+
+    def add_model(self, model):
+
+        self.models.append(model)
+
+        return self.models
+
+    def prediction(self, input_data='', mode='test_data'):
+
+        prediction = {}
+        vote = []
+
+        for model in self.models:
+
+            prediction = model.prediction(input_data, mode)
+            vote.append(prediction['prediction'])
+
+        prediction_return = max(set(vote), key=vote.count)
+
+        if mode == 'future_data':
+            data = input_data.split()
+            input_data_x = [float(v) for v in data]
+            input_data_x = np.ravel(input_data_x)
+            return {"input_data_x": input_data_x, "input_data_y": None, "prediction": prediction_return}
+        else:
+            data = input_data.split()
+            input_data_x = [float(v) for v in data[:-1]]
+            input_data_x = np.ravel(input_data_x)
+            input_data_y = float(data[-1])
+            return {"input_data_x": input_data_x, "input_data_y": input_data_y, "prediction": prediction_return}
+
+    def calculate_avg_error(self, input_data_file=''):
+
+        data_num = 0
+        error_num = 0
+        avg_error = 0
+
+        with open(input_data_file) as f:
+            for line in f:
+                data_num = data_num+1
+                data = line.split()
+                answer = data[-1]
+                prediction = self.prediction(line)
+                if float(prediction['prediction']) != float(answer):
+                    error_num = error_num+1
+
+        avg_error = error_num/data_num
+
+        return avg_error
 
 class Kernel(object):
 
