@@ -1,8 +1,11 @@
 #encoding=utf8
 
+from __future__ import division
 import numpy as np
 import pickle
 import math
+import itertools
+from random import randint
 from sklearn.preprocessing import PolynomialFeatures
 from scipy.special import legendre
 from scipy.spatial.distance import pdist, cdist, squareform
@@ -112,6 +115,21 @@ class DatasetLoader(object):
                 modify_Y.append(float(-1))
 
         return np.array(modify_Y)
+
+    @staticmethod
+    def bootstrap_bagging(X, Y, data_num):
+
+        bootstrap_bagging_X = []
+        bootstrap_bagging_Y = []
+
+        max_row_index = data_num-1
+
+        for _ in itertools.repeat(None, data_num):
+            rand_row_index = randint(0, max_row_index)
+            bootstrap_bagging_X.append(X[rand_row_index])
+            bootstrap_bagging_Y.append(Y[rand_row_index])
+
+        return np.array(bootstrap_bagging_X), np.array(bootstrap_bagging_Y)
 
 
 class CrossValidator(object):
@@ -226,7 +244,7 @@ class UniformBlendingClassifier(object):
                 if float(prediction['prediction']) != float(answer):
                     error_num = error_num+1
 
-        avg_error = error_num/data_num
+        avg_error = float(error_num/data_num)
 
         return avg_error
 
