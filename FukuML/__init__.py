@@ -1,6 +1,6 @@
 #encoding=utf8
 
-__version__ = '0.3.1'
+__version__ = '0.3.2'
 __all__ = [
     'MLBase',
     'PLA',
@@ -49,6 +49,7 @@ __all__ = [
     'Utility',
     'Utility.DatasetLoader',
     'Utility.CrossValidator',
+    'Utility.UniformBlendingClassifier',
     'Utility.Kernel',
     'Utility.Serializer'
 ]

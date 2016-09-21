@@ -127,6 +127,8 @@ Algorithm
 
 - 10 Fold Cross Validation
 
+- Uniform Blending for Classification
+
 Usage
 ============
 
