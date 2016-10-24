@@ -129,6 +129,8 @@ Algorithm
 
 - Uniform Blending for Classification
 
+- Linear Blending for Classification
+
 Usage
 ============
 

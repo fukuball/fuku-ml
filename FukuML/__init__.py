@@ -1,6 +1,6 @@
 #encoding=utf8
 
-__version__ = '0.3.2'
+__version__ = '0.3.3'
 __all__ = [
     'MLBase',
     'PLA',
@@ -46,10 +46,12 @@ __all__ = [
     'DecisionTree',
     'DecisionTree.DecisionTree',
     'DecisionTree.CART',
+    'Blending',
+    'Blending.UniformBlendingClassifier',
+    'Blending.LinearBlendingClassifier',
     'Utility',
     'Utility.DatasetLoader',
     'Utility.CrossValidator',
-    'Utility.UniformBlendingClassifier',
     'Utility.Kernel',
     'Utility.Serializer'
 ]
