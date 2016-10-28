@@ -103,8 +103,7 @@ class LinearBlendingClassifier(BlendingClassifier):
         predict_X = []
 
         for x in self.models[0].train_X:
-            x_string = np.array(map(str, x))
-            x_string = ' '.join(x_string[1:])
+            x_string = ' '.join(map(str, x.tolist()[1:]))
             transform_x = self.feature_transform(x_string)
             transform_x.insert(0, 1)
             predict_X.append(transform_x)
@@ -125,9 +124,7 @@ class LinearBlendingClassifier(BlendingClassifier):
         data = input_data.split()
         x_string = ' '.join(data[0:-1])
         transform_input_data = self.feature_transform(x_string)
-
-        transform_input_data_string = np.array(map(str, transform_input_data))
-        transform_input_data_string = ' '.join(transform_input_data_string[:])
+        transform_input_data_string = ' '.join(map(str, transform_input_data))
 
         if mode == 'test_data':
             transform_input_data_string = transform_input_data_string + ' ' + data[-1]
