@@ -36,7 +36,7 @@ setup(
     test_suite='test_fuku_ml',
     zip_safe=False,
     classifiers=(
-        'Development Status :: 5 - Production/Stable',,
+        'Development Status :: 5 - Production/Stable',
         'Intended Audience :: Science/Research',
         'Intended Audience :: Developers',
         'License :: OSI Approved :: MIT License',
