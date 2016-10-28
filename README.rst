@@ -39,96 +39,52 @@ Tutorial
 Algorithm
 ============
 
-- Perceptron Binary Classification Learning Algorithm
-
-- Perceptron Multi Classification Learning Algorithm
-
-- Pocket Perceptron Binary Classification Learning Algorithm
-
-- Pocket Perceptron Multi Classification Learning Algorithm
-
+- Perceptron
+    - Perceptron Binary Classification Learning Algorithm
+    - Perceptron Multi Classification Learning Algorithm
+    - Pocket Perceptron Binary Classification Learning Algorithm
+    - Pocket Perceptron Multi Classification Learning Algorithm
 - Linear Regression Learning Algorithm
-
 - Linear Regression Binary Classification Learning Algorithm
-
 - Linear Regression Multi Classification Learning Algorithm
-
 - Ridge Regression Learning Algorithm
-
 - Ridge Regression Binary Classification Learning Algorithm
-
 - Ridge Regression Multi Classification Learning Algorithm
-
 - Kernel Ridge Regression Learning Algorithm
-
 - Kernel Ridge Regression Binary Classification Learning Algorithm
-
 - Kernel Ridge Regression Multi Classification Learning Algorithm
-
 - Logistic Regression Learning Algorithm
-
 - Logistic Regression Binary Classification Learning Algorithm
-
 - Logistic Regression One vs All Multi Classification Learning Algorithm
-
 - Logistic Regression One vs One Multi Classification Learning Algorithm
-
 - L2 Regularized Logistic Regression Learning Algorithm
-
 - L2 Regularized Logistic Regression Binary Classification Learning Algorithm
-
 - Kernel Logistic Regression Learning Algorithm
-
 - Primal Hard Margin Support Vector Machine Binary Classification Learning Algorithm
-
 - Dual Hard Margin Support Vector Machine Binary Classification Learning Algorithm
-
 - Polynomial Kernel Support Vector Machine Binary Classification Learning Algorithm
-
 - Gaussian Kernel Support Vector Machine Binary Classification Learning Algorithm
-
 - Soft Polynomial Kernel Support Vector Machine Binary Classification Learning Algorithm
-
 - Soft Gaussian Kernel Support Vector Machine Binary Classification Learning Algorithm
-
 - Polynomial Kernel Support Vector Machine Multi Classification Learning Algorithm
-
 - Gaussian Kernel Support Vector Machine Multi Classification Learning Algorithm
-
 - Soft Polynomial Kernel Support Vector Machine Multi Classification Learning Algorithm
-
 - Soft Gaussian Kernel Support Vector Machine Multi Classification Learning Algorithm
-
 - Probabilistic Support Vector Machine Learning Algorithm
-
 - Least Squares Support Vector Machine Binary Classification Learning Algorithm
-
 - Least Squares Support Vector Machine Multi Classification Learning Algorithm
-
 - Support Vector Regression Learning Algorithm
-
 - Decision Stump Binary Classification Learning Algorithm
-
 - AdaBoost Stump Binary Classification Learning Algorithm
-
 - Decision Tree Classification Learning Algorithm
-
 - Decision Tree Regression Learning Algorithm
-
 - Neural Network Learning Algorithm
-
 - Neural Network Binary Classification Learning Algorithm
-
 - Linear Regression Accelerator
-
 - Polynomial Feature Transform
-
 - Legendre Feature Transform
-
 - 10 Fold Cross Validation
-
 - Uniform Blending for Classification
-
 - Linear Blending for Classification
 
 Usage
