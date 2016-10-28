@@ -16,8 +16,6 @@ if sys.argv[-1] == 'publish':
 
 long_description = open('README.rst').read()
 
-license = open('LICENSE').read()
-
 requirements_lines = [line.strip() for line in open('requirements.txt').readlines()]
 install_requires = list(filter(None, requirements_lines))
 
@@ -30,7 +28,7 @@ setup(
     author='Fukuball Lin',
     author_email='fukuball@gmail.com',
     url='https://github.com/fukuball/fuku-ml',
-    license=license,
+    license='MIT',
     install_requires=install_requires,
     packages=['FukuML'],
     package_dir={'FukuML': 'FukuML'},
