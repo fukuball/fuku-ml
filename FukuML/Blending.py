@@ -38,6 +38,38 @@ class BlendingClassifier(object):
         return avg_error
 
 
+class BlendingRegression(object):
+
+    def add_model(self, model):
+
+        self.models.append(model)
+
+        return self.models
+
+    @abstractmethod
+    def prediction(self, input_data='', mode='test_data'):
+        return
+
+    def calculate_avg_error(self, input_data_file=''):
+
+        data_num = 0
+        error_sum = 0
+        avg_error = 0
+
+        with open(input_data_file) as f:
+            for line in f:
+                data_num = data_num+1
+                data = line.split()
+                answer = data[-1]
+                prediction = self.prediction(line)
+                error = (float(prediction['prediction']) - float(answer)) ** 2
+                error_sum = error_sum+error
+
+        avg_error = float(error_sum/data_num)
+
+        return avg_error
+
+
 class UniformBlendingClassifier(BlendingClassifier):
 
     def __init__(self):
@@ -75,6 +107,45 @@ class UniformBlendingClassifier(BlendingClassifier):
     def calculate_avg_error(self, input_data_file=''):
 
         return super(UniformBlendingClassifier, self).calculate_avg_error(input_data_file)
+
+
+class UniformBlendingRegression(BlendingRegression):
+
+    def __init__(self):
+
+        self.models = []
+
+    def add_model(self, model):
+
+        return super(UniformBlendingRegression, self).add_model(model)
+
+    def prediction(self, input_data='', mode='test_data'):
+
+        prediction = {}
+        prediction_sum = 0
+
+        for model in self.models:
+
+            prediction = model.prediction(input_data, mode)
+            prediction_sum = prediction_sum + prediction['prediction']
+
+        prediction_return = float(prediction_sum/len(self.models))
+
+        if mode == 'future_data':
+            data = input_data.split()
+            input_data_x = [float(v) for v in data]
+            input_data_x = np.ravel(input_data_x)
+            return {"input_data_x": input_data_x, "input_data_y": None, "prediction": prediction_return}
+        else:
+            data = input_data.split()
+            input_data_x = [float(v) for v in data[:-1]]
+            input_data_x = np.ravel(input_data_x)
+            input_data_y = float(data[-1])
+            return {"input_data_x": input_data_x, "input_data_y": input_data_y, "prediction": prediction_return}
+
+    def calculate_avg_error(self, input_data_file=''):
+
+        return super(UniformBlendingRegression, self).calculate_avg_error(input_data_file)
 
 
 class LinearBlendingClassifier(BlendingClassifier):
@@ -136,3 +207,64 @@ class LinearBlendingClassifier(BlendingClassifier):
     def calculate_avg_error(self, input_data_file=''):
 
         return super(LinearBlendingClassifier, self).calculate_avg_error(input_data_file)
+
+
+class LinearBlendingRegression(BlendingRegression):
+
+    def __init__(self):
+
+        self.models = []
+        self.linear = None
+
+    def add_model(self, model):
+
+        return super(LinearBlendingRegression, self).add_model(model)
+
+    def feature_transform(self, x_string):
+
+        transform_x = []
+
+        for model in self.models:
+            prediction = model.prediction(x_string, 'future_data')
+            transform_x.append(prediction['prediction'])
+
+        return transform_x
+
+    def train(self):
+
+        predict_X = []
+
+        for x in self.models[0].train_X:
+            x_string = ' '.join(map(str, x.tolist()[1:]))
+            transform_x = self.feature_transform(x_string)
+            transform_x.insert(0, 1)
+            predict_X.append(transform_x)
+
+        self.linear = linear_regression.LinearRegression()
+        self.linear.load_train_data()
+        self.linear.load_test_data()
+        self.linear.train_X = np.array(predict_X)
+        self.linear.train_Y = self.models[0].train_Y
+        self.linear.set_param()
+        self.linear.init_W()
+        self.linear.train()
+
+    def prediction(self, input_data='', mode='test_data'):
+
+        transform_input_data = ''
+
+        data = input_data.split()
+        x_string = ' '.join(data[0:-1])
+        transform_input_data = self.feature_transform(x_string)
+        transform_input_data_string = ' '.join(map(str, transform_input_data))
+
+        if mode == 'test_data':
+            transform_input_data_string = transform_input_data_string + ' ' + data[-1]
+
+        prediction = self.linear.prediction(transform_input_data_string, mode)
+
+        return prediction
+
+    def calculate_avg_error(self, input_data_file=''):
+
+        return super(LinearBlendingRegression, self).calculate_avg_error(input_data_file)
