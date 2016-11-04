@@ -21,8 +21,8 @@ install:
   - pip install codecov
 
 script:
-  - coverage run --source=FukuML setup.py test
   - pep8 FukuML/*.py --ignore=E501
+  - coverage run --source=FukuML setup.py test
 
 after_success:
   - codecov
