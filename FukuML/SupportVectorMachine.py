@@ -1,4 +1,4 @@
-#encoding=utf8
+# encoding=utf8
 
 import os
 import itertools
@@ -299,7 +299,7 @@ class BinaryClassifier(ml.Learner):
             self.sv_X = original_X[sv]
             self.sv_Y = self.train_Y[sv]
 
-            short_w = np.zeros(self.data_demension-1)
+            short_w = np.zeros(self.data_demension - 1)
             for i in range(len(self.sv_alpha)):
                 short_w += self.sv_alpha[i] * self.sv_Y[i] * self.sv_X[i]
 
@@ -334,7 +334,7 @@ class BinaryClassifier(ml.Learner):
         if nonzero == 0:
             return 0
         else:
-            return 1/np.linalg.norm(self.W[1:])
+            return 1 / np.linalg.norm(self.W[1:])
 
     def get_support_vectors(self):
 

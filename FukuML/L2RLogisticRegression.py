@@ -1,7 +1,7 @@
-#encoding=utf8
+# encoding=utf8
 
-#import operator
-#import itertools
+# import operator
+# import itertools
 import numpy as np
 import FukuML.LogisticRegression as logistic_regression
 
@@ -70,7 +70,7 @@ class L2RLogisticRegression(logistic_regression.LogisticRegression):
         else:
             data_num = 1
 
-        gradient_average = ((2*self.lambda_p)/data_num)*self.W + np.dot(self.theta((-1)*Y*np.dot(W, X.transpose()))*((-1)*Y), X)/data_num
+        gradient_average = ((2 * self.lambda_p) / data_num) * self.W + np.dot(self.theta((-1) * Y * np.dot(W, X.transpose())) * ((-1) * Y), X) / data_num
 
         return gradient_average
 

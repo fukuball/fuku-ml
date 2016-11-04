@@ -1,4 +1,4 @@
-#encoding=utf8
+# encoding=utf8
 
 import os
 import numpy as np
@@ -132,7 +132,7 @@ class BinaryClassifier(ml.Learner):
                 epsiloin += (u[i] * 1.0)
 
         epsiloin = epsiloin / np.sum(u)
-        tune_alpha = np.sqrt((1.0-epsiloin)/epsiloin)
+        tune_alpha = np.sqrt((1.0 - epsiloin) / epsiloin)
         alpha = np.log(tune_alpha)
 
         new_u = []
@@ -160,9 +160,9 @@ class BinaryClassifier(ml.Learner):
 
         for t in range(self.run_t):
 
-            #np.random.choice(np.arange(self.data_num), self.data_num, p=(u/sum(u)))
+            # np.random.choice(np.arange(self.data_num), self.data_num, p=(u/sum(u)))
 
-            print("Round "+str(t+1))
+            print("Round " + str(t + 1))
 
             decision_stump_bc = decision_stump.BinaryClassifier()
             decision_stump_bc.status = 'load_train_data'

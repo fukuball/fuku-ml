@@ -1,4 +1,4 @@
-#encoding=utf8
+# encoding=utf8
 
 import os
 import random
@@ -89,10 +89,10 @@ class NeuralNetwork(ml.Learner):
 
         self.data_num = len(self.train_Y)
         self.data_demension = len(self.train_X[0])
-        self.network_structure.insert(0, self.data_demension-1)
+        self.network_structure.insert(0, self.data_demension - 1)
 
         for i in range(1, len(self.network_structure)):
-            this_layer_w = np.random.uniform(self.w_range_low, self.w_range_high, (self.network_structure[i-1]+1, self.network_structure[i]))
+            this_layer_w = np.random.uniform(self.w_range_low, self.w_range_high, (self.network_structure[i - 1] + 1, self.network_structure[i]))
             self.W.append(this_layer_w)
 
         return self.W
@@ -124,7 +124,7 @@ class NeuralNetwork(ml.Learner):
     def tanh_prime(self, s):
         tanh_prime_output = np.zeros(s.shape)
         for i in range(s.shape[0]):
-            tanh_prime_output[i] = 4.0 / (np.exp(2*s[i])+np.exp(-2*s[i])+2)
+            tanh_prime_output[i] = 4.0 / (np.exp(2 * s[i]) + np.exp(-2 * s[i]) + 2)
         return tanh_prime_output
 
     def forward_process(self, x, y, W):
@@ -139,17 +139,17 @@ class NeuralNetwork(ml.Learner):
     def backward_process(self, x, y, W, neuron_output):
         backward_output = []
         layer_num = len(neuron_output)
-        score = np.dot(np.hstack((1, neuron_output[layer_num-2])), W[layer_num-1])
-        error_gradient = np.array([-2 * (y-neuron_output[layer_num-1][0]) * self.tanh_prime(score)])
-        #error_gradient = np.array([np.sum(-2 * (y - score) * np.hstack((1, neuron_output[layer_num-2])))])
+        score = np.dot(np.hstack((1, neuron_output[layer_num - 2])), W[layer_num - 1])
+        error_gradient = np.array([-2 * (y - neuron_output[layer_num - 1][0]) * self.tanh_prime(score)])
+        # error_gradient = np.array([np.sum(-2 * (y - score) * np.hstack((1, neuron_output[layer_num-2])))])
         backward_output.insert(0, error_gradient)
         # Hidden layer
-        for i in range(layer_num-2, -1, -1):
+        for i in range(layer_num - 2, -1, -1):
             if i == 0:
                 score = np.dot(x, W[i])
             else:
-                score = np.dot(np.hstack((1, neuron_output[i-1])), W[i])
-            error_gradient = np.dot(error_gradient, W[i+1][1:].transpose()) * self.tanh_prime(score)
+                score = np.dot(np.hstack((1, neuron_output[i - 1])), W[i])
+            error_gradient = np.dot(error_gradient, W[i + 1][1:].transpose()) * self.tanh_prime(score)
             backward_output.insert(0, error_gradient)
         return backward_output
 
@@ -158,7 +158,7 @@ class NeuralNetwork(ml.Learner):
         layer_num = len(self.W)
         w_output.append(self.W[0] - self.step_eta * np.array([x]).transpose() * error_gradient[0])
         for i in range(1, layer_num, 1):
-            w_output.append(self.W[i] - self.step_eta * np.array([np.hstack((1, neuron_output[i-1]))]).transpose() * error_gradient[i])
+            w_output.append(self.W[i] - self.step_eta * np.array([np.hstack((1, neuron_output[i - 1]))]).transpose() * error_gradient[i])
         return w_output
 
     def train(self):
@@ -170,7 +170,7 @@ class NeuralNetwork(ml.Learner):
         self.status = 'train'
 
         for i in range(0, self.updates):
-            stochastic_i = random.randint(0, self.data_num-1)
+            stochastic_i = random.randint(0, self.data_num - 1)
             x = self.train_X[stochastic_i]
             y = self.train_Y[stochastic_i]
             neuron_output = self.forward_process(x, y, self.W)

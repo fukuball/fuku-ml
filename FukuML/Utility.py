@@ -1,4 +1,4 @@
-#encoding=utf8
+# encoding=utf8
 
 from __future__ import division
 import numpy as np
@@ -122,7 +122,7 @@ class DatasetLoader(object):
         bootstrap_bagging_X = []
         bootstrap_bagging_Y = []
 
-        max_row_index = data_num-1
+        max_row_index = data_num - 1
 
         for _ in itertools.repeat(None, data_num):
             rand_row_index = randint(0, max_row_index)
@@ -153,7 +153,7 @@ class CrossValidator(object):
 
             avg_error = 0
 
-            validate_num = int(math.ceil(len(model.train_Y)/10))
+            validate_num = int(math.ceil(len(model.train_Y) / 10))
 
             model.train_Y = np.reshape(model.train_Y, (-1, 1))
             dataset = np.concatenate((model.train_X, model.train_Y), axis=1)
@@ -163,12 +163,12 @@ class CrossValidator(object):
 
             for i in range(10):
 
-                model.train_X = np.concatenate((dataset[(i+1)*validate_num:, :-1], dataset[:i*validate_num, :-1]), axis=0)
-                model.train_Y = np.concatenate((dataset[(i+1)*validate_num:, -1], dataset[:i*validate_num, -1]), axis=0)
+                model.train_X = np.concatenate((dataset[(i + 1) * validate_num:, :-1], dataset[:i * validate_num, :-1]), axis=0)
+                model.train_Y = np.concatenate((dataset[(i + 1) * validate_num:, -1], dataset[:i * validate_num, -1]), axis=0)
                 model.init_W()
                 model.train()
-                validate_X = dataset[i*validate_num:(i+1)*validate_num, :-1]
-                validate_Y = dataset[i*validate_num:(i+1)*validate_num, -1]
+                validate_X = dataset[i * validate_num:(i + 1) * validate_num, :-1]
+                validate_Y = dataset[i * validate_num:(i + 1) * validate_num, -1]
 
                 if hasattr(model, 'class_list'):
                     error = error + model.calculate_avg_error_all_class(validate_X, validate_Y, model.W)
@@ -179,7 +179,7 @@ class CrossValidator(object):
             model.train_Y = dataset[:, -1]
 
             dataset = None
-            avg_error = error/10
+            avg_error = error / 10
             self.avg_errors.append(avg_error)
 
         return self.avg_errors
@@ -247,7 +247,7 @@ class Kernel(object):
     @staticmethod
     def gaussian_kernel(svm_model, x1, x2):
 
-        return np.exp(-svm_model.gamma * (np.linalg.norm(x1-x2) ** 2))
+        return np.exp(-svm_model.gamma * (np.linalg.norm(x1 - x2) ** 2))
 
 
 class Serializer(object):

@@ -1,4 +1,4 @@
-#encoding=utf8
+# encoding=utf8
 
 import os
 import collections
@@ -143,7 +143,7 @@ class CART(ml.Learner):
             for v, c in tree.false_branch.each_class_counts.items():
                 false_branch += [v] * c
 
-            true_false_branch = np.array(true_branch+false_branch)
+            true_false_branch = np.array(true_branch + false_branch)
             true_branch = np.array(true_branch)
             false_branch = np.array(false_branch)
 
@@ -172,12 +172,12 @@ class CART(ml.Learner):
                 true_branch += [v] * c
             for v, c in tree.false_branch.each_class_counts.items():
                 false_branch += [v] * c
-            true_false_branch = np.array(true_branch+false_branch)
+            true_false_branch = np.array(true_branch + false_branch)
             true_branch = np.array(true_branch)
             false_branch = np.array(false_branch)
 
             p = float(len(true_branch)) / len(true_false_branch)
-            delta = self.impurity(true_false_branch) - p*self.impurity(true_branch) - (1-p)*self.impurity(false_branch)
+            delta = self.impurity(true_false_branch) - p * self.impurity(true_branch) - (1 - p) * self.impurity(false_branch)
             if delta < self.prune_gain:
                 if self.prune_notify:
                     print('A branch was pruned: gain = %f' % delta)
@@ -212,13 +212,13 @@ class CART(ml.Learner):
                 false_branch = self.classify_with_missing_data(x, tree.false_branch)
                 true_branch_count = sum(true_branch.values())
                 false_branch_count = sum(false_branch.values())
-                true_branch_weight = float(true_branch_count)/(true_branch_count + false_branch_count)
-                false_branch_weight = float(false_branch_count)/(true_branch_count + false_branch_count)
+                true_branch_weight = float(true_branch_count) / (true_branch_count + false_branch_count)
+                false_branch_weight = float(false_branch_count) / (true_branch_count + false_branch_count)
                 each_class_counts = collections.defaultdict(int)
                 for k, v in true_branch.items():
-                    each_class_counts[k] += v*true_branch_weight
+                    each_class_counts[k] += v * true_branch_weight
                 for k, v in false_branch.items():
-                    each_class_counts[k] += v*false_branch_weight
+                    each_class_counts[k] += v * false_branch_weight
                 return dict(each_class_counts)
             else:
                 branch = None
@@ -284,14 +284,14 @@ class CART(ml.Learner):
                 true_branch_sum = 0
                 for key, value in list(true_branch.items()):
                     true_branch_count += value
-                    true_branch_sum += key*value
+                    true_branch_sum += key * value
                 false_branch_count = 0
                 false_branch_sum = 0
                 for key, value in list(false_branch.items()):
                     false_branch_count += value
-                    false_branch_sum += key*value
+                    false_branch_sum += key * value
 
-                mean = (float(true_branch_sum)+float(false_branch_sum))/(true_branch_count+false_branch_count)
+                mean = (float(true_branch_sum) + float(false_branch_sum)) / (true_branch_count + false_branch_count)
                 return {mean: 1}
             else:
                 branch = None
@@ -328,13 +328,13 @@ class CART(ml.Learner):
             total_data_num = len(Y)
             each_class_counts = self.each_class_counts(Y)
             for k in each_class_counts:
-                impurity -= (float(each_class_counts[k])/total_data_num)**2
+                impurity -= (float(each_class_counts[k]) / total_data_num)**2
         elif self.learn_type == 'regression':
             if len(Y) == 0:
                 return 0
             data = [float(y) for y in Y]
             mean = sum(data) / len(data)
-            variance = sum([(d-mean)**2 for d in data]) / len(data)
+            variance = sum([(d - mean)**2 for d in data]) / len(data)
             impurity = variance
 
         return impurity
@@ -355,10 +355,12 @@ class CART(ml.Learner):
 
         if value_is_float:
             # for int and float values
-            splitting_function = lambda row: float(row[column]) >= value
+            def splitting_function(row):
+                return float(row[column]) >= value
         else:
             # for strings
-            splitting_function = lambda row: row[column] == value
+            def splitting_function(row):
+                return row[column] == value
 
         list1 = [row for row in XY if splitting_function(row)]
         list2 = [row for row in XY if not splitting_function(row)]
@@ -380,7 +382,7 @@ class CART(ml.Learner):
         best_set = None
 
         for col in range(1, self.data_demension):
-            column_values = X[:, col:col+1]
+            column_values = X[:, col:col + 1]
             for value in column_values:
                 self.divide_set(X, Y, col, value[0])
                 (set1, set2) = self.divide_set(X, Y, col, value[0])
@@ -398,15 +400,15 @@ class CART(ml.Learner):
                     set2Y = np.array([])
 
                 p = float(len(set1Y)) / len(Y)
-                gain = impurity_score - p*self.impurity(set1Y) - (1-p)*self.impurity(set2Y)
+                gain = impurity_score - p * self.impurity(set1Y) - (1 - p) * self.impurity(set2Y)
                 if gain > best_gain and len(set1Y) > 0 and len(set2Y) > 0:
                     best_gain = gain
                     best_attribute = (col, value[0])
                     best_set = (set1X, set1Y, set2X, set2Y)
 
         if best_gain > 0:
-            true_branch = self.grow_decision_tree_from(best_set[0], best_set[1], height_position+1)
-            false_branch = self.grow_decision_tree_from(best_set[2], best_set[3], height_position+1)
+            true_branch = self.grow_decision_tree_from(best_set[0], best_set[1], height_position + 1)
+            false_branch = self.grow_decision_tree_from(best_set[2], best_set[3], height_position + 1)
             is_leaf = False
             if true_branch is None and false_branch is None:
                 is_leaf = True

@@ -142,6 +142,20 @@ Usage
 
 For detail, please check https://github.com/fukuball/fuku-ml/blob/master/doc/sample_code.rst
 
+Tests
+=========
+
+.. code-block:: shell
+
+   python test_fuku_ml.py
+
+PEP8
+=========
+
+.. code-block:: shell
+
+   pep8 FukuML/*.py --ignore=E501
+
 License
 =========
 The MIT License (MIT)

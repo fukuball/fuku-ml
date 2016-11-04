@@ -1,4 +1,4 @@
-#encoding=utf8
+# encoding=utf8
 
 import random
 import numpy as np
@@ -100,7 +100,7 @@ class KernelLogisticRegression(l2r_logistic_regression.L2RLogisticRegression):
         x = x[1:]
         original_X = self.train_X[:, 1:]
         score = np.sum(self.beta * utility.Kernel.kernel_matrix_xX(self, x, original_X))
-        error = np.log(1 + np.exp((-1)*y*score))
+        error = np.log(1 + np.exp((-1) * y * score))
 
         return error
 
@@ -116,7 +116,7 @@ class KernelLogisticRegression(l2r_logistic_regression.L2RLogisticRegression):
             original_X = self.train_X[:, 1:]
             K = utility.Kernel.kernel_matrix_xX(self, original_x, original_X)
 
-        gradient_average = ((2*self.lambda_p)/data_num)*np.dot(beta, K) + np.dot(self.theta((-1)*Y*np.dot(beta, K))*((-1)*Y), K)/data_num
+        gradient_average = ((2 * self.lambda_p) / data_num) * np.dot(beta, K) + np.dot(self.theta((-1) * Y * np.dot(beta, K)) * ((-1) * Y), K) / data_num
 
         print('calculate gradient descent...')
 
@@ -140,7 +140,7 @@ class KernelLogisticRegression(l2r_logistic_regression.L2RLogisticRegression):
 
         for i in range(0, self.updates):
             if self.feed_mode == 'stochastic':
-                stochastic_i = random.randint(0, self.data_num-1)
+                stochastic_i = random.randint(0, self.data_num - 1)
                 x = self.train_X[stochastic_i]
                 y = self.train_Y[stochastic_i]
                 gradient = self.calculate_gradient(x, y, self.beta)

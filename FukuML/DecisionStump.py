@@ -1,4 +1,4 @@
-#encoding=utf8
+# encoding=utf8
 
 from __future__ import division
 import os
@@ -148,7 +148,7 @@ class BinaryClassifier(ml.Learner):
 
         self.status = 'train'
 
-        error_in = self.data_num/self.data_num
+        error_in = self.data_num / self.data_num
 
         for i in range(0, self.train_X.shape[1]):
 
@@ -161,7 +161,7 @@ class BinaryClassifier(ml.Learner):
             sort_dim_X = sort_dim_XY[:, 0]
             sort_dim_Y = sort_dim_XY[:, 1]
 
-            thetas = np.array([float("-inf")] + [(sort_dim_X[j] + sort_dim_X[j+1])/2 for j in range(0, self.data_num-1)] + [float("inf")])
+            thetas = np.array([float("-inf")] + [(sort_dim_X[j] + sort_dim_X[j + 1]) / 2 for j in range(0, self.data_num - 1)] + [float("inf")])
             error_in_i = sum(sort_u)
             sign_i = 1
             theta_i = 0.0
@@ -169,8 +169,8 @@ class BinaryClassifier(ml.Learner):
             for theta in thetas:
                 y_positive = np.where(sort_dim_X > theta, 1, -1)
                 y_negative = np.where(sort_dim_X < theta, 1, -1)
-                error_positive = sum((y_positive != sort_dim_Y)*sort_u)
-                error_negative = sum((y_negative != sort_dim_Y)*sort_u)
+                error_positive = sum((y_positive != sort_dim_Y) * sort_u)
+                error_negative = sum((y_negative != sort_dim_Y) * sort_u)
                 if error_positive > error_negative:
                     if error_in_i > error_negative:
                         error_in_i = error_negative

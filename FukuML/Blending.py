@@ -1,4 +1,4 @@
-#encoding=utf8
+# encoding=utf8
 
 from __future__ import division
 from abc import ABCMeta, abstractmethod
@@ -26,14 +26,14 @@ class BlendingClassifier(object):
 
         with open(input_data_file) as f:
             for line in f:
-                data_num = data_num+1
+                data_num = data_num + 1
                 data = line.split()
                 answer = data[-1]
                 prediction = self.prediction(line)
                 if float(prediction['prediction']) != float(answer):
-                    error_num = error_num+1
+                    error_num = error_num + 1
 
-        avg_error = float(error_num/data_num)
+        avg_error = float(error_num / data_num)
 
         return avg_error
 
@@ -58,14 +58,14 @@ class BlendingRegression(object):
 
         with open(input_data_file) as f:
             for line in f:
-                data_num = data_num+1
+                data_num = data_num + 1
                 data = line.split()
                 answer = data[-1]
                 prediction = self.prediction(line)
                 error = (float(prediction['prediction']) - float(answer)) ** 2
-                error_sum = error_sum+error
+                error_sum = error_sum + error
 
-        avg_error = float(error_sum/data_num)
+        avg_error = float(error_sum / data_num)
 
         return avg_error
 
@@ -129,7 +129,7 @@ class UniformBlendingRegression(BlendingRegression):
             prediction = model.prediction(input_data, mode)
             prediction_sum = prediction_sum + prediction['prediction']
 
-        prediction_return = float(prediction_sum/len(self.models))
+        prediction_return = float(prediction_sum / len(self.models))
 
         if mode == 'future_data':
             data = input_data.split()

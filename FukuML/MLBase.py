@@ -1,4 +1,4 @@
-#encoding=utf8
+# encoding=utf8
 
 from abc import ABCMeta, abstractmethod
 import numpy as np

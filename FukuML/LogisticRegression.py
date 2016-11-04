@@ -1,15 +1,15 @@
-#encoding=utf8
+# encoding=utf8
 
 import os
 import random
 import operator
 import itertools
-#import collections
+# import collections
 import numpy as np
 import FukuML.Utility as utility
 import FukuML.MLBase as ml
 import FukuML.LinearRegression as linear_regression
-#np.set_printoptions(threshold=np.nan)
+# np.set_printoptions(threshold=np.nan)
 
 
 class LogisticRegression(ml.Learner):
@@ -123,7 +123,7 @@ class LogisticRegression(ml.Learner):
 
         s = np.where(s < -709, -709, s)
 
-        return 1/(1 + np.exp((-1)*s))
+        return 1 / (1 + np.exp((-1) * s))
 
     def score_function(self, x, W):
         # need refector
@@ -143,7 +143,7 @@ class LogisticRegression(ml.Learner):
         Error function to calculate error: cross entropy error
         '''
 
-        error = np.log(1 + np.exp((-1)*y*np.inner(x, W)))
+        error = np.log(1 + np.exp((-1) * y * np.inner(x, W)))
 
         return error
 
@@ -154,7 +154,7 @@ class LogisticRegression(ml.Learner):
         else:
             data_num = 1
 
-        gradient_average = np.dot(self.theta((-1)*Y*np.dot(W, X.transpose()))*((-1)*Y), X)/data_num
+        gradient_average = np.dot(self.theta((-1) * Y * np.dot(W, X.transpose())) * ((-1) * Y), X) / data_num
 
         return gradient_average
 
@@ -203,7 +203,7 @@ class LogisticRegression(ml.Learner):
 
         for i in range(0, self.updates):
             if self.feed_mode == 'stochastic':
-                stochastic_i = random.randint(0, self.data_num-1)
+                stochastic_i = random.randint(0, self.data_num - 1)
                 x = self.train_X[stochastic_i]
                 y = self.train_Y[stochastic_i]
                 gradient = self.calculate_gradient(x, y, self.W)
@@ -577,7 +577,7 @@ class MultiClassifier(LogisticRegression):
             self.temp_W = {}
 
         if self.decomposition == 'ovo':
-            #counter = collections.Counter(ovo_vote)
+            # counter = collections.Counter(ovo_vote)
             prediction_return = max(set(ovo_vote), key=ovo_vote.count)
         elif self.decomposition == 'ova':
             prediction_return = max(prediction_list.items(), key=operator.itemgetter(1))[0]

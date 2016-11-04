@@ -1,4 +1,4 @@
-#encoding=utf8
+# encoding=utf8
 
 import os
 import numpy as np
@@ -114,7 +114,7 @@ class SupportVectorRegression(ml.Learner):
     def score_function(self, x, W):
 
         x = x[1:]
-        #score = np.sum(self.sv_beta * utility.Kernel.kernel_matrix_xX(self, x, self.sv_X)) + self.sv_avg_b
+        # score = np.sum(self.sv_beta * utility.Kernel.kernel_matrix_xX(self, x, self.sv_X)) + self.sv_avg_b
         score = np.sum(self.sv_beta * utility.Kernel.kernel_matrix_xX(self, x, self.sv_X))
 
         return score
@@ -148,11 +148,11 @@ class SupportVectorRegression(ml.Learner):
         # P = Q, q = p, G = -A, h = -c
 
         P = cvxopt.matrix(np.bmat([[K, -K], [-K, K]]))
-        q = cvxopt.matrix(np.bmat([self.epsilon-self.train_Y, self.epsilon+self.train_Y]).reshape((-1, 1)))
-        G = cvxopt.matrix(np.bmat([[-np.eye(2*self.data_num)], [np.eye(2*self.data_num)]]))
-        h = cvxopt.matrix(np.bmat([[np.zeros((2*self.data_num, 1))], [self.C*np.ones((2*self.data_num, 1))]]))
-        #A = cvxopt.matrix(np.append(np.ones(self.data_num), -1 * np.ones(self.data_num)), (1, 2*self.data_num))
-        #b = cvxopt.matrix(0.0)
+        q = cvxopt.matrix(np.bmat([self.epsilon - self.train_Y, self.epsilon + self.train_Y]).reshape((-1, 1)))
+        G = cvxopt.matrix(np.bmat([[-np.eye(2 * self.data_num)], [np.eye(2 * self.data_num)]]))
+        h = cvxopt.matrix(np.bmat([[np.zeros((2 * self.data_num, 1))], [self.C * np.ones((2 * self.data_num, 1))]]))
+        # A = cvxopt.matrix(np.append(np.ones(self.data_num), -1 * np.ones(self.data_num)), (1, 2*self.data_num))
+        # b = cvxopt.matrix(0.0)
         cvxopt.solvers.options['show_progress'] = False
         solution = cvxopt.solvers.qp(P, q, G, h)
 
@@ -183,7 +183,7 @@ class SupportVectorRegression(ml.Learner):
         short_b_upper = self.free_sv_Y_upper[0] - np.sum(self.sv_beta * utility.Kernel.kernel_matrix_xX(self, self.free_sv_X_upper[0], self.sv_X)) - self.epsilon
         short_b_lower = self.free_sv_Y_lower[0] - np.sum(self.sv_beta * utility.Kernel.kernel_matrix_xX(self, self.free_sv_X_lower[0], self.sv_X)) + self.epsilon
 
-        self.sv_avg_b = (short_b_upper+short_b_lower)/2
+        self.sv_avg_b = (short_b_upper + short_b_lower) / 2
 
         return self.W
 

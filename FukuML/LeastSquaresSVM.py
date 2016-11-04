@@ -1,4 +1,4 @@
-#encoding=utf8
+# encoding=utf8
 
 import FukuML.KernelRidgeRegression as kernel_ridge_regression
 

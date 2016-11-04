@@ -1,4 +1,4 @@
-#encoding=utf8
+# encoding=utf8
 
 import os
 import numpy as np
@@ -109,7 +109,7 @@ class ProbabilisticSVM(ml.Learner):
         svm_process_x = self.svm_score(x)
         svm_process_x = [1] + [svm_process_x]
 
-        error = np.log(1 + np.exp((-1)*y*np.inner(svm_process_x, self.logistic_processor.W)))
+        error = np.log(1 + np.exp((-1) * y * np.inner(svm_process_x, self.logistic_processor.W)))
 
         return error
 
