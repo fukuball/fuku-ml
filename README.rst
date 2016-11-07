@@ -95,6 +95,8 @@ Algorithm
 - Blending
     - Uniform Blending for Classification
     - Linear Blending for Classification
+    - Uniform Blending for Regression
+    - Linear Blending for Regression
 
 Usage
 ============
@@ -142,14 +144,14 @@ Usage
 
 For detail, please check https://github.com/fukuball/fuku-ml/blob/master/doc/sample_code.rst
 
-Tests
+Run Tests
 =========
 
 .. code-block:: shell
 
    python test_fuku_ml.py
 
-PEP8
+PEP8 Coding Style Check
 =========
 
 .. code-block:: shell
