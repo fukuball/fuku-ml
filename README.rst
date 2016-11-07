@@ -144,14 +144,14 @@ Usage
 
 For detail, please check https://github.com/fukuball/fuku-ml/blob/master/doc/sample_code.rst
 
-Run Tests
+Tests
 =========
 
 .. code-block:: shell
 
    python test_fuku_ml.py
 
-PEP8 Coding Style Check
+PEP8
 =========
 
 .. code-block:: shell
