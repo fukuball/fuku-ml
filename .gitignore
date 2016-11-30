@@ -1,0 +1,20 @@
+*.py[cod]
+
+*.egg
+*.egg-info
+
+.Python
+bin
+build
+dist
+include
+lib
+pip-selfcheck.json
+
+# IPython Notebook
+.ipynb_checkpoints
+
+.coverage
+htmlcov/
+
+.DS_STORE
