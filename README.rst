@@ -1,5 +1,7 @@
 `FukuML`_
+
 .. _FukuML: http://www.fukuball.com/fuku-ml/
+
 =========
 
 .. image:: https://travis-ci.org/fukuball/fuku-ml.svg?branch=master
