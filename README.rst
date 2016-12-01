@@ -83,6 +83,8 @@ Algorithm
     - AdaBoost Stump Binary Classification Learning Algorithm
     - Decision Tree Classification Learning Algorithm
     - Decision Tree Regression Learning Algorithm
+    - Random Forest Classification Learning Algorithm
+    - Random Forest Regression Learning Algorithm
 - Neural Network
     - Neural Network Learning Algorithm
     - Neural Network Binary Classification Learning Algorithm

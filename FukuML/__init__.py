@@ -46,6 +46,8 @@ __all__ = [
     'DecisionTree',
     'DecisionTree.DecisionTree',
     'DecisionTree.CART',
+    'RandomForest',
+    'RandomForest.RandomForest',
     'Blending',
     'Blending.UniformBlendingClassifier',
     'Blending.LinearBlendingClassifier',

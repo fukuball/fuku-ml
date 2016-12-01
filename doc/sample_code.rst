@@ -1037,6 +1037,57 @@ Run demo dataset
 
     >>> prediction = decision_tree_c.prediction(test_data)
 
+Random Forest Classification Learning Algorithm
+============
+
+.. code-block:: py
+
+    >>> import numpy as np
+
+    >>> import FukuML.RandomForest as random_forest
+
+    >>> random_forest_c = random_forest.RandomForest()
+
+    >>> random_forest_c.load_train_data()
+
+    >>> random_forest_c.set_param(learn_type='classifier')
+
+    >>> random_forest_c.init_W()
+
+    >>> random_forest_c.train()
+
+    >>> test_data = '0.94544 0.42842 0.79833 0.16244 -1'
+
+    >>> prediction = random_forest_c.prediction(test_data)
+
+Random Forest Regression Learning Algorithm
+============
+
+Run demo dataset
+-----------------
+
+.. code-block:: py
+
+    >>> import numpy as np
+
+    >>> import FukuML.RandomForest as random_forest
+
+    >>> input_train_data_file = os.path.join(os.path.join(os.getcwd(), os.path.dirname(__file__)), 'FukuML/dataset/linear_regression_train.dat')
+
+    >>> random_forest_r = random_forest.RandomForest()
+
+    >>> random_forest_r.load_train_data(input_train_data_file)
+
+    >>> random_forest_r.set_param(learn_type='regression')
+
+    >>> random_forest_r.init_W()
+
+    >>> random_forest_r.train()
+
+    >>> test_data = '55.7 43 285'
+
+    >>> prediction = random_forest_r.prediction(test_data)
+
 Kernel Logistic Regression Learning Algorithm
 ============
 
