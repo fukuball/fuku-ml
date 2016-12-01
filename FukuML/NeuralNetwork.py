@@ -6,6 +6,7 @@ import numpy as np
 import FukuML.Utility as utility
 import FukuML.MLBase as ml
 
+random.seed(1)
 
 class NeuralNetwork(ml.Learner):
 

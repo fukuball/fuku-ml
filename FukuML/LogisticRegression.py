@@ -11,6 +11,7 @@ import FukuML.MLBase as ml
 import FukuML.LinearRegression as linear_regression
 # np.set_printoptions(threshold=np.nan)
 
+random.seed(1)
 
 class LogisticRegression(ml.Learner):
 

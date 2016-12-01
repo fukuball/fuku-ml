@@ -8,6 +8,7 @@ import FukuML.Utility as utility
 import FukuML.MLBase as ml
 import FukuML.LinearRegression as linear_regression
 
+random.seed(1)
 
 class BinaryClassifier(ml.Learner):
 

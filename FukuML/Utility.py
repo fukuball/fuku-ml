@@ -4,12 +4,14 @@ from __future__ import division
 import numpy as np
 import pickle
 import math
+import random
 import itertools
 from random import randint
 from sklearn.preprocessing import PolynomialFeatures
 from scipy.special import legendre
 from scipy.spatial.distance import pdist, cdist, squareform
 
+random.seed(1)
 
 class DatasetLoader(object):
 
@@ -130,6 +132,32 @@ class DatasetLoader(object):
             bootstrap_bagging_Y.append(Y[rand_row_index])
 
         return np.array(bootstrap_bagging_X), np.array(bootstrap_bagging_Y)
+
+    @staticmethod
+    def random_projection(X):
+
+        data_demension = X.shape[1]
+
+        new_data_demension = random.randint(2, data_demension)
+
+        new_X = np.empty((data_demension, new_data_demension))
+
+        minus_one = 0.1
+        positive_one = 0.9
+
+        for i in range(len(new_X)):
+            for j in range(len(new_X[i])):
+                rand = random.random()
+                if rand < minus_one:
+                    new_X[i][j] = -1.0
+                elif rand >= positive_one:
+                    new_X[i][j] = 1.0
+                else:
+                    new_X[i][j] = 0.0
+
+        new_X = np.inner(X, new_X.T)
+
+        return new_X
 
 
 class CrossValidator(object):
