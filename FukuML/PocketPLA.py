@@ -10,6 +10,7 @@ import FukuML.LinearRegression as linear_regression
 
 random.seed(1)
 
+
 class BinaryClassifier(ml.Learner):
 
     temp_avg_error = float('Inf')

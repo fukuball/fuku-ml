@@ -8,6 +8,7 @@ import FukuML.MLBase as ml
 
 random.seed(1)
 
+
 class NeuralNetwork(ml.Learner):
 
     def __init__(self):

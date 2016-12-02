@@ -13,6 +13,7 @@ import FukuML.LinearRegression as linear_regression
 
 random.seed(1)
 
+
 class LogisticRegression(ml.Learner):
 
     def __init__(self):

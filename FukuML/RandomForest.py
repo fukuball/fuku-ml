@@ -8,6 +8,7 @@ import FukuML.MLBase as ml
 import FukuML.DecisionTree as decision_tree
 import FukuML.Blending as blending
 
+
 class RandomForest(ml.Learner):
 
     def __init__(self):

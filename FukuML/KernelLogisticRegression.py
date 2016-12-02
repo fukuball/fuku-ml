@@ -7,6 +7,7 @@ import FukuML.L2RLogisticRegression as l2r_logistic_regression
 
 random.seed(1)
 
+
 class KernelLogisticRegression(l2r_logistic_regression.L2RLogisticRegression):
 
     def __init__(self):

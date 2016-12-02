@@ -13,6 +13,7 @@ from scipy.spatial.distance import pdist, cdist, squareform
 
 random.seed(1)
 
+
 class DatasetLoader(object):
 
     @staticmethod
