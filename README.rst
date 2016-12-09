@@ -33,9 +33,13 @@ Tutorial
 
 - Appendix 1: `Play With Your Own Dataset`_
 
+- Appendix 2: `iNDIEVOX Open Data/API 智慧音樂應用：An Introduce to iNDIEVOX Open Data/API and the intelligent music application`_
+
 .. _Perceptron Binary Classification Learning Algorithm: https://github.com/fukuball/FukuML-Tutorial/blob/master/Perceptron%20Binary%20Classification%20Learning%20Algorithm%20Tutorial.ipynb
 
 .. _Play With Your Own Dataset: https://github.com/fukuball/FukuML-Tutorial/blob/master/Play%20With%20Your%20Own%20Dataset%20Tutorial.ipynb
+
+.. _iNDIEVOX Open Data/API 智慧音樂應用：An Introduce to iNDIEVOX Open Data/API and the intelligent music application: https://speakerdeck.com/fukuball/api-and-the-intelligent-music-application
 
 Algorithm
 ============
