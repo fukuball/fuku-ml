@@ -165,6 +165,14 @@ PEP8
 
    pep8 FukuML/*.py --ignore=E501
 
+Donate
+=========
+
+If you find fuku-ml useful, please consider a donation. Thank you!
+
+<a href='https://pledgie.com/campaigns/33186'><img alt='Click here to lend your support to: fuku-ml and make a donation at pledgie.com !' src='https://pledgie.com/campaigns/33186.png?skin_name=chrome' border='0' ></a>
+
+
 License
 =========
 The MIT License (MIT)
