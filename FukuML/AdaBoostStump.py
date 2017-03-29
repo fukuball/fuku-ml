@@ -130,7 +130,7 @@ class BinaryClassifier(ml.Learner):
             prediction = weak_learner.prediction(predict_string, 'test_data')
             if (float(prediction['prediction']) != float(prediction['input_data_y'])):
                 epsiloin += (u[i] * 1.0)
-
+test
         epsiloin = epsiloin / np.sum(u)
         tune_alpha = np.sqrt((1.0 - epsiloin) / epsiloin)
         alpha = np.log(tune_alpha)
@@ -182,3 +182,5 @@ class BinaryClassifier(ml.Learner):
     def prediction(self, input_data='', mode='test_data'):
 
         return super(BinaryClassifier, self).prediction(input_data, mode)
+    
+    
