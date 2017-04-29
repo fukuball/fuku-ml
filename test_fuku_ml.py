@@ -18,6 +18,7 @@ import FukuML.DecisionStump as decision_stump
 import FukuML.DecisionTree as decision_tree
 import FukuML.RandomForest as random_forest
 import FukuML.AdaBoostStump as adaboost_stump
+import FukuML.AdaBoostDecisionTree as adaboost_decision_tree
 import FukuML.NeuralNetwork as nn
 import FukuML.Blending as blending
 import FukuML.Utility as utility
@@ -2102,6 +2103,33 @@ class FukuMLTestCase(unittest.TestCase):
         print(adaboost_stump_bc.calculate_avg_error(adaboost_stump_bc.test_X, adaboost_stump_bc.test_Y, adaboost_stump_bc.W))
         print('-'*70)
 
+    def test_adaboost_decision_tree_classifier(self):
+
+        #------------------------------------------------------------
+
+        adaboost_decision_tree_c = adaboost_decision_tree.Classifier()
+        adaboost_decision_tree_c.load_train_data()
+        adaboost_decision_tree_c.load_test_data()
+        adaboost_decision_tree_c.set_param(run_t=10)
+        adaboost_decision_tree_c.init_W()
+        adaboost_decision_tree_c.train()
+
+        test_data = '-9.706 1.392 6.562 -6.543 -1.980 -6.261 -6.067 1.254 -1.071 1'
+        prediction = adaboost_decision_tree_c.prediction(test_data)
+
+        print("測試資料 x：")
+        print(prediction['input_data_x'])
+        print("測試資料 y：")
+        print(prediction['input_data_y'])
+        print("預測結果：")
+        print(prediction['prediction'])
+
+        print("平均錯誤率（Ein）：")
+        print(adaboost_decision_tree_c.calculate_avg_error(adaboost_decision_tree_c.train_X, adaboost_decision_tree_c.train_Y, adaboost_decision_tree_c.W))
+        print("平均錯誤率（Eout）：")
+        print(adaboost_decision_tree_c.calculate_avg_error(adaboost_decision_tree_c.test_X, adaboost_decision_tree_c.test_Y, adaboost_decision_tree_c.W))
+        print('-'*70)
+
     def test_support_vector_regression(self):
 
         #------------------------------------------------------------
@@ -2329,7 +2357,6 @@ class FukuMLTestCase(unittest.TestCase):
         print(linear_blending_classifier.calculate_avg_error(input_test_data_file))
         print('-'*70)
 
-
     def test_regression_uniform_blending(self):
 
         #------------------------------------------------------------
@@ -2389,7 +2416,6 @@ class FukuMLTestCase(unittest.TestCase):
         print("平均錯誤值（Eout）：")
         print(uniform_blending_regression.calculate_avg_error(input_test_data_file))
         print('-'*70)
-
 
     def test_regression_linear_blending(self):
 
