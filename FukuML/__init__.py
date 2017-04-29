@@ -1,6 +1,6 @@
 # encoding=utf8
 
-__version__ = '0.3.6'
+__version__ = '0.4.0'
 __all__ = [
     'MLBase',
     'PLA',
