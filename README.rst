@@ -85,6 +85,7 @@ Algorithm
 - Decision Tree
     - Decision Stump Binary Classification Learning Algorithm
     - AdaBoost Stump Binary Classification Learning Algorithm
+    - AdaBoost Decision Tree Binary Classification Learning Algorithm
     - Decision Tree Classification Learning Algorithm
     - Decision Tree Regression Learning Algorithm
     - Random Forest Classification Learning Algorithm

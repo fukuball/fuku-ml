@@ -24,7 +24,7 @@ setup(
     version=FukuML.__version__,
     description='Simple machine learning library',
     long_description=long_description,
-    keywords='Machine Learning, Perceptron Learning Algorithm, PLA, Pocket Perceptron Learning Algorithm, Pocket PLA, Linear Regression, Logistic Regression, Ridge Regression, Binay Classifier, Multi Classifier',
+    keywords='Machine Learning, Perceptron Learning Algorithm, PLA, Pocket Perceptron Learning Algorithm, Pocket PLA, Linear Regression, Logistic Regression, Ridge Regression, Binay Classifier, Multi Classifier, SVM, Support Vector Machine, Decision Tree, AdaBoost',
     author='Fukuball Lin',
     author_email='fukuball@gmail.com',
     url='https://github.com/fukuball/fuku-ml',
