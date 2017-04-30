@@ -19,6 +19,7 @@ import FukuML.DecisionTree as decision_tree
 import FukuML.RandomForest as random_forest
 import FukuML.AdaBoostStump as adaboost_stump
 import FukuML.AdaBoostDecisionTree as adaboost_decision_tree
+import FukuML.GradientBoostDecisionTree as gradient_boost_decision_tree
 import FukuML.NeuralNetwork as nn
 import FukuML.Blending as blending
 import FukuML.Utility as utility
@@ -2128,6 +2129,33 @@ class FukuMLTestCase(unittest.TestCase):
         print(adaboost_decision_tree_c.calculate_avg_error(adaboost_decision_tree_c.train_X, adaboost_decision_tree_c.train_Y, adaboost_decision_tree_c.W))
         print("平均錯誤率（Eout）：")
         print(adaboost_decision_tree_c.calculate_avg_error(adaboost_decision_tree_c.test_X, adaboost_decision_tree_c.test_Y, adaboost_decision_tree_c.W))
+        print('-'*70)
+
+    def test_gradient_boost_decision_tree_regression(self):
+
+        #------------------------------------------------------------
+
+        gradient_boost_decision_tree_r = gradient_boost_decision_tree.Regression()
+        gradient_boost_decision_tree_r.load_train_data()
+        gradient_boost_decision_tree_r.load_test_data()
+        gradient_boost_decision_tree_r.set_param(run_t=10)
+        gradient_boost_decision_tree_r.init_W()
+        gradient_boost_decision_tree_r.train()
+
+        test_data = '0.62771 0.11513 0.82235 0.14493 -1'
+        prediction = gradient_boost_decision_tree_r.prediction(test_data)
+
+        print("測試資料 x：")
+        print(prediction['input_data_x'])
+        print("測試資料 y：")
+        print(prediction['input_data_y'])
+        print("預測結果：")
+        print(prediction['prediction'])
+
+        print("平均錯誤值（Ein）：")
+        print(gradient_boost_decision_tree_r.calculate_avg_error(gradient_boost_decision_tree_r.train_X, gradient_boost_decision_tree_r.train_Y, gradient_boost_decision_tree_r.W))
+        print("平均錯誤值（Eout）：")
+        print(gradient_boost_decision_tree_r.calculate_avg_error(gradient_boost_decision_tree_r.test_X, gradient_boost_decision_tree_r.test_Y, gradient_boost_decision_tree_r.W))
         print('-'*70)
 
     def test_support_vector_regression(self):
