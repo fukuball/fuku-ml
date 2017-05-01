@@ -1,6 +1,6 @@
 # encoding=utf8
 
-__version__ = '0.4.0'
+__version__ = '0.4.1'
 __all__ = [
     'MLBase',
     'PLA',
@@ -43,6 +43,12 @@ __all__ = [
     'DecisionStump.BinaryClassifier',
     'AdaBoostStump',
     'AdaBoostStump.BinaryClassifier',
+    'AdaBoostStump',
+    'AdaBoostStump.BinaryClassifier',
+    'AdaBoostDecisionTree',
+    'AdaBoostDecisionTree.Classifier',
+    'GradientBoostDecisionTree',
+    'GradientBoostDecisionTree.Regression',
     'DecisionTree',
     'DecisionTree.DecisionTree',
     'DecisionTree.CART',
