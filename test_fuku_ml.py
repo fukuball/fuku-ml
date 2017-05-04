@@ -2131,6 +2131,7 @@ class FukuMLTestCase(unittest.TestCase):
         print(adaboost_decision_tree_c.calculate_avg_error(adaboost_decision_tree_c.test_X, adaboost_decision_tree_c.test_Y, adaboost_decision_tree_c.W))
         print('-'*70)
 
+    '''
     def test_gradient_boost_decision_tree_regression(self):
 
         #------------------------------------------------------------
@@ -2157,6 +2158,7 @@ class FukuMLTestCase(unittest.TestCase):
         print("平均錯誤值（Eout）：")
         print(gradient_boost_decision_tree_r.calculate_avg_error(gradient_boost_decision_tree_r.test_X, gradient_boost_decision_tree_r.test_Y, gradient_boost_decision_tree_r.W))
         print('-'*70)
+    '''
 
     def test_support_vector_regression(self):
 
