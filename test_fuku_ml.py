@@ -2104,6 +2104,7 @@ class FukuMLTestCase(unittest.TestCase):
         print(adaboost_stump_bc.calculate_avg_error(adaboost_stump_bc.test_X, adaboost_stump_bc.test_Y, adaboost_stump_bc.W))
         print('-'*70)
 
+    '''
     def test_adaboost_decision_tree_classifier(self):
 
         #------------------------------------------------------------
@@ -2131,7 +2132,6 @@ class FukuMLTestCase(unittest.TestCase):
         print(adaboost_decision_tree_c.calculate_avg_error(adaboost_decision_tree_c.test_X, adaboost_decision_tree_c.test_Y, adaboost_decision_tree_c.W))
         print('-'*70)
 
-    '''
     def test_gradient_boost_decision_tree_regression(self):
 
         #------------------------------------------------------------
