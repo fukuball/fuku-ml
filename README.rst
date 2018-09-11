@@ -172,8 +172,8 @@ Donate
 
 If you find fuku-ml useful, please consider a donation. Thank you!
 
-.. image:: https://pledgie.com/campaigns/33186.png?skin_name=chrome
-    :target: https://pledgie.com/campaigns/33186
+- bitcoin: 1BbihQU3CzSdyLSP9bvQq7Pi1z1jTdAaq9
+- eth: 0x92DA3F837bf2F79D422bb8CEAC632208F94cdE33
 
 
 License
