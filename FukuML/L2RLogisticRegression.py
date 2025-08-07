@@ -1,5 +1,6 @@
 # encoding=utf8
 
+from __future__ import division
 # import operator
 # import itertools
 import numpy as np

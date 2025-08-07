@@ -159,10 +159,10 @@ class BinaryClassifier(ml.Learner):
 
         self.status = 'train'
 
-        if (self.loop_mode is 'random'):
-            data_check_order = range(self.data_num)
+        if (self.loop_mode == 'random'):
+            data_check_order = list(range(self.data_num))
             data_check_order = random.sample(data_check_order, self.data_num)
-        elif (self.loop_mode is 'naive_cycle'):
+        elif (self.loop_mode == 'naive_cycle'):
             data_check_order = range(self.data_num)
         else:
             data_check_order = range(self.data_num)

@@ -171,13 +171,13 @@ class BinaryClassifier(ml.Learner):
         self.temp_avg_error = self.calculate_avg_error(self.train_X, self.train_Y, new_W)
 
         for _ in range(self.updates):
-            if (self.loop_mode is 'naive_cycle'):
+            if (self.loop_mode == 'naive_cycle'):
                 data_check_order = range(self.data_num)
-            elif (self.loop_mode is 'random'):
-                data_check_order = range(self.data_num)
+            elif (self.loop_mode == 'random'):
+                data_check_order = list(range(self.data_num))
                 data_check_order = random.sample(data_check_order, self.data_num)
             else:
-                data_check_order = range(self.data_num)
+                data_check_order = list(range(self.data_num))
                 data_check_order = random.sample(data_check_order, self.data_num)
             for i in data_check_order:
 

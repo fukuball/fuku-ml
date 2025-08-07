@@ -1,11 +1,16 @@
 # encoding=utf8
 
 import os
+import sys
+
+# Add parent directory to path so we can import FukuML
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
 import numpy as np
 import FukuML.Utility as utility
 import FukuML.SupportVectorMachine as svm
 
-input_train_data_file = os.path.join(os.path.join(os.getcwd(), os.path.dirname(__file__)), 'FukuML/dataset/emotion.dat')
+input_train_data_file = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'FukuML/dataset/emotion.dat')
 
 cross_validator = utility.CrossValidator()
 
@@ -36,7 +41,7 @@ print(svm_mc.calculate_avg_error_all_class(svm_mc.train_X, svm_mc.train_Y, svm_m
 data_num = len(svm_mc.train_Y)
 
 for i in range(data_num):
-    x_string = np.array(map(str, svm_mc.train_X[i]))
+    x_string = np.array(list(map(str, svm_mc.train_X[i])))
     x_string = ' '.join(x_string[1:])+' '+str(svm_mc.train_Y[i])
     prediction = svm_mc.prediction(x_string)
     if (float(prediction['prediction']) != float(prediction['input_data_y'])):

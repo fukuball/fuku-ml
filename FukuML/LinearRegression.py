@@ -129,7 +129,7 @@ class LinearRegression(ml.Learner):
         return super(LinearRegression, self).calculate_test_data_avg_error()
 
     def calculate_psedo_X(self, X):
-
+        """Calculate pseudo-inverse of X"""
         return np.linalg.pinv(X)
 
     def train(self):
