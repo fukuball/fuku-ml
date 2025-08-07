@@ -87,9 +87,9 @@ class KernelRidgeRegression(ridge_regression.RidgeRegression):
 
         original_X = self.train_X[:, 1:]
         K = utility.Kernel.kernel_matrix(self, original_X)
-        I = np.diag(np.ones(self.data_num))
+        identity = np.diag(np.ones(self.data_num))
 
-        inverse_part = np.linalg.inv(self.lambda_p * I + K)
+        inverse_part = np.linalg.inv(self.lambda_p * identity + K)
         self.beta = np.dot(inverse_part, self.train_Y)
 
         return self.W

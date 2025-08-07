@@ -158,14 +158,19 @@ Tests
 
 .. code-block:: shell
 
+   # Run comprehensive test suite
    python test_fuku_ml.py
+   
+   # Run individual algorithm tests
+   python tests/test_pla_binary_classifier.py
+   python tests/test_linear_regression.py
 
-PEP8
-=========
+Code Style
+==========
 
 .. code-block:: shell
 
-   pep8 FukuML/*.py --ignore=E501
+   python -m pycodestyle FukuML/*.py --ignore=E501
 
 Donate
 =========
