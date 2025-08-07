@@ -2,7 +2,6 @@
 
 import os
 import sys
-import warnings
 import numpy as np
 
 # Add parent directory to path so we can import FukuML
