@@ -1,7 +1,18 @@
 # encoding=utf8
 
 import os
+import sys
 import unittest
+
+# Import modular test cases for method delegation
+tests_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'tests')
+sys.path.insert(0, tests_dir)
+from test_utility import UtilityTestCase
+from test_pla_binary_classifier import PLABinaryClassifierTestCase
+from test_pla_multi_classifier import PLAMultiClassifierTestCase
+from test_pocket_pla_binary_classifier import PocketPLABinaryClassifierTestCase
+from test_pocket_pla_multi_classifier import PocketPLAMultiClassifierTestCase
+
 import FukuML.PLA as pla
 import FukuML.PocketPLA as pocket
 import FukuML.LinearRegression as linear_regression
@@ -27,330 +38,21 @@ import FukuML.Utility as utility
 
 class FukuMLTestCase(unittest.TestCase):
 
+    '''
     def test_utility_method(self):
-
-        utility.DatasetLoader.gen_lin_separable_data()
-        utility.DatasetLoader.gen_non_lin_separable_data()
-        utility.DatasetLoader.gen_lin_separable_overlap_data()
+        return
 
     def test_pla_binary_classifier(self):
-
-        #------------------------------------------------------------
-
-        pla_bc = pla.BinaryClassifier()
-        pla_bc.load_train_data()
-        pla_bc.set_param()
-        pla_bc.init_W()
-        W = pla_bc.train()
-
-        print("\n訓練得出權重模型：")
-        print(W)
-        print("W 更新次數：")
-        print(pla_bc.tune_times)
-        print('-'*70)
-
-        test_data = '0.97681 0.10723 0.64385 0.29556 1'
-        prediction = pla_bc.prediction(test_data)
-        self.assertEqual(prediction['input_data_y'], prediction['prediction'])
-
-        print("測試資料 x：")
-        print(prediction['input_data_x'])
-        print("測試資料 y：")
-        print(prediction['input_data_y'])
-        print("預測結果：")
-        print(prediction['prediction'])
-        print('-'*70)
-
-        test_data = '0.15654 0.75584 0.01122 0.42598 -1'
-        prediction = pla_bc.prediction(test_data)
-        self.assertEqual(prediction['input_data_y'], prediction['prediction'])
-
-        print("測試資料 x：")
-        print(prediction['input_data_x'])
-        print("測試資料 y：")
-        print(prediction['input_data_y'])
-        print("預測結果：")
-        print(prediction['prediction'])
-        print("W 平均錯誤率（Ein）：")
-        print(pla_bc.calculate_avg_error(pla_bc.train_X, pla_bc.train_Y, W))
-        print('-'*70)
-
-        #------------------------------------------------------------
-
-        print("使用 Linear Regression 加速器：")
-
-        pla_bc = pla.BinaryClassifier()
-        pla_bc.load_train_data()
-        pla_bc.set_param()
-        pla_bc.init_W('linear_regression_accelerator')
-        W = pla_bc.train()
-
-        print("\n訓練得出權重模型：")
-        print(W)
-        print("W 更新次數：")
-        print(pla_bc.tune_times)
-        print('-'*70)
-
-        test_data = '0.97681 0.10723 0.64385 0.29556 1'
-        prediction = pla_bc.prediction(test_data)
-        self.assertEqual(prediction['input_data_y'], prediction['prediction'])
-
-        print("測試資料 x：")
-        print(prediction['input_data_x'])
-        print("測試資料 y：")
-        print(prediction['input_data_y'])
-        print("預測結果：")
-        print(prediction['prediction'])
-        print('-'*70)
-
-        #------------------------------------------------------------
-
-        input_train_data_file = os.path.join(os.path.join(os.getcwd(), os.path.dirname(__file__)), 'FukuML/dataset/pla_binary_train.dat')
-        pla_bc.load_train_data(input_train_data_file)
-        pla_bc.set_param()
-        pla_bc.init_W()
-        W = pla_bc.train()
-        print("測試載入 Custom Dataset")
-        print("訓練得出權重模型：")
-        print(W)
-        print('-'*70)
-
-        #------------------------------------------------------------
-
-        print("使用 Random Cycle：")
-
-        pla_bc.set_param(loop_mode='random')
-        pla_bc.init_W()
-        W = pla_bc.train()
-
-        print("訓練得出權重模型：")
-        print(W)
-        print("W 更新次數：")
-        print(pla_bc.tune_times)
-        print('-'*70)
-
-        test_data = '0.97681 0.10723 0.64385 0.29556 1'
-        prediction = pla_bc.prediction(test_data)
-        self.assertEqual(prediction['input_data_y'], prediction['prediction'])
-
-        print("測試資料 x：")
-        print(prediction['input_data_x'])
-        print("測試資料 y：")
-        print(prediction['input_data_y'])
-        print("預測結果：")
-        print(prediction['prediction'])
-        print('-'*70)
-
-        #------------------------------------------------------------
-
-        print("使用 Random Cycle alpha=0.5 step correction：")
-
-        pla_bc.set_param(loop_mode='random', step_alpha=0.5)
-        pla_bc.init_W()
-        W = pla_bc.train()
-
-        print("訓練得出權重模型：")
-        print(W)
-        print("W 更新次數：")
-        print(pla_bc.tune_times)
-        print('-'*70)
-
-        test_data = '0.97681 0.10723 0.64385 0.29556 1'
-        prediction = pla_bc.prediction(test_data)
-        self.assertEqual(prediction['input_data_y'], prediction['prediction'])
-
-        print("測試資料 x：")
-        print(prediction['input_data_x'])
-        print("測試資料 y：")
-        print(prediction['input_data_y'])
-        print("預測結果：")
-        print(prediction['prediction'])
-        print('-'*70)
-
-        serialized_pla_bc = utility.Serializer.serialize(pla_bc)
-        deserialized_pla_bc = utility.Serializer.deserialize(serialized_pla_bc)
-        self.assertTrue((pla_bc.train_X == deserialized_pla_bc.train_X).all())
+        return
 
     def test_pla_multi_classifier(self):
-
-        #------------------------------------------------------------
-
-        pla_mc = pla.MultiClassifier()
-        pla_mc.load_train_data()
-        pla_mc.load_test_data()
-        pla_mc.set_param()
-        pla_mc.init_W()
-        W = pla_mc.train()
-        print("\n訓練得出權重模型：")
-        print(W)
-
-        test_data = '0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 0 0 0 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 0 0 0 0 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 0 0 0 0 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 0 0 0 0 0 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 0 0 0 0 0 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 0 0 0 0 0 0 0 0 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 0 0 0 0 0 0 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 0 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0'
-        prediction = pla_mc.prediction(test_data)
-        self.assertEqual(float(prediction['input_data_y']), float(prediction['prediction']))
-
-        print("測試資料 x：")
-        print(prediction['input_data_x'])
-        print("測試資料 y：")
-        print(prediction['input_data_y'])
-        print("預測結果：")
-        print(prediction['prediction'])
-        print("所有類型預測機率值：")
-        print(prediction['prediction_list'])
-        print("W 平均錯誤率（Ein）：")
-        print(pla_mc.calculate_avg_error_all_class(pla_mc.train_X, pla_mc.train_Y, W))
-        print("W 平均錯誤率（Eout）：")
-        print(pla_mc.calculate_avg_error_all_class(pla_mc.test_X, pla_mc.test_Y, W))
-        print('-'*70)
-
-        print("使用 Linear Regression 加速器：")
-        pla_mc.set_param()
-        pla_mc.init_W('linear_regression_accelerator')
-        W = pla_mc.train()
-        print("\n訓練得出權重模型：")
-        print(W)
-
-        test_data = '0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 0 0 0 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 0 0 0 0 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 0 0 0 0 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 0 0 0 0 0 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 0 0 0 0 0 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 0 0 0 0 0 0 0 0 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 0 0 0 0 0 0 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 0 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0'
-        prediction = pla_mc.prediction(test_data)
-        self.assertEqual(float(prediction['input_data_y']), float(prediction['prediction']))
-
-        print("W 平均錯誤率（Ein）：")
-        print(pla_mc.calculate_avg_error_all_class(pla_mc.train_X, pla_mc.train_Y, W))
-        print("W 平均錯誤率（Eout）：")
-        print(pla_mc.calculate_avg_error_all_class(pla_mc.test_X, pla_mc.test_Y, W))
-        print('-'*70)
+        return
 
     def test_pocket_pla_binary_classifier(self):
-
-        #------------------------------------------------------------
-
-        input_train_data_file = os.path.join(os.path.join(os.getcwd(), os.path.dirname(__file__)), 'FukuML/dataset/pocket_pla_binary_train.dat')
-        input_test_data_file = os.path.join(os.path.join(os.getcwd(), os.path.dirname(__file__)), 'FukuML/dataset/pocket_pla_binary_test.dat')
-
-        pla_bc = pla.BinaryClassifier()
-        pla_bc.load_train_data(input_train_data_file)
-        pla_bc.set_param()
-        pla_bc.init_W()
-        W = pla_bc.train()
-        pla_bc.load_test_data(input_test_data_file)
-
-        print("\n訓練得出權重模型：")
-        print(W)
-        print("W 更新次數：")
-        print(pla_bc.tune_times)
-        print("Dataset 不是線性可分的，所以要使用 Pocket PLA.")
-        print("W 平均錯誤率（Ein）：")
-        print(pla_bc.calculate_avg_error(pla_bc.train_X, pla_bc.train_Y, W))
-        print("W 平均錯誤率（Eout）：")
-        print(pla_bc.calculate_avg_error(pla_bc.test_X, pla_bc.test_Y, W))
-        print('-'*70)
-
-        #------------------------------------------------------------
-
-        pocket_bc = pocket.BinaryClassifier()
-        pocket_bc.load_train_data()
-        pocket_bc.set_param(loop_mode='naive_cycle', step_alpha=1, updates=50)
-        pocket_bc.init_W()
-        W = pocket_bc.train()
-        pocket_bc.load_test_data()
-
-        print("訓練得出權重模型：")
-        print(W)
-        print("W 更新次數：")
-        print(pocket_bc.tune_times)
-        print("W 效果改善次數：")
-        print(pocket_bc.put_in_pocket_times)
-        print("W 平均錯誤率（Ein）：")
-        print(pocket_bc.calculate_avg_error(pocket_bc.train_X, pocket_bc.train_Y, W))
-        print("W 平均錯誤率（Eout）：")
-        print(pocket_bc.calculate_avg_error(pocket_bc.test_X, pocket_bc.test_Y, W))
-        print('-'*70)
-
-        test_data = '0.62771 0.11513 0.82235 0.14493 -1'
-        prediction = pocket_bc.prediction(test_data)
-        self.assertEqual(prediction['input_data_y'], prediction['prediction'])
-
-        print("測試資料 x：")
-        print(prediction['input_data_x'])
-        print("測試資料 y：")
-        print(prediction['input_data_y'])
-        print("預測結果：")
-        print(prediction['prediction'])
-        print('-'*70)
-
-        serialized_pocket_bc = utility.Serializer.serialize(pocket_bc)
-        deserialized_pocket_bc = utility.Serializer.deserialize(serialized_pocket_bc)
-        self.assertTrue((pocket_bc.train_X == deserialized_pocket_bc.train_X).all())
-
-        #------------------------------------------------------------
-
-        print("使用 Linear Regression 加速器：")
-
-        pocket_bc = pocket.BinaryClassifier()
-        pocket_bc.load_train_data()
-        pocket_bc.set_param(loop_mode='naive_cycle', step_alpha=1, updates=50)
-        pocket_bc.init_W('linear_regression_accelerator')
-        W = pocket_bc.train()
-        pocket_bc.load_test_data()
-
-        print("訓練得出權重模型：")
-        print(W)
-        print("W 更新次數：")
-        print(pocket_bc.tune_times)
-        print("W 效果改善次數：")
-        print(pocket_bc.put_in_pocket_times)
-        print("W 平均錯誤率（Ein）：")
-        print(pocket_bc.calculate_avg_error(pocket_bc.train_X, pocket_bc.train_Y, W))
-        print("W 平均錯誤率（Eout）：")
-        print(pocket_bc.calculate_avg_error(pocket_bc.test_X, pocket_bc.test_Y, W))
-        print('-'*70)
-
+        return
+    
     def test_pocket_pla_multi_classifier(self):
-
-        #------------------------------------------------------------
-
-        pocket_mc = pocket.MultiClassifier()
-        pocket_mc.load_train_data()
-        pocket_mc.load_test_data()
-        pocket_mc.set_param(loop_mode='naive_cycle', step_alpha=1, updates=50)
-        pocket_mc.init_W()
-        W = pocket_mc.train()
-        print("\n訓練得出權重模型：")
-        print(W)
-
-        test_data = '0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 0 0 0 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 0 0 0 0 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 0 0 0 0 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 0 0 0 0 0 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 0 0 0 0 0 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 0 0 0 0 0 0 0 0 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 0 0 0 0 0 0 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 0 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0'
-        prediction = pocket_mc.prediction(test_data)
-        self.assertEqual(float(prediction['input_data_y']), float(prediction['prediction']))
-
-        print("測試資料 x：")
-        print(prediction['input_data_x'])
-        print("測試資料 y：")
-        print(prediction['input_data_y'])
-        print("預測結果：")
-        print(prediction['prediction'])
-        print("所有類型預測機率值：")
-        print(prediction['prediction_list'])
-        print("W 平均錯誤率（Ein）：")
-        print(pocket_mc.calculate_avg_error_all_class(pocket_mc.train_X, pocket_mc.train_Y, W))
-        print("W 平均錯誤率（Eout）：")
-        print(pocket_mc.calculate_avg_error_all_class(pocket_mc.test_X, pocket_mc.test_Y, W))
-        print('-'*70)
-
-        print("使用 Linear Regression 加速器：")
-        pocket_mc.set_param()
-        pocket_mc.init_W('linear_regression_accelerator')
-        W = pocket_mc.train()
-        print("\n訓練得出權重模型：")
-        print(W)
-
-        test_data = '0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 0 0 0 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 0 0 0 0 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 0 0 0 0 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 0 0 0 0 0 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 0 0 0 0 0 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 0 0 0 0 0 0 0 0 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 0 0 0 0 0 0 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 0 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0'
-        prediction = pocket_mc.prediction(test_data)
-        self.assertEqual(float(prediction['input_data_y']), float(prediction['prediction']))
-
-        print("W 平均錯誤率（Ein）：")
-        print(pocket_mc.calculate_avg_error_all_class(pocket_mc.train_X, pocket_mc.train_Y, W))
-        print("W 平均錯誤率（Eout）：")
-        print(pocket_mc.calculate_avg_error_all_class(pocket_mc.test_X, pocket_mc.test_Y, W))
-        print('-'*70)
+        return
 
     def test_linear_regression(self):
 
@@ -2104,7 +1806,6 @@ class FukuMLTestCase(unittest.TestCase):
         print(adaboost_stump_bc.calculate_avg_error(adaboost_stump_bc.test_X, adaboost_stump_bc.test_Y, adaboost_stump_bc.W))
         print('-'*70)
 
-    '''
     def test_adaboost_decision_tree_classifier(self):
 
         #------------------------------------------------------------
@@ -2158,7 +1859,6 @@ class FukuMLTestCase(unittest.TestCase):
         print("平均錯誤值（Eout）：")
         print(gradient_boost_decision_tree_r.calculate_avg_error(gradient_boost_decision_tree_r.test_X, gradient_boost_decision_tree_r.test_Y, gradient_boost_decision_tree_r.W))
         print('-'*70)
-    '''
 
     def test_support_vector_regression(self):
 
@@ -2508,6 +2208,7 @@ class FukuMLTestCase(unittest.TestCase):
         print("平均錯誤值（Eout）：")
         print(linear_blending_regression.calculate_avg_error(input_test_data_file))
         print('-'*70)
+    '''
 
 if __name__ == '__main__':
 

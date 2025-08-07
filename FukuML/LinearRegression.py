@@ -2,6 +2,7 @@
 
 import os
 import itertools
+import warnings
 import numpy as np
 import FukuML.Utility as utility
 import FukuML.MLBase as ml
@@ -129,7 +130,7 @@ class LinearRegression(ml.Learner):
         return super(LinearRegression, self).calculate_test_data_avg_error()
 
     def calculate_psedo_X(self, X):
-
+        """Calculate pseudo-inverse of X"""
         return np.linalg.pinv(X)
 
     def train(self):

@@ -1,5 +1,10 @@
 # encoding=utf8
-from __future__ import print_function
+
+import os
+import sys
+
+# Add parent directory to path so we can import FukuML
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 import FukuML.PLA as pla
 import FukuML.PocketPLA as pocket
