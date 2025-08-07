@@ -1,5 +1,6 @@
 # encoding=utf8
 
+from __future__ import division
 import os
 import numpy as np
 import cvxopt
